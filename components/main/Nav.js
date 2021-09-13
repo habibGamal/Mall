@@ -13,7 +13,11 @@ export default function Nav({ setPopup }) {
                     <span className="bar"></span>
                 </div>
                 <div className={`logo ${expand ? 'nav-bar' : ''}`}>
-                    <h2>Mall</h2>
+                    <Link href="/">
+                        <a>
+                            <h2>Mall</h2>
+                        </a>
+                    </Link>
                 </div>
                 <div id="nav-bar" className={expand ? 'active' : ''}>
                     <ul>
@@ -28,7 +32,7 @@ export default function Nav({ setPopup }) {
                             </Link>
                         </li>
                         <li>
-                            <a href=""><i className="fas fa-shopping-basket"></i> Categories</a>
+                            <a href="">Categories</a>
                         </li>
                     </ul>
                 </div>

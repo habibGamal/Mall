@@ -346,11 +346,16 @@ nav {
         }
     }
     .logo {
-        color: #fff;
         margin: 0 2rem;
+        > a , > a:hover {
+            color: #fff;
+            text-decoration: none;
+        }
     }
     .logo.nav-bar:not(body.dark nav .logo.nav-bar) {
-        color: #000;
+        > a , > a:hover {
+            color: #000;
+        }
     }
     .logo.nav-bar {
         z-index: $z-index-logo-bars;
