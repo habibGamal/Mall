@@ -1,0 +1,189 @@
+/*
+    Variables
+*/
+$card-text-color: #4D5F7F;
+/*
+    Name : Info Section
+*/
+section.info {
+    padding-top: 1rem;
+    .card {
+        color: $card-text-color;
+        padding: 1rem;
+        margin: 1rem 0;
+        @extend .isolate;
+        border: none;
+        > h2 {
+            font-size: 1.8rem;
+        }
+        > .icon {
+            text-align: center;
+            padding: 1rem;
+            > i {
+                font-size: 6rem;
+            }
+        }
+        > .text {
+            text-align: center;
+            font-size: 1.6rem;
+        }
+        &.sales {
+            > .icon > i ,
+            > .text > .value {
+                color: #F1C40F;
+            }
+        }
+        &.views {
+            > .icon > i ,
+            > .text > .value {
+                color: #2C3E50;
+            }
+        }
+        &.orders {
+            > .icon > i ,
+            > .text > .value {
+                color: #E74C3C;
+            }
+        }
+    }
+}
+/*
+    Name : Dashboard
+*/
+.dashboard {
+    margin: 2rem 0;
+    .dashboard-content {
+        @extend .isolate;
+        padding-bottom: 1rem;
+        > .controllers {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin: 2rem 3rem;
+            > .select{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+                > .buttons {
+                    display: none;
+                    &.active {
+                        display: block;
+                    }
+                    > .btn{
+                        margin: 0 .2rem;
+                    }
+                }
+                .form-group {
+                    margin: 0 .5rem;
+                }
+            }
+            .btn-add {
+                background-color: $main-color;
+                color: #fff;
+                border-radius: 100px;
+                padding: 1rem 1.5rem;
+            }
+        }
+        > .products {
+            margin: 2rem;
+        }
+        > .dashboard-table {
+            width: 80%;
+            margin: 0 auto;
+            tr {
+                position: relative;
+                &:nth-child(odd){
+                    @extend .isolate-2;
+                    > td:first-child {
+                        border-radius: 10px 0 0 10px;
+                    }
+                    > td:last-child {
+                        border-radius: 0 10px 10px 0;
+                    }
+                }
+                > td {
+                    padding: 1rem;
+                    vertical-align: baseline;
+                }
+            }
+            .logo {
+                > img {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 100%;
+                    object-fit: cover;
+                    object-position: center center;
+                }
+            }
+            .buttons > button {
+                margin: .3rem;
+                &:first-child {
+                    vertical-align: bottom;
+                }
+            }
+        }
+        > .workers {
+            margin: 0 2rem;
+            .worker {
+                @extend .isolate-3;
+                padding: 2rem;
+                margin: 1rem 0;
+                // general
+                h5 {
+                    font-weight: 600;
+                    color: $text-layer-3;
+                }
+                // children
+                > .name {
+                    text-align: center;
+                    > i {
+                        font-size: 5rem;
+                        color: var(--primary);
+                    }
+                    > h4 {
+                        padding: .5rem;
+                    }
+                }
+                > .branches {
+                    > ul > li {
+                        list-style-type: disclosure-closed;
+                    }
+                }
+                > .permissions {
+                    > ul {
+                        > li {
+                            display: inline-block;
+                            position: relative;
+                            padding-left: 1.25rem;
+                            margin-right: 1rem;
+                        }
+                        > li::before {
+                            content:"\25EF";
+                            font-size: 1rem;
+                            vertical-align: baseline;
+                            position: absolute;
+                            left:0;
+                        }
+                        > li[data-permission="add"]::before {
+                            color: var(--primary)
+                        }
+                        > li[data-permission="edit"]::before {
+                            color: var(--success)
+                        }
+                        > li[data-permission="delete"]::before {
+                            color: var(--danger)
+                        }
+                    }
+                }
+                > .controllers {
+                    text-align: center;
+                    > button {
+                        margin: 0 .3rem;
+                    }
+                }
+            }
+        }
+    }
+}

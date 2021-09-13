@@ -1,0 +1,252 @@
+// Extra small
+@media screen and(max-width:576px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    /*
+        Name : Navbar
+
+    */
+    nav {
+
+        padding: .5rem 1rem;
+
+        .search {
+            position: absolute;
+            top: 56px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+
+            &.active {
+                display: block;
+            }
+
+            >input {
+                &:focus {
+                    width: 16rem;
+                }
+            }
+        }
+
+        .logo {
+            color: #fff;
+            margin: 0 1.5rem;
+        }
+
+        .user-cart {
+            >.circle {
+                width: 40px;
+                height: 40px;
+
+                &.search-icon {
+                    display: block;
+
+                    &.active {
+                        display: none;
+                    }
+                }
+
+                >.svg-inline--fa {
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+
+    // Stores
+    .stores .store .logo {
+        width: 150px;
+        height: 150px;
+    }
+
+    // Categories
+    .categories {
+        .grid {
+            display: block;
+
+            .category {
+                display: block;
+                margin: 1rem 0;
+            }
+        }
+    }
+}
+
+// Large
+@media screen and (min-width:576px) and (max-width:992px) {
+
+    /*
+        Name : Categories
+
+    */
+    .categories {
+        .grid {
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-template-rows: 250px 250px 250px 250px;
+
+            .category {
+                display: block;
+                margin: 1rem 0;
+
+                &:nth-child(2) {
+                    grid-area: 1/2 / 3/ 3;
+                }
+
+                &:nth-child(6) {
+                    grid-area: 3/1 / 5/ 2;
+                }
+            }
+        }
+    }
+}
+
+// Speicial 
+
+@media screen and (max-width:767px) {
+    /* 
+        Name : Single product
+    */
+    .single-product .product > .content { 
+        .pictures {
+            max-width: 300px;
+            margin: 0 auto;
+            margin-bottom: 2rem;
+            .mini {
+                display: none;
+            }
+            .show {
+                margin: 0 auto;
+                display: flex;
+                overflow-x: scroll;
+                > div {
+                    display: block;
+                    flex-shrink: 0;
+                    flex-basis: 100%;
+                    margin: 0;
+                    &.active {
+                        margin: 0;
+                    }
+                    &:not(:last-child):not(:first-child){
+                        margin: 0 1rem;
+                    }
+                }
+            }
+        }
+    }
+    /*
+        Name : Dashboard
+    */
+    .dashboard .dashboard-content>.controllers {
+        >.select div {
+            margin: .5rem 0;
+        }
+        >.btn-add {
+            padding: .75rem 1rem;
+        }
+    }
+}
+
+@media screen and (max-width:991px) {
+
+    .single-product {
+        .product > .content .pictures {
+            width: 100%;
+            justify-content: center;
+        }
+        .extra {
+            .description , .specifications , .comments , .shop-details {
+                margin: 2rem .5rem;
+                padding: 1rem;
+            }
+        }
+    }
+    /*
+        Name : Control panel
+    */
+    .control-panel {
+        >.navigation {
+            display: flex;
+            position: relative;
+
+            >.sm-only {
+                display: block;
+                color: $main-color;
+                cursor: pointer;
+                user-select: none;
+                > i {
+                    margin-left: 0.5rem;
+                }
+            }
+
+            >ul {
+                display: none;
+                position: absolute;
+
+                &.expand {
+                    display: block;
+                    top: 50px;
+                    left: 50%;
+                    z-index: 1;
+                    transform: translateX(-50%);
+                    box-shadow: 0 0 5px $shodow-color;
+                    background-color: #fff;
+                }
+
+                >li {
+                    display: block;
+                    width: max-content;
+                    padding: 1rem;
+
+                    &.active {
+                        &::after {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .dashboard {
+        .dashboard-content {
+            >.controllers {
+                display: flex;
+                flex-direction: column;
+                margin: 2rem 3rem;
+
+                >.select {
+                    .form-group {
+                        margin-bottom: 0;
+                    }
+                }
+
+                .btn-add {
+                    margin-top: 1rem
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:1200px) {
+    /*
+        Name : Product page
+    */
+    .single-product .product > .content .pictures .show .active {
+        margin: 0 2rem;
+    }
+    /*
+        Name : Control panel
+    */
+    .control-panel {
+        align-items: center;
+        flex-direction: column;
+        padding-bottom: 0;
+
+        >ul.filters {
+            margin-top: 3rem
+        }
+    }
+}

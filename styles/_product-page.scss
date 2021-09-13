@@ -1,0 +1,214 @@
+.single-product {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    .product {
+        @extend .isolate;
+        padding: 1.5rem 2rem;
+        margin: 1rem 0;
+        > .path {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            .store-logo {
+                display: block;
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
+                overflow: hidden;
+                > img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    object-position: center center;
+                }
+            }
+            .category-path {
+                margin-left: 1rem;
+            }
+        }
+        > .content {
+            display: flex;
+            flex-wrap: wrap;
+            .pictures {
+                display: flex;
+                .mini {
+                    .picture {
+                        width: 120px;
+                        height: 170px;
+                        border: 3px solid $line-color;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        padding: .5rem;
+                        cursor: pointer;
+                        &.active {
+                            border-color: $main-color;
+                        }
+                        &:not(:first-child){
+                            margin: .5rem 0;
+                        }
+                        > img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            transition: transform 300ms ease-in-out;
+                            &:hover{
+                                transform: scale(.9);
+                            }
+                        }
+                    }
+                }
+                .show {
+                    .active {
+                        display: block;
+                    }
+                    > div {
+                        display: none;
+                        max-width: 300px;
+                        margin: 0 3rem;
+                        aspect-ratio: 4/7;
+                        border-radius: 10px;
+                        overflow: hidden;
+                        > img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+                    }
+                }
+            }
+            .details {
+                > h2 {
+                    font-size: 1.2rem;
+                    color: $text-layer-1;
+                }
+                > h3 {
+                    color: $second-color;
+                }
+                .block {
+                    margin: 1rem 0;
+                    > h4 {
+                        font-size: 1rem;
+                        color: $text-layer-3;
+                        font-weight: 400;
+                    }
+                    > .context {
+                        margin-left: 1rem;
+                        > .option {
+                            @extend .isolate;
+                            display: inline-block;
+                            padding: .5rem 1rem;
+                            margin: .5rem;
+                            cursor: pointer;
+                            transition: background-color 200ms ease-in-out;
+                            color: $text-layer-2;
+                            &.active {
+                                background-color: $main-color;
+                                color: #fff;
+                            }
+                        }
+                        > .form-group {
+                            display: inline-block;
+                            margin-bottom: 0;
+                            vertical-align: middle;
+                        }
+                        > button {
+                            margin: .5rem;
+                        }
+                    }
+                    &.interact .option {
+                        > i {
+                            color: $text-layer-3;
+                            transition-property: color,transform;
+                            transition-duration: 200ms;
+                            transition-timing-function: ease-in-out;
+                        }
+                        &.like {
+                            > i {
+                                color: red;
+                                transform: scale(1.1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .extra {
+        @extend .isolate;
+        margin: 1rem 0;
+        .description , .specifications , .comments , .shop-details {
+            margin: 2rem 4rem;
+            padding: 1rem;
+        }
+        .sub-title {
+            border-left: 3px solid $main-color;
+            padding: 0 .5rem;
+        }
+        .description > .content {
+            margin: 1rem;
+        }
+        .specifications {
+            table {
+                width: 100%;
+                tr {
+                    > td {
+                        padding: .5rem 1rem;
+                    }
+                    &:nth-child(odd) {
+                        @extend .isolate-3;
+                    }
+                }
+            }
+        }
+        .comments {
+            .comment {
+                display: flex;
+                align-items: flex-start;
+                &:not(:first-child){
+                    margin: 1rem 0;
+                }
+                > .avatar {
+                    width: 50px;
+                    height: 50px;
+                    flex-shrink: 0;
+                    position: relative;
+                    border-radius: 100%;
+                    background-color: $second-color;
+                    > i {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%,-50%);
+                        color: #fff;
+                        font-size: 1.8rem;
+                    }
+                }
+                > .content {
+                    @extend .isolate-2;
+                    padding: 1rem;
+                    padding-bottom: 0;
+                    margin: 0 1rem;
+                    > h5 {
+                        font-size: 1rem;
+                    }
+                }
+                &.write {
+                    align-items: center;
+                    form {
+                        width: 90%;
+                    }
+                    .content {
+                        @extend .isolate-2;
+                        margin: 0 1rem;
+                        border: none;
+                        width: 100%;
+                        padding: .5rem 1rem;
+                        &:focus-visible {
+                            outline: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
