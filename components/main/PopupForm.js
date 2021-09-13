@@ -22,7 +22,7 @@ export default function PopupForm({active}) {
             </div>
             <div className="login-or-register">
                 <button type="submit" className="btn btn-black btn-lg btn-block">Login</button>
-                <span>Don't have an account?<br /><a href="">Sign up</a></span>
+                <span>Don{`'`}t have an account?<br /><a href="">Sign up</a></span>
             </div>
             <div className="login-with">
                 <a href="">

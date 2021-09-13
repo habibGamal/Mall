@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
 import SliderPhoto from './SliderPhoto';
 import { getChildrenByClassName } from '../../helpers/dom-collect';
 export default function Slider() {

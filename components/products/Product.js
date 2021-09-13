@@ -41,11 +41,11 @@ export default function Product({ selectable, selected , name, price, offerPrice
                 <div className={active(menuT,{defaultClass:'menu'})}>
                     <Link href="/product/edit">
                         <a>
-                            <i class="fas fa-edit"></i> Edit
+                            <i className="fas fa-edit"></i> Edit
                         </a>
                     </Link>
-                    <button className="btn btn-mini"><i class="fas fa-trash"></i> Delete</button>
-                    <button className="btn btn-mini"><i class="fas fa-file"></i> Draft</button>
+                    <button className="btn btn-mini"><i className="fas fa-trash"></i> Delete</button>
+                    <button className="btn btn-mini"><i className="fas fa-file"></i> Draft</button>
                 </div>
                 <h5>{name}</h5>
                 <span className="separator"></span>

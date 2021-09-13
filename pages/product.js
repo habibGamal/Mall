@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Link from 'next/link'
 import active from '../helpers/active'
 import ProductControlPanel from '../components/control-panel/ProductControlPanel'
-export default function product() {
+export default function Product() {
     const show = useRef();
     const [sizeOption, setSizeOption] = useState(0);
     const [colorOption, setColorOption] = useState(0);
@@ -53,7 +53,7 @@ export default function product() {
                                 <Link href="/category">
                                     Fashion
                                 </Link>
-                                &#x2192;
+                                {/* {`&#x2192;`} */}
                                 <Link href="/category">
                                     Men
                                 </Link>

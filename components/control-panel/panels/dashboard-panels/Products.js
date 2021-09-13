@@ -55,8 +55,8 @@ export default function Products() {
                 </div>
                 <button className="btn btn-add"><i className="fas fa-plus-circle" /> Add Product</button>
             </div>
-            <div class="products">
-                <div class="row justify-content-center">
+            <div className="products">
+                <div className="row justify-content-center">
                     <Product
                         selectable={selectable}
                         selected={selectAll}

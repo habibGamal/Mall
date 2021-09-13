@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Cards from '../components/cards/Cards'
 import DashboardControlPanel from '../components/control-panel/DashboardControlPanel'
 
-export default function Home() {
+export default function Dashboard() {
   return (
     <>
         <Head>
