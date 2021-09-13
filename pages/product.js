@@ -53,7 +53,7 @@ export default function Product() {
                                 <Link href="/category">
                                     Fashion
                                 </Link>
-                                {/* {`&#x2192;`} */}
+                                &#x2192;
                                 <Link href="/category">
                                     Men
                                 </Link>

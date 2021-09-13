@@ -3,6 +3,13 @@ import SliderPhoto from './SliderPhoto';
 import { getChildrenByClassName } from '../../helpers/dom-collect';
 export default function Slider() {
     const slider = useRef();
+    useEffect(()=>{
+        window.onresize = ()=>{
+            let children = slider.current.children;
+            slider.current.style.height = children[children.length-1].clientHeight+'px';
+            console.log(slider.current.style.height);
+        }
+    },[])
     const [left,setLeft] = useState({
         order:0,
         executer:function(i){
@@ -10,9 +17,9 @@ export default function Slider() {
         }
     });
     const photos = [
-        'slider_1.jpg',
-        'slider_2.jpg',
-        'slider_3.jpg',
+        'slide-1.png',
+        'slide-2.png',
+        'slide-3.png',
     ]
     function toLeft(){
         if(left.order !== 0){

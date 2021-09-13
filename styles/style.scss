@@ -255,8 +255,9 @@ body {
         i {
             font-size: 3rem;
         }
-        .fa-google {
-            color: #000;
+        svg {
+            width: 48px;
+            height: 48px;
         }
     }
 }
@@ -432,7 +433,6 @@ nav {
 .slider {
     position: relative;
     width: 100vw;
-    height: 50vh;
     overflow: hidden;
     .right-arrow , .left-arrow {
         position: absolute;
@@ -459,11 +459,13 @@ nav {
         position: absolute;
         width: 100%;
         max-height: 50vh;
+        min-height: 150px;
         transition: left 800ms ease-in-out;
+        background-color: #000;
         > img {
             width: 100%;
-            max-height: 100%;
-            object-position: 0 28%;
+            height: 100%;
+            min-height: 150px;
             object-fit: cover;
         }
     }
@@ -473,7 +475,7 @@ nav {
     Name : Stores
 */
 .stores {
-    margin: 5rem 0;
+    margin: 3rem 0;
     .store {
         cursor: pointer;
         .logo {
@@ -575,7 +577,7 @@ nav {
     Name : Products
 */
 .products {
-    margin: 5rem 0;
+    margin: 3rem 0;
     h2 {
         margin: 1rem;
         margin-bottom: 2rem;

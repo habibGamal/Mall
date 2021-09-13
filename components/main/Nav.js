@@ -1,11 +1,16 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Link from 'next/link'
+import active from '../../helpers/active';
+import { useRouter } from 'next/dist/client/router';
 export default function Nav({ setPopup }) {
+    const router = useRouter();
+    const search = useRef();
     const [expand, setExpand] = useState(false);
     const [escape, setEscape] = useState(false);
+    const [searchT, setSearchT] = useState(false);
     return (
         <nav className="d-flex justify-content-between">
-            <div onClick={() => { setEscape(false); setPopup(false); setExpand(false) }} className={`escape-effect ${escape ? 'active' : ''} ${expand ? 'active' : ''}`}></div>
+            <div onClick={() => { setEscape(false); setPopup(false); setExpand(false); setSearchT(false); }} className={active(escape||expand||searchT,{defaultClass:'escape-effect'})}></div>
             <div className="d-flex align-items-center">
                 <div onClick={() => setExpand(!expand)} className={`bars ${expand ? 'nav-bar' : ''}`}>
                     <span className="bar"></span>
@@ -38,17 +43,20 @@ export default function Nav({ setPopup }) {
                 </div>
             </div>
             <div className="d-flex align-items-center user-cart">
-                <form id="search" className="search">
-                    <input id="search-input" type="text" name="search" placeholder="Search" />
+                <form className={active(searchT,{defaultClass:'search'})}>
+                    <input  ref={search} id="search-input" type="text" name="search" placeholder="Search" />
                     <i className="fas fa-search"></i>
                 </form>
-                <div className="circle search-icon">
+                <div onClick={async()=>{
+                    await setSearchT(true);
+                    search.current.focus();
+                }} className="circle search-icon">
                     <i className="fas fa-search"></i>
                 </div>
                 <div className="circle cart">
                     <i className="fas fa-shopping-cart"></i>
                 </div>
-                <div className="circle user" onClick={() => { setEscape(true); setPopup(true) }}>
+                <div className="circle user" onClick={() => { setEscape(true); setPopup(true); router.push({query:{popup:true}}) }}>
                     <i className="fas fa-user"></i>
                 </div>
             </div>
