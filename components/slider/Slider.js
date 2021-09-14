@@ -4,11 +4,13 @@ import { getChildrenByClassName } from '../../helpers/dom-collect';
 export default function Slider() {
     const slider = useRef();
     useEffect(()=>{
-        window.onresize = ()=>{
+        const optimizeSlider = ()=>{
             let children = slider.current.children;
             slider.current.style.height = children[children.length-1].clientHeight+'px';
             console.log(slider.current.style.height);
         }
+        optimizeSlider();
+        window.onresize = optimizeSlider
     },[])
     const [left,setLeft] = useState({
         order:0,

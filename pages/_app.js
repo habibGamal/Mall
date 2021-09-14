@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
     <header>
-        <Nav setPopup={setPopup} />
+        <Nav popup={popup} setPopup={setPopup} />
         <PopupForm active={popup} />
       </header>
     <Component {...pageProps} />

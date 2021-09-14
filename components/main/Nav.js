@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import active from '../../helpers/active';
 import { useRouter } from 'next/dist/client/router';
@@ -8,9 +8,37 @@ export default function Nav({ setPopup }) {
     const [expand, setExpand] = useState(false);
     const [escape, setEscape] = useState(false);
     const [searchT, setSearchT] = useState(false);
+    useEffect(() => {
+        const handleRouteChange = (url) => {
+          if(!url.includes('popup=true')){
+            setEscape(false); 
+            setPopup(false);
+          }
+        }
+    
+        router.events.on('routeChangeStart', handleRouteChange)
+    
+        // If the component is unmounted, unsubscribe
+        // from the event with the `off` method:
+        return () => {
+          router.events.off('routeChangeStart', handleRouteChange)
+        }
+      }, [])
+    function loginPopup(){
+        setEscape(true);
+        setPopup(true);
+        router.push({query:{popup:true}})
+    }
+    function escapeEffect(){
+        setEscape(false); 
+        setPopup(false); 
+        setExpand(false); 
+        setSearchT(false);
+        router.push({query:{}})
+    }
     return (
         <nav className="d-flex justify-content-between">
-            <div onClick={() => { setEscape(false); setPopup(false); setExpand(false); setSearchT(false); }} className={active(escape||expand||searchT,{defaultClass:'escape-effect'})}></div>
+            <div onClick={escapeEffect} className={active(escape||expand||searchT,{defaultClass:'escape-effect'})}></div>
             <div className="d-flex align-items-center">
                 <div onClick={() => setExpand(!expand)} className={`bars ${expand ? 'nav-bar' : ''}`}>
                     <span className="bar"></span>
@@ -56,7 +84,7 @@ export default function Nav({ setPopup }) {
                 <div className="circle cart">
                     <i className="fas fa-shopping-cart"></i>
                 </div>
-                <div className="circle user" onClick={() => { setEscape(true); setPopup(true); router.push({query:{popup:true}}) }}>
+                <div className="circle user" onClick={loginPopup}>
                     <i className="fas fa-user"></i>
                 </div>
             </div>

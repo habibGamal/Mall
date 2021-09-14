@@ -1,6 +1,8 @@
+import { useRouter } from 'next/dist/client/router'
 import React from 'react'
 
 export default function PopupForm({active}) {
+    
     return (
         <form className={`pop-up-form ${active ? 'active':''}`}>
             <h3 className="text-dark text-center">Login</h3>
