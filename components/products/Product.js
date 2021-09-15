@@ -52,7 +52,7 @@ export default function Product({ selectable, selected, name, price, offerPrice,
                 <span className="price">
                     <span className="old">
                         <del>{price} {currency}</del>
-                        <span class="badge badge-success">11%</span>
+                        <span className="badge badge-success">11%</span>
                     </span>
                     <strong>{offerPrice}</strong> {currency}
                 </span>
