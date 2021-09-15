@@ -22,7 +22,6 @@ export default function Store() {
                     </div>
                 </div>
             </div>
-
             <Products 
                 title="Latest Products"
             />

@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import Categories from '../components/categories/Categories'
 import Products from '../components/products/Products'
 import Slider from '../components/slider/Slider'

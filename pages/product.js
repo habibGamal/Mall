@@ -45,9 +45,11 @@ export default function Product() {
                 <div className="container">
                     <div className="product">
                         <div className="path">
-                            <a className="store-logo" href="/store">
-                                <img src="/images/logo_1.jpg" />
-                            </a>
+                            <Link  href="/store">
+                                <a className="store-logo">
+                                    <img src="/images/logo_1.jpg" />
+                                </a>
+                            </Link>
                             <div className="category-path">
                                 <Link href="/category">
                                     Fashion
