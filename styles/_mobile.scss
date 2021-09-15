@@ -94,6 +94,22 @@
             object-position: 60% 50%;
         }
     }
+
+    // Category page
+    .single-category .mini-show-store > .store > {
+        .logo {
+            width: 65px;
+            height: 65px;
+        }
+        .name > h3 {
+            font-size: 1.5rem;
+        }
+    }
+
+    // Store page 
+    .single-store .background-store {
+        height: 150px;
+    }
 }
 
 // Large
@@ -167,6 +183,22 @@
         }
         >.btn-add {
             padding: .75rem 1rem;
+        }
+    }
+    
+    // Store page 
+    .single-store .container .info-control {
+        flex-direction: column;
+        align-items: center;
+        > .store {
+            margin: 0;
+        }
+        > .control-panel {
+            padding: 0;
+            > ul.filters {
+                margin: 0;
+                margin-top: 1rem;
+            }
         }
     }
 }

@@ -1,57 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
+import isdefined from '../../helpers/isdefined'
 import RowScroll from '../general/RowScroll'
 import Product from './Product'
 
-export default function Products() {
-    // const row = useRef();
-    // const [arrow,setArrow] = useState({left:false,right:true})
-    // function toRight(){
-    //     let element = row.current
-    //     element.scrollTo({
-    //         left:element.scrollLeft + element.clientWidth,
-    //         behavior: 'smooth'
-    //     })
-    // }
-    // function toLeft(){
-    //     let element = row.current
-    //     element.scrollTo({
-    //         left:element.scrollLeft - element.clientWidth,
-    //         behavior: 'smooth'
-    //     })
-    // }
-    // function scrolled(){
-    //     let element = row.current
-    //     let [scrollWidth,scrollLeft,width] = [element.scrollWidth, element.scrollLeft,element.clientWidth];
-    //     console.log(scrollWidth,scrollLeft,width);
-    //     if(scrollLeft === scrollWidth-width){
-    //         setArrow(old => ({
-    //             left: old.left,
-    //             right: false
-    //         }))
-    //     }
-    //     if(scrollLeft < scrollWidth-width){
-    //         setArrow(old => ({
-    //             left: old.left,
-    //             right: true
-    //         }))
-    //     }
-    //     if(scrollLeft === 0){
-    //         setArrow(old => ({
-    //             left: false,
-    //             right: old.right
-    //         }))
-    //     }
-    //     if(scrollLeft > 0){
-    //         setArrow(old => ({
-    //             left: true,
-    //             right: old.right
-    //         }))
-    //     }
-    // }
+export default function Products({title}) {
     return (
         <section className="products">
             <div className="container">
-                <h2>Top Sales</h2>
+                {isdefined(title,<h2>{title}</h2>)}
                 <RowScroll>
                         <Product 
                             name="Front Pocket T-Shirt in White 
@@ -59,7 +15,7 @@ export default function Products() {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_5.jpg"
+                            src="./images/cat_1.jpg"
                             href="/products"
                         />
                         <Product 
@@ -68,7 +24,23 @@ export default function Products() {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_5.jpg"
+                            src="./images/cat_2.jpg"
+                            href="/products"
+                        />
+                        <Product 
+                            name="Blouse"
+                            price="250"
+                            offerPrice="200"
+                            currency="LE"
+                            src="./images/cat_3.jpg"
+                            href="/products"
+                        />
+                        <Product 
+                            name="Blouse"
+                            price="250"
+                            offerPrice="200"
+                            currency="LE"
+                            src="./images/cat_4.jpg"
                             href="/products"
                         />
                         <Product 
@@ -84,7 +56,7 @@ export default function Products() {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_5.jpg"
+                            src="./images/cat_6.jpg"
                             href="/products"
                         />
                         <Product 
@@ -92,7 +64,7 @@ export default function Products() {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_5.jpg"
+                            src="./images/cat_1.jpg"
                             href="/products"
                         />
                         <Product 
@@ -100,7 +72,7 @@ export default function Products() {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_5.jpg"
+                            src="./images/cat_3.jpg"
                             href="/products"
                         />
                         <Product 
@@ -108,7 +80,7 @@ export default function Products() {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_5.jpg"
+                            src="./images/cat_6.jpg"
                             href="/products"
                         />
                         <Product 
@@ -116,23 +88,7 @@ export default function Products() {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_5.jpg"
-                            href="/products"
-                        />
-                        <Product 
-                            name="Blouse"
-                            price="250"
-                            offerPrice="200"
-                            currency="LE"
-                            src="./images/cat_5.jpg"
-                            href="/products"
-                        />
-                        <Product 
-                            name="Blouse"
-                            price="250"
-                            offerPrice="200"
-                            currency="LE"
-                            src="./images/cat_5.jpg"
+                            src="./images/cat_2.jpg"
                             href="/products"
                         />
                 </RowScroll>     

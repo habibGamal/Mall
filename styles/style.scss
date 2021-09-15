@@ -426,7 +426,31 @@ nav {
         width: .75rem;
     }
 }
-
+/*
+    Name : Nav Categories
+*/
+.nav-categories {
+    background-color: black;
+    margin:0;
+    white-space: nowrap;
+    overflow-x: hidden;
+    > li {
+        display: inline-block;
+        border: 1px solid transparent;
+        transition: border-color 200ms ease-in-out;
+        &:hover {
+            border: 1px solid #fff;
+        }
+        a {
+            display: inline-block;
+            padding: .5rem 1rem;
+            color: #fff;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+}
 /*
     Name : Slider
 */
@@ -476,36 +500,37 @@ nav {
 */
 .stores {
     margin: 3rem 0;
-    .store {
-        cursor: pointer;
-        margin-right: 2rem;
-        .logo {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto;
-            border-radius: 100%;
-            overflow: hidden;
-            > img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transition: transform .3s ease-in-out;
-            }
+}
+// to be general rule
+.store {
+    cursor: pointer;
+    margin-right: 2rem;
+    .logo {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+        border-radius: 100%;
+        overflow: hidden;
+        > img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .3s ease-in-out;
         }
-        .name {
-            text-align: center;
-            margin: 1rem 0;
-            > h3 {
-                color: #000;
-                font-size: 1.5rem;
-            }
+    }
+    .name {
+        text-align: center;
+        margin: 1rem 0;
+        > h3 {
+            color: #000;
+            font-size: 1.5rem;
         }
-        &:hover {
-            text-decoration: none;
-        }
-        &:hover .logo > img {
-            transform: scale(1.2);
-        }
+    }
+    &:hover {
+        text-decoration: none;
+    }
+    &:hover .logo > img {
+        transform: scale(1.2);
     }
 }
 
@@ -777,5 +802,7 @@ Imported files
 @import 'admin.scss';
 @import 'single-page.scss';
 @import 'product-page.scss';
+@import 'category-page.scss';
+@import 'store-page.scss';
 @import 'mobile.scss';
 @import 'darkmode.scss';

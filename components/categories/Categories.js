@@ -9,48 +9,33 @@ export default function Categories() {
                 <Category 
                     name="Casual"
                     src="./images/cat_6.jpg"
-                    href="/casual"
+                    href="/category"
                 />
-                <a href=""  className="category">
-                    <div className="photo">
-                        <img src="./images/cat_1.jpg" />
-                    </div>
-                    <div className="lable">
-                        <h4>Men</h4>
-                    </div>
-                </a>
-                <a href=""  className="category">
-                    <div className="photo">
-                        <img src="./images/cat_2.jpg" />
-                    </div>
-                    <div className="lable">
-                        <h4>Formal</h4>
-                    </div>
-                </a>
-                <a href=""  className="category">
-                    <div className="photo">
-                        <img src="./images/cat_4.jpg" />
-                    </div>
-                    <div className="lable">
-                        <h4>Home</h4>
-                    </div>
-                </a>
-                <a href=""  className="category">
-                    <div className="photo">
-                        <img src="./images/cat_5.jpg" />
-                    </div>
-                    <div className="lable">
-                        <h4>Fashion</h4>
-                    </div>
-                </a>
-                <a href=""  className="category">
-                    <div className="photo">
-                        <img src="./images/cat_3.jpg" />
-                    </div>
-                    <div className="lable">
-                        <h4>Classic</h4>
-                    </div>
-                </a>
+                <Category 
+                    name="Men"
+                    src="./images/cat_1.jpg"
+                    href="/category"
+                />
+                <Category 
+                    name="Formal"
+                    src="./images/cat_2.jpg"
+                    href="/category"
+                />
+                <Category 
+                    name="Home"
+                    src="./images/cat_4.jpg"
+                    href="/category"
+                />
+                <Category 
+                    name="Classic"
+                    src="./images/cat_3.jpg"
+                    href="/category"
+                />
+                <Category 
+                    name="Fashion"
+                    src="./images/cat_5.jpg"
+                    href="/category"
+                />
             </div>
         </div>
     </section>

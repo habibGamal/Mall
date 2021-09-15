@@ -16,7 +16,15 @@ export default function Home() {
       <Slider />
       <Stores />
       <Categories />
-      <Products />
+      <Products 
+        title="Top Sales" 
+      />
+      <Products
+        title="Men"
+      />
+      <Products
+        title="Women Fashion"
+      />
     </>
   )
 }

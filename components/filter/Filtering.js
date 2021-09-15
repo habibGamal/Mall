@@ -12,21 +12,21 @@ export default function Filtering({requirements}) {
             'sort','filter','search'
         ];
     }
-    function requirement(name){
+    function requirement(name,key){
         switch(name) {
             case 'sort':
-                return <Sort />
+                return <Sort key={key} />
             case 'filter':
-                return <Filter filterT={filterT} setFilterT={setFilterT}/>
+                return <Filter key={key} filterT={filterT} setFilterT={setFilterT}/>
             case 'search':
-                return <Search />
+                return <Search key={key} />
         }
     }
     return (
         <>
             <div onClick={() => setFilterT(false)} className={active(filterT, { defaultClass: 'escape-effect' })} />
             <ul className="filters">
-                {requirements.map((r)=>requirement(r))}
+                {requirements.map((r,i)=>requirement(r,i))}
             </ul>
         </>
     )
