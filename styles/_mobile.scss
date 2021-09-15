@@ -10,10 +10,8 @@
     h2 {
         font-size: 1.5rem;
     }
-
     /*
         Name : Navbar
-
     */
     nav {
 
@@ -64,9 +62,14 @@
     }
 
     // Stores
-    .stores .store .logo {
-        width: 150px;
-        height: 150px;
+    .stores .store {
+        .logo {
+            width: 100px;
+            height: 100px;
+        }
+        .name > h3 {
+            font-size: 1.25rem;
+        }
     }
 
     // Categories
@@ -78,6 +81,17 @@
                 display: block;
                 margin: 1rem 0;
             }
+        }
+    }
+
+    // Products
+    .products .product {
+        display: block;
+        width: 150px;
+        height: 300px;
+        margin: 5px;
+        > img {
+            object-position: 60% 50%;
         }
     }
 }

@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default function store({name,href,src}) {
     return (
         <Link href={href}>
-            <a className="col-lg-3 col-sm-6 store">
+            <a className="store">
                 <div className="logo">
                     <img src={src} />
                 </div>

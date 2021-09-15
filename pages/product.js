@@ -29,7 +29,6 @@ export default function Product() {
                 next(i);
             }
         }
-        console.log(e.clientX , show.current.offsetLeft , showW);
     }
     function activeSize(index) {
         return active(sizeOption === index, { defaultClass: 'option' })

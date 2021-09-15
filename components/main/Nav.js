@@ -56,16 +56,13 @@ export default function Nav({ setPopup }) {
                     <ul>
                         <li>
                             <Link href="/dashboard">
-                                <a className="active">Dashboard</a>
+                                <a onClick={escapeEffect} className="active">Dashboard</a>
                             </Link>
                         </li>
                         <li>
                             <Link href="/product">
-                                <a>Product</a>
+                                <a  onClick={escapeEffect}>Product</a>
                             </Link>
-                        </li>
-                        <li>
-                            <a href="">Categories</a>
                         </li>
                     </ul>
                 </div>

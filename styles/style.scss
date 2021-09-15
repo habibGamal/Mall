@@ -478,9 +478,10 @@ nav {
     margin: 3rem 0;
     .store {
         cursor: pointer;
+        margin-right: 2rem;
         .logo {
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             margin: 0 auto;
             border-radius: 100%;
             overflow: hidden;
@@ -496,6 +497,7 @@ nav {
             margin: 1rem 0;
             > h3 {
                 color: #000;
+                font-size: 1.5rem;
             }
         }
         &:hover {
@@ -584,8 +586,8 @@ nav {
     }
     .product {
         display: block;
-        width: 12.5rem;
-        height: 19rem;
+        width: 200px;
+        height: 300px;
         margin: 1rem;
         box-shadow: 0px 0px 5px $shodow-color;
         color: #000;
@@ -636,8 +638,11 @@ nav {
             transform: translate(-50%);
             border-radius: 20px;
             background-color: #fff;
+            padding: 1rem;
+            text-align: center;
             cursor: auto;
             > .menu-bars {
+                display: none;
                 position: absolute;
                 top: 10px;
                 right: 20px;
@@ -678,15 +683,34 @@ nav {
                     }
                 }
             }
+            > .name {
+                display: block;
+                height: 2rem;
+                white-space: nowrap; 
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
             > .separator{
                 display: block;
-                width: 50%;
+                width: 95%;
                 height: 1px;
                 background-color: #00000024;
                 margin: 0 auto;
             }
-            > .price > del{
-                color: #838383a3;
+            > .price {
+                display: block;
+                padding: .2rem .5rem;
+                font-size: 1.14rem;
+                > .old {
+                    display: block;
+                    font-size: 0.95rem;
+                    > del {
+                        opacity: .7;
+                    }
+                    > .badge {
+                        margin: 0 .3rem;
+                    }
+                }
             }
         }
     }
@@ -703,7 +727,7 @@ nav {
     padding-bottom: 1rem;
     overflow-x: auto;
 }
-.row-show .product {
+.row-show > div {
     flex-shrink: 0;
 }
 .row-show::-webkit-scrollbar-track
@@ -730,12 +754,12 @@ nav {
     display: none;
 }
 .row-show-container .left-arrow {
-    left: 0;
+    left: 5px;
     top: 50%;
     transform: translateY(-50%);
 }
 .row-show-container .right-arrow {
-    right: 0;
+    right: 5px;
     top: 50%;
     transform: translateY(-50%);
 }
