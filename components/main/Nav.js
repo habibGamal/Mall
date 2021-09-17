@@ -64,8 +64,13 @@ export default function Nav({ setPopup }) {
                     <div id="nav-bar" className={active(expand)}>
                         <ul>
                             <li>
-                                <Link href="/dashboard">
+                                <Link href="/">
                                     <a ref={activeLink} onClick={navLink} className="active">Home</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/create-product">
+                                    <a onClick={navLink}>Create Product</a>
                                 </Link>
                             </li>
                             <li>

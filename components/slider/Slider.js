@@ -11,6 +11,9 @@ export default function Slider() {
         }
         optimizeSlider();
         window.onresize = optimizeSlider
+        return ()=>{
+            window.onresize = undefined;
+        }
     },[])
     const [left,setLeft] = useState({
         order:0,
