@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import active from '../../helpers/active';
 import { useRouter } from 'next/dist/client/router';
 export default function Product({ selectable, selected, name, price, offerPrice, currency, src, href }) {
@@ -22,7 +23,7 @@ export default function Product({ selectable, selected, name, price, offerPrice,
                 <span className={active(select, { activeClass: 'selected', defaultClass: 'selectable-box' })}>
                     <i className="fas fa-check" />
                 </span>
-                <img src={src} alt="T-shirt" draggable={false} />
+                <Image src={src} objectFit="cover" layout="fill" alt="T-shirt" draggable={false} />
                 <div className="product-details p-3 text-center">
                     <h5>{name}</h5>
                     <span className="separator"></span>
@@ -33,7 +34,9 @@ export default function Product({ selectable, selected, name, price, offerPrice,
     }
     return (
         <div className="product" onClick={(e) => clickHandle(e, href)}>
-            <img src={src} alt="T-shirt" />
+            <div className="picture">
+                <Image src={src} layout="fill" className="img"  alt="T-shirt" />
+            </div>
             <div className="product-details">
                 <div onClick={() => setMenuT(!menuT)} className="menu-bars">
                     <i className="fas fa-bars"></i>

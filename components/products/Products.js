@@ -15,7 +15,7 @@ export default function Products({title}) {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_1.jpg"
+                            src="/images/cat_1.jpg"
                             href="/products"
                         />
                         <Product 
@@ -24,7 +24,7 @@ export default function Products({title}) {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_2.jpg"
+                            src="/images/cat_2.jpg"
                             href="/products"
                         />
                         <Product 
@@ -32,7 +32,7 @@ export default function Products({title}) {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_3.jpg"
+                            src="/images/cat_3.jpg"
                             href="/products"
                         />
                         <Product 
@@ -40,7 +40,7 @@ export default function Products({title}) {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_4.jpg"
+                            src="/images/cat_4.jpg"
                             href="/products"
                         />
                         <Product 
@@ -48,7 +48,7 @@ export default function Products({title}) {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_5.jpg"
+                            src="/images/cat_5.jpg"
                             href="/products"
                         />
                         <Product 
@@ -56,7 +56,7 @@ export default function Products({title}) {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_6.jpg"
+                            src="/images/cat_6.jpg"
                             href="/products"
                         />
                         <Product 
@@ -64,7 +64,7 @@ export default function Products({title}) {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_1.jpg"
+                            src="/images/cat_1.jpg"
                             href="/products"
                         />
                         <Product 
@@ -72,7 +72,7 @@ export default function Products({title}) {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_3.jpg"
+                            src="/images/cat_3.jpg"
                             href="/products"
                         />
                         <Product 
@@ -80,7 +80,7 @@ export default function Products({title}) {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_6.jpg"
+                            src="/images/cat_6.jpg"
                             href="/products"
                         />
                         <Product 
@@ -88,7 +88,7 @@ export default function Products({title}) {
                             price="250"
                             offerPrice="200"
                             currency="LE"
-                            src="./images/cat_2.jpg"
+                            src="/images/cat_2.jpg"
                             href="/products"
                         />
                 </RowScroll>     

@@ -127,6 +127,7 @@ export default function draggable(element , [boundryW,boundryH]) {
      * @param {Object} event - The event.
      */
 	function onTouchMove(event) {
+        event.preventDefault();
         if (!isTouchStart) return;
         let dx = event.touches[0].clientX - touchX;
         let dy = event.touches[0].clientY - touchY;

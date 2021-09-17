@@ -618,10 +618,10 @@ nav {
         color: #000;
         border-radius: 20px;
         position: relative;
-        overflow: hidden;
-        &:hover > img {
+        &:hover .img {
             transform: scale(1.2);
         }
+        overflow: hidden;
         .selectable-box {
             display: inline-block;
             position: absolute;
@@ -645,15 +645,18 @@ nav {
                 color: #fff;
             }
         }
-        > img {
+        .picture {
+            position: relative;
             cursor: pointer;
             width: 114%;
             height: 210px;
-            object-fit: cover;
-            object-position: 81% 100%;
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            transition: transform 400ms ease-in-out;
+            .img {
+                object-fit: cover;
+                object-position: 81% 100%;
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
+                transition: transform 400ms ease-in-out;
+            }
         }
         > .product-details{
             width: 100%;
