@@ -14,8 +14,6 @@ export default function Preview({imgSrc,previewT,setPreviewT}) {
     },[previewT]);
     async function handle(e){
         setRange(e.target.value);
-        let magnification = imgBoundry.current.clientWidth*parseFloat(e.target.value);
-        // console.log(magnification);
         img.current.style.width = (imgBoundry.current.clientWidth*parseFloat(e.target.value))+'px';
         imgDrag.current.style.top = '0';
         imgDrag.current.style.left = '0';
@@ -30,6 +28,7 @@ export default function Preview({imgSrc,previewT,setPreviewT}) {
         let leftP = (parseInt(imgDrag.current.style.left)*-1 ) / ((imgDrag.current.clientWidth-imgBoundry.current.clientWidth)/100);
         toggleImg.current.style.height = heightP+'%';
         toggleImg.current.style.objectPosition = `${leftP}%`;
+        toggleImg.current.style.top = (parseInt(imgDrag.current.style.top)/imgBoundry.current.clientHeight)*100 +'%';
     }
     return (
         <div className="preview-container">
