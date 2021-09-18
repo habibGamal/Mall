@@ -64,7 +64,17 @@ export default function Products() {
                         price="250"
                         offerPrice="200"
                         currency="LE"
-                        src="./images/cat_5.jpg"
+                        src="/images/cat_5.jpg"
+                        href="/products"
+                    />
+                   <Product
+                        selectable={selectable}
+                        selected={selectAll}
+                        name="Blouse"
+                        price="250"
+                        offerPrice="200"
+                        currency="LE"
+                        src="/images/cat_5.jpg"
                         href="/products"
                     />
                     <Product
@@ -74,7 +84,7 @@ export default function Products() {
                         price="250"
                         offerPrice="200"
                         currency="LE"
-                        src="./images/cat_5.jpg"
+                        src="/images/cat_5.jpg"
                         href="/products"
                     />
                     <Product
@@ -84,17 +94,7 @@ export default function Products() {
                         price="250"
                         offerPrice="200"
                         currency="LE"
-                        src="./images/cat_5.jpg"
-                        href="/products"
-                    />
-                    <Product
-                        selectable={selectable}
-                        selected={selectAll}
-                        name="Blouse"
-                        price="250"
-                        offerPrice="200"
-                        currency="LE"
-                        src="./images/cat_5.jpg"
+                        src="/images/cat_5.jpg"
                         href="/products"
                     />
                 </div>

@@ -13,13 +13,20 @@
     h3 {
         font-size: 1.2rem;
     }
-    /*
-        Name : Navbar
-    */
+    // Invoice
+    .checkout .invoice {
+        h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+        }
+    }
+    // Navbar
     nav {
 
         padding: .5rem 1rem;
-
+        #cart {
+            max-width: 320px;
+        }
         .search {
             position: absolute;
             top: 72px;
@@ -118,10 +125,7 @@
 // Large
 @media screen and (min-width:576px) and (max-width:992px) {
 
-    /*
-        Name : Categories
-
-    */
+    // Categories
     .categories {
         .grid {
             display: grid;
@@ -147,9 +151,30 @@
 // Speicial 
 
 @media screen and (max-width:767px) {
-    /* 
-        Name : Single product
-    */
+    // Cart
+    .cart-page {
+        .cart {
+            .cart-item {
+                flex-direction: column;
+                margin: 1rem 0;
+                .picture {
+                    width: 100%;
+                    height: 200px;
+                }
+                .details {
+                    margin-left: 1rem;
+                    .interact {
+                        display: grid;
+                        grid-template-columns: auto auto;
+                        > button {
+                            grid-column: 1 / span 2;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    // Single Product
     .single-product .product > .content { 
         .pictures {
             max-width: 300px;
@@ -177,9 +202,7 @@
             }
         }
     }
-    /*
-        Name : Dashboard
-    */
+    // Dashboard
     .dashboard .dashboard-content>.controllers {
         >.select div {
             margin: .5rem 0;
@@ -207,7 +230,7 @@
 }
 
 @media screen and (max-width:991px) {
-
+    // Single Product
     .single-product {
         .product > .content .pictures {
             width: 100%;
@@ -220,9 +243,7 @@
             }
         }
     }
-    /*
-        Name : Control panel
-    */
+    // Control panel
     .control-panel {
         >.navigation {
             display: flex;
@@ -288,15 +309,18 @@
 }
 
 @media screen and (max-width:1200px) {
-    /*
-        Name : Product page
-    */
+    // Cart
+    .cart-page {
+        > .container {
+            grid-template-columns: auto;
+            grid-template-rows: auto auto;
+        }
+    }
+    // Product page
     .single-product .product > .content .pictures .show .active {
         margin: 0 2rem;
     }
-    /*
-        Name : Control panel
-    */
+    // Control panel
     .control-panel {
         align-items: center;
         flex-direction: column;

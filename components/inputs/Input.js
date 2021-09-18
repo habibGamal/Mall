@@ -62,7 +62,7 @@ export default function Input({ id, label, type, options, icon, addClass , onCha
         case 'select':
             return (
                 <div className={`form-group ${addClass}`}>
-                    <label htmlFor="o">{label}</label>
+                    {label === null ? '':<label htmlFor="o">{label}</label>}
                     <select className="form-control" id="o">
                         {options.map((option, i) => <option key={i}>{option}</option>)}
                     </select>

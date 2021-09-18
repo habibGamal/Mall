@@ -1,0 +1,106 @@
+.cart-page {
+    margin: 2rem 0;
+    > .container {
+        display: grid;
+        grid-template-columns: auto auto;
+        align-items: start;
+        gap: 1rem;
+    }
+    .cart , .summary {
+        @extend .isolate;
+        padding: 1rem 1.5rem;
+    }
+    .cart {
+        h2 {
+            padding: 1rem 0;
+        }
+        .cart-item {
+            @extend .isolate-3;
+            display: flex;
+            gap: 0 1rem;
+            margin: 1rem;
+            overflow: hidden;
+            .picture {
+                width: 115px;
+                position: relative;
+                img {
+                    object-fit: cover;
+                }
+            }
+            .details {
+                padding: 1rem 0;
+                margin-right: 1rem;
+                > span {
+                    display: block;
+                }
+                .sold-by {
+                    color: $text-layer-2;
+                }
+                .name {
+                    font-size: 1.2rem;
+                    margin: .5rem 0;
+                }
+                .interact {
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 1rem;
+                    .form-group {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+    .summary {
+        h3 {
+            padding: 1rem 0;
+            text-align: center;
+        }
+        ul > li {
+            list-style-type: square;
+        }
+        .final {
+            color: #fff;
+            background-color: var(--success);
+            padding: 0 1rem;
+            border-radius: 10px;
+            width: fit-content;
+            display: block;
+            margin: 0 auto 1rem;
+        }
+        > a {
+            text-transform: uppercase;
+            margin: .5rem 0;
+        }
+    }
+}
+.checkout .invoice {
+    @extend .isolate;
+    margin: 2rem auto;
+    padding: 1rem 1.5rem;
+    max-width: 400px;
+    h3 {
+        padding: .5rem 0;
+        text-align: center;
+    }
+    ul {
+        padding: 0;
+        > li {
+            list-style-type: none;
+        }
+    }
+    .final {
+        color: #fff;
+        background-color: var(--success);
+        padding: 0 1rem;
+        border-radius: 10px;
+        width: fit-content;
+        display: block;
+        margin: 0 auto 1rem;
+    }
+    > a {
+        text-transform: uppercase;
+        margin: .5rem 0;
+    }
+}

@@ -7,7 +7,6 @@ export default function Slider() {
         const optimizeSlider = ()=>{
             let children = slider.current.children;
             slider.current.style.height = children[children.length-1].clientHeight+'px';
-            console.log(slider.current.style.height);
         }
         optimizeSlider();
         window.onresize = optimizeSlider
