@@ -17,7 +17,7 @@ export default function Products() {
         <>
             <div className="controllers">
                 <div className="select">
-                    <div className="form-check form-check-inline">
+                    <div className="form-check">
                         <input onChange={handleSelect} checked={selectable} className="form-check-input" hidden type="checkbox" id="inlineCheckbox1" defaultValue="option1" />
                         <label className="form-check-label" htmlFor="inlineCheckbox1">
                             <span className="box">
@@ -28,7 +28,7 @@ export default function Products() {
                             </span>
                         </label>
                     </div>
-                    <div className="form-check form-check-inline">
+                    <div className="form-check">
                         <input onChange={handleSelectAll} className="form-check-input" hidden type="checkbox" id="inlineCheckbox2" defaultValue="option1" />
                         <label className="form-check-label" htmlFor="inlineCheckbox2">
                             <span className="box">

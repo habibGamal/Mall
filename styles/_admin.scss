@@ -184,5 +184,38 @@ section.info {
                 }
             }
         }
+        > .orders {
+            margin: 2rem;
+            .order {
+                border: 3px solid $line-color;
+                border-radius: 10px;
+                padding: 1rem;
+                ul > li {
+                    margin: 1rem;
+                    list-style-type: disclosure-closed;
+                    .details {
+                        display: block;
+                        color: $text-layer-2;
+                        margin: .5rem 0;
+                        .point:not(:first-child) {
+                            padding: 0 .5rem;
+                        }
+                    }
+                }
+                .buttons {
+                    display: grid;
+                    grid-template-columns: auto auto;
+                    gap: 1rem;
+                }
+            }
+        }
+        > .categories {
+            margin: 2rem;
+            .action {
+                .expand {
+                    display: none;
+                }
+            }
+        }
     }
 }

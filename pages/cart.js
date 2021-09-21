@@ -25,6 +25,10 @@ export default function Cart() {
                         price={320}
                         shopName="Brave"
                     />
+                    <button className="btn btn-outline-danger m-2">Empty the cart</button>
+                    <Link href="/">
+                        <a className="btn btn-outline-primary m-2">Continue Shopping</a>
+                    </Link>
                 </div>
                 <div className="summary">
                     <h3>Order Summary</h3>

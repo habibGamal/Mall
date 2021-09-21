@@ -1,5 +1,5 @@
 import React, { useRef, useState , useReducer } from 'react';
-import Categories from './panels/dashboard-panels/Categories';
+import Categories from './panels/dashboard-panels/categories/Categories';
 import Branches from './panels/dashboard-panels/Branches';
 import Products from './panels/dashboard-panels/Products'
 import Workers from './panels/dashboard-panels/workers/Workers';

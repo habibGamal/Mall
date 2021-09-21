@@ -52,6 +52,7 @@ span.count {
 .form-check {
     position: relative;
     margin: .5rem 0;
+    cursor: pointer;
     > input:checked + label .box {  
         background-color: #007bff;
     }
@@ -148,6 +149,68 @@ body {
             }
         }
     }
+    > .filter {
+        @extend .isolate;
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        z-index: 3;
+        background-color: #fff;
+        padding: 1rem;
+        transform: translate(-50%,-50%);
+        overflow-y: scroll;
+        &.active{
+            display: block;
+            max-width: 90vw;
+            width: 1140px;
+            height: 70vh;
+        }
+        .grid {
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: auto auto;
+        }
+        .filter-option {
+            width: fit-content;
+            > .content {
+                margin: 1rem;
+                > .category {
+                    .category-name {
+                        user-select: none;
+                        font-size: 1.2rem;
+                        i {
+                            margin-right: .5rem;
+                        }
+                    }
+                    .subcategories {
+                        margin-left: .5rem;
+                    }
+                }
+            }
+            &.price-range > .content {
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+                .form-group {
+                    width: 100px;
+                    margin-bottom: 0;
+                }
+            }
+            &.specificaitions {
+                .specification .options {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+            }
+            &.options {
+                .colors {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+            }
+        }
+    }
     > ul.filters {
         text-align: center;
         position: relative;
@@ -169,22 +232,6 @@ body {
             }
             &#filter {
                 cursor: unset;
-                > .filter {
-                    display: none;
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    z-index: 3;
-                    background-color: #fff;
-                    box-shadow: 0 0 5px $shodow-color;
-                    transform: translate(-50%,-50%);
-                    &.active{
-                        display: block;
-                        max-width: 90vw;
-                        width: 1140px;
-                        height: 70vh;
-                    }
-                }
             }
             i {
                 color: #DBDEE6;
@@ -380,7 +427,7 @@ nav {
         }
         .content {
             overflow-y: scroll;
-            height: 80%;
+            height: calc(100% - 3rem - 92px);
             margin: {
                 top: 2rem;
                 bottom: 1rem;

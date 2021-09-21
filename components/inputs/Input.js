@@ -1,7 +1,7 @@
 import React from 'react'
 import isdefined from '../../helpers/isdefined';
 
-export default function Input({ id, label, type, options, icon, addClass , onChange }) {
+export default function Input({ id, label, type, options, icon, addClass, onChange }) {
     if (addClass === undefined) {
         addClass = 'col-md-6';
     }
@@ -62,7 +62,7 @@ export default function Input({ id, label, type, options, icon, addClass , onCha
         case 'select':
             return (
                 <div className={`form-group ${addClass}`}>
-                    {label === null ? '':<label htmlFor="o">{label}</label>}
+                    {label === null ? '' : <label htmlFor="o">{label}</label>}
                     <select className="form-control" id="o">
                         {options.map((option, i) => <option key={i}>{option}</option>)}
                     </select>
@@ -71,7 +71,7 @@ export default function Input({ id, label, type, options, icon, addClass , onCha
         default:
             return (
                 <div className={`form-group ${addClass}`}>
-                    <label htmlFor="1">{label}</label>
+                    {label === null ? '' : <label htmlFor="o">{label}</label>}
                     <input type={type} className="form-control" />
                     {isdefined(icon, icon)}
                 </div>
