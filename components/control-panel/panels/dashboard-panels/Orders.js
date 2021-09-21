@@ -21,7 +21,7 @@ export default function Orders() {
                                 Price : <strong>350</strong> LE
                             </span>
                         </span>
-                        <button className="btn btn-outline-danger">This product isn't exists</button>
+                        <button className="btn btn-outline-danger">This product is not exists</button>
                     </li>
                     <li>
                         <Link href="/product">Dri-FIT Swoosh Training T-Shirt White/University </Link>
@@ -36,7 +36,7 @@ export default function Orders() {
                                 Price : <strong>350</strong> LE
                             </span>
                         </span>
-                        <button className="btn btn-outline-danger">This product isn't exists</button>
+                        <button className="btn btn-outline-danger">This product is not exists</button>
                     </li>
                 </ul>
                 <div className="buttons">

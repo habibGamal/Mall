@@ -9,7 +9,7 @@ export default function Category({ name, count, deg }) {
             <td>{count}</td>
             <td className="action">
                 <div onClick={()=>setButtonsT(!buttonsT)} className="expand">
-                    <i class="fas fa-ellipsis-v"></i>
+                    <i className="fas fa-ellipsis-v"></i>
                 </div>
                 <div className={active(buttonsT,{defaultClass:'buttons'})}>
                     <button className="btn btn-outline-success m-1">Edit</button>

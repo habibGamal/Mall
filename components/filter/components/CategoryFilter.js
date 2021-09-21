@@ -7,11 +7,13 @@ export default function CategoryFilter() {
             <h4>Categories</h4>
             <div className="content">
                 <Category
+                    key={1}
                     name="Phones"
                     parentId="level_1_1"
                     id="for_1_1"
                     subcategories={[
                         <Category
+                            key={2}
                             name="samsong"
                             lastCategory={true}
                         />,
@@ -19,23 +21,28 @@ export default function CategoryFilter() {
                             name="Apple"
                             parentId="level_2_11_1"
                             id="for_2_11_1"
+                            key={3}
                             subcategories={[
                                 <Category
                                     name="iphone 12 series"
                                     parentId="level_3_21_11_1"
                                     id="for_3_21_11_1"
+                                    key={4}
                                     subcategories={[
                                         <Category
                                             name="iPhone 12 pro max"
                                             lastCategory={true}
+                                            key={5}
                                         />,
                                         <Category
                                             name="iPhone 12 pro"
                                             lastCategory={true}
+                                            key={6}
                                         />,
                                         <Category
                                             name="iPhone 12s"
                                             lastCategory={true}
+                                            key={7}
                                         />,
                                     ]}
                                 />
