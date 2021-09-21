@@ -54,31 +54,38 @@ export default function CategoryFilter() {
                     name="Electronics"
                     parentId="level_1_2"
                     id="for_1_2"
+                    key={8}
                     subcategories={[
                         <Category
                             name="Pc"
                             lastCategory={true}
+                            key={9}
                         />,
                         <Category
                             name="TVs"
                             parentId="level_2_12_1"
                             id="for_2_12_1"
+                            key={10}
                             subcategories={[
                                 <Category
                                     name="Samsong"
                                     parentId="level_3_21_12_1"
                                     id="for_3_21_12_1"
+                                    key={11}
                                     subcategories={[
                                         <Category
                                             name="4k"
                                             lastCategory={true}
+                                            key={12}
                                         />,
                                         <Category
                                             name="2k"
                                             lastCategory={true}
+                                            key={13}
                                         />,
                                         <Category
                                             name="Full HD"
+                                            key={14}
                                             lastCategory={true}
                                         />,
                                     ]}
