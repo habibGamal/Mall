@@ -8,19 +8,32 @@ if (typeof window !== "undefined") {
   require("bootstrap");
 }
 import '../styles/style.scss'
+import { Provider } from 'react-redux'
+import withRedux, { createWrapper } from 'next-redux-wrapper'
+import store from '../redux/store';
+import Authenticating from '../directives/Authenticating';
+import DefineRouter from '../directives/DefineRouter';
+import Messages from '../components/messages/Messages';
+
 
 function MyApp({ Component, pageProps }) {
-  
-  const [popup,setPopup] = useState(false);
+  const [popup, setPopup] = useState(false);
   return (
-    <>
-    <header>
-        <Nav popup={popup} setPopup={setPopup} />
-        <PopupForm active={popup} />
-      </header>
-    <Component {...pageProps} />
-    </>
+    <Provider store={store}>
+      <Authenticating>
+        <DefineRouter>
+          <Messages />
+          <header>
+            <Nav popup={popup} setPopup={setPopup} />
+            <PopupForm active={popup} />
+          </header>
+            <Component {...pageProps} />
+        </DefineRouter>
+      </Authenticating>
+    </Provider>
   )
 }
 
-export default MyApp
+const makeStore = () => store;
+const wrapper = createWrapper(makeStore);
+export default wrapper.withRedux(MyApp);

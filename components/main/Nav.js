@@ -1,11 +1,15 @@
-import React, { useEffect, useReducer, useRef, useState } from 'react'
+import React, { useEffect, useReducer, useRef } from 'react'
 import Link from 'next/link'
 import active from '../../helpers/active';
 import { useRouter } from 'next/dist/client/router';
 import NavCategory from './NavCategory';
-import CartItem from '../cart/MiniCartItem';
 import MiniCart from '../cart/MiniCart';
-export default function Nav({ setPopup }) {
+import Unauthenticated from '../../directives/Unauthenticated';
+import Authenticated from '../../directives/Authenticated';
+import auth from '../../api/auth';
+import { Reauth } from '../../redux/actions/auth';
+import { connect } from 'react-redux';
+function Nav({ setPopup , Reauth }) {
     const router = useRouter();
     const search = useRef();
     const activeLink = useRef();
@@ -80,6 +84,12 @@ export default function Nav({ setPopup }) {
         e.target.classList.add('active');
         activeLink.current = e.target;
     }
+    // api section
+    async function logout(){
+        await auth.logout().then(res => console.log(res));
+        await Reauth();
+        router.push('/');
+    }
     return (
         <>
             <nav className="d-flex justify-content-between">
@@ -130,8 +140,15 @@ export default function Nav({ setPopup }) {
                                 </Link>
                             </li>
                         </ul>
+                        <div className="options">
+                            <Authenticated>
+                                <div className="logout" onClick={logout}>
+                                    <i className="fas fa-sign-out-alt"></i><span>Logout</span>
+                                </div>
+                            </Authenticated>
+                        </div>
                     </div>
-                    <MiniCart 
+                    <MiniCart
                         expand={state.expandCart}
                         close={() => dispatch({ type: ACTIONS.ESCAPE })}
                     />
@@ -152,13 +169,20 @@ export default function Nav({ setPopup }) {
                     >
                         <i className="fas fa-search"></i>
                     </div>
-                    <div className="circle cart" onClick={()=>dispatch({type:ACTIONS.EXPAND_CART})}>
+                    <div className="circle cart" onClick={() => dispatch({ type: ACTIONS.EXPAND_CART })}>
                         <i className="fas fa-shopping-cart"></i>
                         <span className="count">3</span>
                     </div>
-                    <div className="circle user" onClick={loginPopup}>
-                        <i className="fas fa-user"></i>
-                    </div>
+                    <Unauthenticated>
+                        <div className="circle user" onClick={loginPopup}>
+                            <i className="fas fa-user"></i>
+                        </div>
+                    </Unauthenticated>
+                    <Authenticated>
+                        <div className="circle">
+                            <i className="fas fa-comments"></i>
+                        </div>
+                    </Authenticated>
                 </div>
             </nav>
             <ul className="nav-categories">
@@ -190,3 +214,9 @@ export default function Nav({ setPopup }) {
         </>
     )
 }
+
+const mapDispatchToProps = {
+  Reauth,
+}
+
+export default connect(null,mapDispatchToProps)(Nav);

@@ -147,16 +147,17 @@
     }
 
     .dashboard .dashboard-content {
-        >.orders .order {
-            margin: 1rem;
+        >.orders {
+            margin: 2rem 1rem;
+            .order {
+                ul {
+                    padding-left: 1rem;
+                }
 
-            ul {
-                padding-left: 1rem;
-            }
-
-            .buttons {
-                grid-template-columns: auto;
-                grid-template-rows: auto auto;
+                .buttons {
+                    grid-template-columns: auto;
+                    grid-template-rows: auto auto;
+                }
             }
         }
 
@@ -167,20 +168,26 @@
                 .expand {
                     display: block;
                     text-align: center;
+                    &.active {
+                        color: var(--success);
+                    }
                 }
 
                 .buttons {
-                    display: none;
-
+                    display: flex;
+                    position: absolute;
+                    opacity: 0;
+                    right: 0;
+                    top: -110%;
+                    pointer-events: none;
+                    background-color: #f6f6f6;
+                    border-radius: 10px;
+                    padding: .5rem;
+                    z-index: 1;
+                    transition: opacity 200ms ease-in-out;
                     &.active {
-                        background-color: #f6f6f6;
-                        border-radius: 10px;
-                        padding: .5rem;
-                        display: flex;
-                        position: absolute;
-                        right: 0;
-                        top: -100%;
-                        z-index: 1;
+                        opacity: 1;
+                        pointer-events: all;
                     }
                 }
             }
@@ -384,7 +391,14 @@
             }
         }
     }
-
+    // Slider
+    .slider {
+        .photo > img {
+            height: 100%;
+            min-height: 150px;
+        }
+    }
+    // Dashboard
     .dashboard {
         .dashboard-content {
             >.controllers {

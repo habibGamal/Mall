@@ -1,10 +1,24 @@
 import { useRouter } from 'next/dist/client/router'
-import React from 'react'
-
-export default function PopupForm({active}) {
-    
+import React, { useEffect, useRef } from 'react'
+import auth from '../../api/auth';
+import Input from '../inputs/Input';
+import { Reauth } from '../../redux/actions/auth';
+import { connect } from 'react-redux';
+import { attachForm } from '../../redux/actions/form';
+function PopupForm({active, Reauth ,attachForm}) {
+    const form = useRef(null);
+    const formKey = 'popup_form';
+    const router = useRouter();
+    useEffect(()=>attachForm(formKey),[]);
+    async function login(e){
+        e.preventDefault();
+        let data = new FormData(form.current);
+        await auth.login(data).then(res => console.log(res));
+        await Reauth();
+        router.push('/');
+    }
     return (
-        <form className={`pop-up-form ${active ? 'active':''}`}>
+        <form ref={form} className={`pop-up-form ${active ? 'active':''}`}>
             <h3 className="text-dark text-center">Login</h3>
             <div className="select">
                 <div className="option active">
@@ -14,16 +28,24 @@ export default function PopupForm({active}) {
                     <span>Business</span>
                 </div>
             </div>
-            <div className="form-group">
-                <label htmlFor="exampleInputEmail1">Email address</label>
-                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-            </div>
-            <div className="form-group">
-                <label htmlFor="exampleInputPassword1">Password</label>
-                <input type="password" className="form-control" id="exampleInputPassword1" />
-            </div>
+            <Input 
+                type="email"
+                label="Email address"
+                addClass=""
+                id="email"
+                name="email"
+                formKey={formKey}
+            />
+            <Input 
+                type="password"
+                label="Password"
+                addClass=""
+                id="password"
+                name="password"
+                formKey={formKey}
+            />
             <div className="login-or-register">
-                <button type="submit" className="btn btn-black btn-lg btn-block">Login</button>
+                <button onClick={login} type="submit" className="btn btn-black btn-lg btn-block">Login</button>
                 <span>Don{`'`}t have an account?<br /><a href="">Sign up</a></span>
             </div>
             <div className="login-with">
@@ -44,3 +66,11 @@ export default function PopupForm({active}) {
         </form>
     )
 }
+
+
+const mapDispatchToProps = dispatch => ({
+    Reauth,
+    attachForm : fromKey => dispatch(attachForm(fromKey)),
+})
+  
+  export default connect(null,mapDispatchToProps)(PopupForm);

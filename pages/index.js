@@ -3,8 +3,22 @@ import Categories from '../components/categories/Categories'
 import Products from '../components/products/Products'
 import Slider from '../components/slider/Slider'
 import Stores from '../components/stores/Stores'
-
-export default function Home() {
+import auth from '../api/auth'
+import {connect} from 'react-redux'
+import { Reauth } from '../redux/actions/auth'
+function Home({Reauth}) {
+  // for fast test login and logout functionality
+  async function login(){
+    await auth.login({'email':'habibmisi3@gmail.com','password':'gh090807'}).then(res => console.log(res));
+    await Reauth();
+  }
+  async function logout(){
+    await auth.logout().then(res => console.log(res));
+    await Reauth();
+  }
+  function testAuth(){
+    auth.isAuthenticated().then(res => console.log(res));
+  }
   return (
     <>
       <Head>
@@ -24,6 +38,20 @@ export default function Home() {
       <Products
         title="Women Fashion"
       />
+      <button onClick={login} className="btn btn-primary">Login</button>
+      <button onClick={logout} className="btn btn-primary">Logout</button>
+      <button onClick={testAuth} className="btn btn-primary">I am authenticated</button>
     </>
   )
 }
+
+const mapStateToProps = state => ({
+  authenticated: state.main.authenticated,
+  router: state.router,
+})
+
+const mapDispatchToProps = {
+  Reauth,
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Home);
