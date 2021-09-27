@@ -1,6 +1,6 @@
 import * as t from '../types'
-// - this file take care of all authentication and authorization actions
-// + rule : action creator is camel case and aciton dispatch with thunk is pascal case
+// - this file take care of inputs in any form to clear it or handle it
+// + rule : action creator is camel case and async action creator is pascal case
 export const attachForm = (formKey)=>({
     type: t.ATTACH_FORM,
     payload: formKey

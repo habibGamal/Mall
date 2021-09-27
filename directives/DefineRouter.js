@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
-import {setRouter} from '../redux/actions/router'
-function DefineRouter({children,setRouter}) {
+import { setRouter } from '../redux/actions/router'
+function DefineRouter({ children, setRouter }) {
     const router = useRouter();
-    useEffect(()=>setRouter(router),[]);
+    useEffect(() => setRouter(router), []);
     return (
         <>
             {children}
@@ -12,9 +12,4 @@ function DefineRouter({children,setRouter}) {
     )
 }
 
-  
-const mapDispatchToProps = {
-setRouter,
-}
-  
-export default connect(null, mapDispatchToProps)(DefineRouter);
+export default connect(null, { setRouter })(DefineRouter);

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import SliderPhoto from './SliderPhoto';
-import { getChildrenByClassName } from '../../helpers/dom-collect';
 export default function Slider() {
     const slider = useRef();
     useEffect(()=>{

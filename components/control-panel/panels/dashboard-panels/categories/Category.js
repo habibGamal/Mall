@@ -1,25 +1,32 @@
 import React, { useRef, useState } from 'react'
+import { connect } from 'react-redux';
 import category from '../../../../../api/category';
 import active from '../../../../../helpers/active';
 import { SetMessage } from '../../../../../redux/dispatchDirect';
-
-export default function Category({ name, count, id, buttonsT, setButtonsT }) {
+import { GetCategories, deleteCategory } from '../../../../../redux/actions/apiFlow';
+import { setPopup } from '../../../../../redux/actions/popup';
+import { setInputValue } from '../../../../../redux/actions/form';
+function Category({ name, count, id, buttonsT, setPopupEdit, setButtonsT, deleteCategory }) {
     const btns = useRef(null)
     function toggle() {
-        if(buttonsT !== `expand_${id}`){
+        if (buttonsT !== `expand_${id}`) {
             setButtonsT(`expand_${id}`);
-        }else{
+        } else {
             setButtonsT('');
         }
     }
-    function deleteCategory(){
-        category.deleteCategory(id).then(res=>{
-            console.log(res);
-            if(res.status === 200){
+    function deleteCat() {
+        category.deleteCategory(id).then(res => {
+            if (res.status === 200 && res.data == 1) {
                 // => success message
-                SetMessage('danger',<>Category <strong>{name}</strong> has been deleted successfully</>);
+                SetMessage('danger', <>Category <strong>{name}</strong> has been deleted successfully</>);
+                // => remove the category from categories state
+                deleteCategory(id);
             }
         })
+    }
+    function editCat() {
+        setPopupEdit(true,{id,name});
     }
     return (
         <tr>
@@ -30,11 +37,20 @@ export default function Category({ name, count, id, buttonsT, setButtonsT }) {
                     <i className="fas fa-ellipsis-v"></i>
                 </div>
                 <div ref={btns} className={active(buttonsT === `expand_${id}`, { defaultClass: 'buttons' })}>
-                    <button className="btn btn-outline-success m-1">Edit</button>
-                    <button onClick={deleteCategory} className="btn btn-outline-danger m-1">Delete</button>
+                    <button onClick={editCat} className="btn btn-outline-success m-1">Edit</button>
+                    <button onClick={deleteCat} className="btn btn-outline-danger m-1">Delete</button>
                     <button className="btn btn-outline-secondary m-1">Show</button>
                 </div>
             </td>
         </tr>
     )
 }
+
+const mapDispatchToProps = dispatch => (
+    {
+        setPopupEdit: (value, args) => dispatch(setPopup('edit-category', value, args)),
+        GetCategories: () => dispatch(GetCategories()),
+        deleteCategory: (id) => dispatch(deleteCategory(id)),
+    }
+)
+export default connect(null, mapDispatchToProps)(Category);

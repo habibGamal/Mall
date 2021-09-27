@@ -89,7 +89,6 @@ body {
     left: 5%;
     z-index: 5;
     width: 90%;
-    // margin: 1rem 0;
 
 }
 .btn-black {
@@ -271,7 +270,8 @@ body {
         height: 100vh;
     }
 }
-.pop-up-form {
+.popup {
+
     position: fixed;
     width: 380px;
     max-width: 95%;
@@ -287,43 +287,45 @@ body {
     &.active {
         --scale:1;
     }
-    .select {
-        display: flex;
-        width: fit-content;
-        justify-content: space-between;
-        margin: 1.5rem auto;
-        background-color: #E2F8E3;
-        color: #1F8B24;
-        padding: 5px;
-        border-radius: 10px;
-        > .option {
-            padding: 0.2rem 1rem;
-            cursor: pointer;
-            transition: background-color .2s ease-in-out;
-            &.active {
-                background-color: #fff;
-                color: #000;
-                border-radius: 10px;
+    &.form {
+        .select {
+            display: flex;
+            width: fit-content;
+            justify-content: space-between;
+            margin: 1.5rem auto;
+            background-color: #E2F8E3;
+            color: #1F8B24;
+            padding: 5px;
+            border-radius: 10px;
+            > .option {
+                padding: 0.2rem 1rem;
+                cursor: pointer;
+                transition: background-color .2s ease-in-out;
+                &.active {
+                    background-color: #fff;
+                    color: #000;
+                    border-radius: 10px;
+                }
             }
         }
-    }
-    .login-or-register {
-        text-align: center;
-        > span {
-            display: block;
-            margin-top: 1rem;
+        .login-or-register {
+            text-align: center;
+            > span {
+                display: block;
+                margin-top: 1rem;
+            }
         }
-    }
-    .login-with {
-        display: flex;
-        justify-content: space-evenly;
-        margin-top: 1.5rem;
-        i {
-            font-size: 3rem;
-        }
-        svg {
-            width: 48px;
-            height: 48px;
+        .login-with {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 1.5rem;
+            i {
+                font-size: 3rem;
+            }
+            svg {
+                width: 48px;
+                height: 48px;
+            }
         }
     }
 }

@@ -5,7 +5,8 @@ import Input from '../inputs/Input';
 import { Reauth } from '../../redux/actions/auth';
 import { connect } from 'react-redux';
 import { attachForm } from '../../redux/actions/form';
-function PopupForm({active, Reauth ,attachForm}) {
+import active from '../../helpers/active';
+function AuthForm({show, keyPopup, Reauth ,attachForm}) {
     const form = useRef(null);
     const formKey = 'popup_form';
     const router = useRouter();
@@ -18,7 +19,7 @@ function PopupForm({active, Reauth ,attachForm}) {
         router.push('/');
     }
     return (
-        <form ref={form} className={`pop-up-form ${active ? 'active':''}`}>
+        <form ref={form} className={active(show(keyPopup),{defaultClass:'popup form'})}>
             <h3 className="text-dark text-center">Login</h3>
             <div className="select">
                 <div className="option active">
@@ -67,10 +68,13 @@ function PopupForm({active, Reauth ,attachForm}) {
     )
 }
 
+const mapStateToProps = state => ({
+    show: (key) => state.popup[key],
+})
 
 const mapDispatchToProps = dispatch => ({
     Reauth,
     attachForm : fromKey => dispatch(attachForm(fromKey)),
 })
   
-  export default connect(null,mapDispatchToProps)(PopupForm);
+export default connect(mapStateToProps,mapDispatchToProps)(AuthForm);

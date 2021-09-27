@@ -7,6 +7,7 @@ import Orders from './panels/dashboard-panels/Orders';
 import active from '../../helpers/active';
 import Navigation from '../general/navigation/Navigation';
 import Filtering from '../filter/Filtering';
+import store from '../../redux/store';
 export default function Dashboard() {
     const taps = {
         'product' : <Products />,

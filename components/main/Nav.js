@@ -9,7 +9,9 @@ import Authenticated from '../../directives/Authenticated';
 import auth from '../../api/auth';
 import { Reauth } from '../../redux/actions/auth';
 import { connect } from 'react-redux';
-function Nav({ setPopup , Reauth }) {
+import { setPopup } from '../../redux/actions/popup';
+function Nav({ setPopupForm, Reauth,p}) {
+    console.log(p);
     const router = useRouter();
     const search = useRef();
     const activeLink = useRef();
@@ -46,37 +48,15 @@ function Nav({ setPopup , Reauth }) {
                     escape: true,
                     searchT: true
                 }
-            case ACTIONS.LOGIN_T:
-                return {
-                    ...state,
-                    escape: true
-                }
         }
     }
     const [state, dispatch] = useReducer(reducer, initialState);
-    useEffect(() => {
-        const handleRouteChange = (url) => {
-            if (!url.includes('popup=true')) {
-                setPopup(false);
-                dispatch({ type: ACTIONS.ESCAPE });
-            }
-        }
-        router.events.on('routeChangeStart', handleRouteChange);
-        // If the component is unmounted, unsubscribe
-        // from the event with the `off` method:
-        return () => {
-            router.events.off('routeChangeStart', handleRouteChange)
-        }
-    }, [])
     function loginPopup() {
-        setPopup(true);
-        dispatch({ type: ACTIONS.LOGIN_T });
+        setPopupForm(true);
         router.push({ query: { popup: true } })
     }
     function escapeEffect() {
-        setPopup(false);
         dispatch({ type: ACTIONS.ESCAPE });
-        router.push({ query: {} })
     }
     function navLink(e) {
         escapeEffect();
@@ -85,7 +65,7 @@ function Nav({ setPopup , Reauth }) {
         activeLink.current = e.target;
     }
     // api section
-    async function logout(){
+    async function logout() {
         await auth.logout().then(res => console.log(res));
         await Reauth();
         router.push('/');
@@ -215,8 +195,10 @@ function Nav({ setPopup , Reauth }) {
     )
 }
 
-const mapDispatchToProps = {
-  Reauth,
-}
-
-export default connect(null,mapDispatchToProps)(Nav);
+const mapDispatchToProps = dispatch => (
+    {
+        setPopupForm: (value) => dispatch(setPopup('auth-form', value)),
+        Reauth: ()=> dispatch(Reauth()),
+    }
+)
+export default connect(state=>({p:state.messages}), mapDispatchToProps)(Nav);

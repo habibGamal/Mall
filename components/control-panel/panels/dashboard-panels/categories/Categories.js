@@ -5,20 +5,23 @@ import invalid from '../../../../../helpers/invalid';
 import isThat from '../../../../../helpers/isThat';
 import { attachForm, unAttachForm, emptyForm } from '../../../../../redux/actions/form';
 import { SetMessage } from '../../../../../redux/dispatchDirect';
+import { clearCategories, GetCategories } from '../../../../../redux/actions/apiFlow';
 import Input from '../../../../inputs/Input'
 import Category from './Category'
+import Popup from '../../../../popup/Popup'
+import EditCategory from '../../../../popup/EditCategory'
+import listCategories from '../../../../../helpers/listCategories';
 
-function Categories({ attachForm, unAttachForm , emptyForm}) {
+function Categories({ attachForm, unAttachForm, emptyForm, categories, clearCategories , GetCategories }) {
     const formKey = 'add_cat';
     const [errors, setErrors] = useState(null);
-    const [categories, setCategories] = useState([]);
     const [buttonsT, setButtonsT] = useState('');
-    const refreshCategories = () => category.index().then(res => setCategories(res.data));
     useEffect(() => {
-        refreshCategories();
+        GetCategories();
         attachForm(formKey);
         return () => {
             unAttachForm(formKey);
+            clearCategories();
         }
     }, []);
     useEffect(() => {
@@ -40,48 +43,23 @@ function Categories({ attachForm, unAttachForm , emptyForm}) {
             document.removeEventListener('click', escape);
         }
     }, [buttonsT]);
-    function catLevel(level) {
-        let buffer = '';
-        for (let i = 0; i < level; i++) {
-            buffer += '→';
-        }
-        return buffer;
-    }
-    function mappingCategory(c) {
-        let buffer = [];
-        buffer.push({ value: c.id, as: catLevel(c.level) + c.name });
-        if (c.sub_categories.length !== 0) {
-            c.sub_categories.forEach(cc => buffer.push(...mappingCategory(cc)));
-        }
-        return buffer;
-    }
-    function listCategories(categories) {
-        if (categories !== null) {
-            let buffer = [];
-            categories.forEach(c => {
-                buffer.push(...mappingCategory(c));
-            });
-            return buffer;
-        }
-        return [{}];
-    }
     function addCategory(e) {
         e.preventDefault();
         let form = new FormData(e.target);
         // => send category to backend
         category.store(form)
-        // => debug successful states
-        .then(res => {
-            if(res.status === 200){
-                // => get the new categories from backend
-                refreshCategories();
-                // => success message
-                SetMessage('success',<>Category <strong>{form.get('name')}</strong> has been added successfully</>);
-                // => clean Inputs
-                emptyForm(formKey);
-                // => clean errors if exists
-                setErrors(null);
-            }
+            // => debug successful states
+            .then(res => {
+                if (res.status === 200) {
+                    // => get the new categories from backend
+                    GetCategories();
+                    // => success message
+                    SetMessage('success', <>Category <strong>{form.get('name')}</strong> has been added successfully</>);
+                    // => clean Inputs
+                    emptyForm(formKey);
+                    // => clean errors if exists
+                    setErrors(null);
+                }
             })
             // => debug errors
             .catch(err => {
@@ -119,6 +97,9 @@ function Categories({ attachForm, unAttachForm , emptyForm}) {
                     <button className="btn btn-primary my-2">Add Category</button>
                 </form>
             </div>
+            <Popup keyPopup="edit-category">
+                <EditCategory keyPopup="edit-category"/>
+            </Popup>
             <table className="table">
                 <thead className="thead-dark">
                     <tr>
@@ -138,21 +119,20 @@ function Categories({ attachForm, unAttachForm , emptyForm}) {
                             setButtonsT={setButtonsT}
                         />
                     ))}
-
-                    {/* <Category
-                        name="&#x2015;&#x2015;Lg"
-                        count="52"
-                    /> */}
                 </tbody>
             </table>
 
         </div>
     )
 }
-
-const mapDispatchToProps = dispatch => ({
-    attachForm: fromKey => dispatch(attachForm(fromKey)),
-    unAttachForm: fromKey => dispatch(unAttachForm(fromKey)),
-    emptyForm: fromKey => dispatch(emptyForm(fromKey)),
+const mapStateToProps = state => ({
+    categories: state.apiFlow.categories,
 })
-export default connect(null, mapDispatchToProps)(Categories);
+const mapDispatchToProps = {
+    attachForm,
+    unAttachForm,
+    emptyForm,
+    clearCategories,
+    GetCategories,
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);

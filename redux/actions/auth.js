@@ -1,7 +1,7 @@
 import auth from '../../api/auth'
 import * as t from '../types'
 // - this file take care of all authentication and authorization actions
-// + rule : action creator is camel case and aciton dispatch with thunk is pascal case
+// + rule : action creator is camel case and async action creator is pascal case
 export const authenticating = (loginState)=>({
     type: t.AUTHENTICATED,
     payload: loginState

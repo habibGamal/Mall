@@ -7,7 +7,7 @@ const form = (state={},action)=>{
             return {...state,[action.payload]:{}}
         case t.UN_ATTACH_FORM:
             delete state[action.payload];
-            return state;
+            return {...state};
         case t.EMPTY_FORM:
             return {...state,[action.payload]:{}}
         case t.INPUT_VALUE:

@@ -9,8 +9,12 @@ export default {
         let res = await api.get('/category',data);
         return res;
     },
-    deleteCategory : async function(id){
+    deleteCategory: async function(id){
         let res = await api.delete(`/category/${id}`);
+        return res;
+    },
+    edit : async function(id,data){
+        let res = await api.post(`/category/${id}`,data);
         return res;
     },
 }

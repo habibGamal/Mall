@@ -3,16 +3,19 @@ import { connect } from 'react-redux'
 import active from '../../helpers/active';
 import { ClearMessage } from '../../redux/dispatchDirect';
 
-function Message({index,type,content}) {
+export default function Message({index,type,content}) {
     const [showT,setShowT] = useState(true)
     useEffect(()=>{
         let t = setTimeout(()=>{
             setShowT(false);
-            setTimeout(()=>{
-                ClearMessage(index);
-            },150);
-        },2000);
-        return ()=> clearTimeout(t);
+        },1500);
+        let t2 = setTimeout(()=>{
+            ClearMessage(index);
+        },1650);
+        return ()=> {
+            clearTimeout(t);
+            clearTimeout(t2);
+        }
     },[])
     return (
         <div className={active(showT,{activeClass:'show',defaultClass:`alert alert-${type} alert-dismissible fade`})} role="alert">
@@ -23,5 +26,3 @@ function Message({index,type,content}) {
         </div>
     )
 }
-
-export default connect()(Message);

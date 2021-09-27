@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Nav from '../components/main/Nav';
-import PopupForm from '../components/main/PopupForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 if (typeof window !== "undefined") {
   require("jquery");
@@ -9,23 +8,26 @@ if (typeof window !== "undefined") {
 }
 import '../styles/style.scss'
 import { Provider } from 'react-redux'
-import withRedux, { createWrapper } from 'next-redux-wrapper'
+import { createWrapper } from 'next-redux-wrapper'
 import store from '../redux/store';
 import Authenticating from '../directives/Authenticating';
 import DefineRouter from '../directives/DefineRouter';
 import Messages from '../components/messages/Messages';
+import Popup from '../components/popup/Popup';
+import AuthForm from '../components/popup/AuthForm';
 
 
 function MyApp({ Component, pageProps }) {
-  const [popup, setPopup] = useState(false);
   return (
     <Provider store={store}>
       <Authenticating>
         <DefineRouter>
           <Messages />
           <header>
-            <Nav popup={popup} setPopup={setPopup} />
-            <PopupForm active={popup} />
+            <Nav />
+            <Popup keyPopup="auth-form">
+              <AuthForm keyPopup="auth-form"/>
+            </Popup>
           </header>
             <Component {...pageProps} />
         </DefineRouter>
