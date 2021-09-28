@@ -4,7 +4,7 @@ import { Router } from "../redux/getStateDirect";
 import { SetMessage } from "../redux/dispatchDirect";
 export const api = axios.create({
     baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}api/`,
-    headers: { 'Access-Control-Allow-Origin': '*','Content-Type': 'application/json', 'Accept': 'application/json' },
+    headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json', 'Accept': 'application/json' },
     withCredentials: true
 });
 export const web = axios.create({
@@ -24,8 +24,8 @@ function interceptor(error) {
         return res;
     }
     // => too many requests
-    if(res.status === 429){
-        SetMessage('warning',<>You are performing<strong>too many requsets</strong>. Please wait a second or use <strong>Bulk action</strong></>)
+    if (res.status === 429) {
+        SetMessage('warning', <>You are performing<strong>too many requsets</strong>. Please wait a second or use <strong>Bulk action</strong></>)
         return res;
     }
     return Promise.reject(error);
