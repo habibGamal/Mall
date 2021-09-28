@@ -15,7 +15,6 @@ export const web = axios.create({
 
 function interceptor(error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
     let res = error.response
     // => redirection
     if (res.status === 302) {
