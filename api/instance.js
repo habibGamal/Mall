@@ -3,12 +3,12 @@ import store from "../redux/store";
 import { Router } from "../redux/getStateDirect";
 import { SetMessage } from "../redux/dispatchDirect";
 export const api = axios.create({
-    baseURL: 'http://mallonlineback.co:8000/api/',
+    baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}api/`,
     headers: { 'Access-Control-Allow-Origin': '*','Content-Type': 'application/json', 'Accept': 'application/json' },
     withCredentials: true
 });
 export const web = axios.create({
-    baseURL: 'http://mallonlineback.co:8000/',
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     withCredentials: true
 });
