@@ -14,4 +14,8 @@ export default {
         let res = await api.get('/state');
         return res;
     },
+    getCookie: async function(){
+        let res = await api.get('/getCookie');
+        return res;
+    },
 }

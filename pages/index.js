@@ -19,6 +19,9 @@ function Home({Reauth}) {
   function testAuth(){
     auth.isAuthenticated().then(res => console.log(res));
   }
+  function getCookie(){
+    auth.getCookie().then(res => console.log(res));
+  }
   return (
     <>
       <Head>
@@ -41,6 +44,7 @@ function Home({Reauth}) {
       <button onClick={login} className="btn btn-primary">Login</button>
       <button onClick={logout} className="btn btn-primary">Logout</button>
       <button onClick={testAuth} className="btn btn-primary">I am authenticated</button>
+      <button onClick={getCookie} className="btn btn-primary">get cookie</button>
     </>
   )
 }
