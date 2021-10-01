@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import category from '../../../../../api/category';
 import active from '../../../../../helpers/active';
 import { SetMessage } from '../../../../../redux/dispatchDirect';
-import { GetCategories, deleteCategory } from '../../../../../redux/actions/apiFlow';
+import { deleteCategory } from '../../../../../redux/actions/apiFlow';
 import { setPopup } from '../../../../../redux/actions/popup';
+import Subcategories from './Subcategories';
 function Category({ name, id, level, subCategories, buttonsT, setPopupEdit, setButtonsT, deleteCategory }) {
     const btns = useRef(null);
     const [expandCat,setExpandCat] = useState(false);
@@ -21,6 +22,7 @@ function Category({ name, id, level, subCategories, buttonsT, setPopupEdit, setB
                 // => success message
                 SetMessage('danger', <>Category <strong>{name}</strong> has been deleted successfully</>);
                 // => remove the category from categories state
+                // console.log(deleteCategory);
                 deleteCategory(id);
             }
         })
@@ -46,17 +48,7 @@ function Category({ name, id, level, subCategories, buttonsT, setPopupEdit, setB
                     </div>
                 </div>
             </div>
-            {subCategories.map(c =>
-                <Category
-                    name={c.as}
-                    id={c.value}
-                    key={c.value}
-                    level={c.level}
-                    buttonsT={buttonsT}
-                    setButtonsT={setButtonsT}
-                    subCategories={c.children}
-                />
-            )}
+            <Subcategories data={subCategories}/>
         </div>
     )
 }
@@ -64,7 +56,6 @@ function Category({ name, id, level, subCategories, buttonsT, setPopupEdit, setB
 const mapDispatchToProps = dispatch => (
     {
         setPopupEdit: (value, args) => dispatch(setPopup('edit-category', value, args)),
-        GetCategories: () => dispatch(GetCategories()),
         deleteCategory: (id) => dispatch(deleteCategory(id)),
     }
 )
