@@ -1,15 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import product from '../../../../api/product';
 import active from '../../../../helpers/active';
 import Product from '../../../products/Product'
 export default function Products() {
-    const [selectable,setSelectable] = useState(false);
-    const [selectAll,setSelectAll] = useState(false);
-    function handleSelect(e){
-        if(!selectAll){
+    const [selectable, setSelectable] = useState(false);
+    const [selectAll, setSelectAll] = useState(false);
+    const [products, setProducts] = useState([]);
+    useEffect(async () => {
+        let res = await product.index();
+        if (res.status === 200) {
+            setProducts(res.data);
+        }
+    }, []);
+    function handleSelect(e) {
+        if (!selectAll) {
             setSelectable(e.target.checked);
         }
     }
-    function handleSelectAll(e){
+    function handleSelectAll(e) {
         setSelectAll(e.target.checked);
         setSelectable(e.target.checked);
     }
@@ -48,7 +56,7 @@ export default function Products() {
                             <option>فرع الجمهورية</option>
                         </select>
                     </div>
-                    <div className={active(selectable,{defaultClass:'buttons'})}>
+                    <div className={active(selectable, { defaultClass: 'buttons' })}>
                         <button className="btn btn-danger">Delete</button>
                         <button className="btn btn-dark">Draft</button>
                     </div>
@@ -57,36 +65,25 @@ export default function Products() {
             </div>
             <div className="products">
                 <div className="row justify-content-center">
-                    <Product
-                        selectable={selectable}
-                        selected={selectAll}
-                        name="Blouse"
-                        price="250"
-                        offerPrice="200"
-                        currency="LE"
-                        src="/images/cat_5.jpg"
-                        href="/products"
-                    />
-                   <Product
-                        selectable={selectable}
-                        selected={selectAll}
-                        name="Blouse"
-                        price="250"
-                        offerPrice="200"
-                        currency="LE"
-                        src="/images/cat_5.jpg"
-                        href="/products"
-                    />
-                    <Product
-                        selectable={selectable}
-                        selected={selectAll}
-                        name="Blouse"
-                        price="250"
-                        offerPrice="200"
-                        currency="LE"
-                        src="/images/cat_5.jpg"
-                        href="/products"
-                    />
+
+                    {products.map(p => {
+                        let { path, position } = JSON.parse(p.pictures)[0];
+                        path = process.env.NEXT_PUBLIC_BASE_URL_STORAGE + path.replace('public', '');
+                        return (
+                            <Product
+                                selectable={selectable}
+                                selected={selectAll}
+                                key={p.id}
+                                name={p.name}
+                                price={p.price}
+                                offerPrice={p.offer_price}
+                                currency="LE"
+                                src={path}
+                                href="/product"
+                                position={JSON.parse(position)}
+                            />
+                        )
+                    })}
                     <Product
                         selectable={selectable}
                         selected={selectAll}

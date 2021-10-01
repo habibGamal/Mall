@@ -20,7 +20,6 @@ export default function RowScroll({children}) {
     function scrolled() {
         let element = row.current
         let [scrollWidth, scrollLeft, width] = [element.scrollWidth, element.scrollLeft, element.clientWidth];
-        console.log(scrollWidth, scrollLeft, width);
         if (scrollLeft === scrollWidth - width) {
             setArrow(old => ({
                 left: old.left,

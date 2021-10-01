@@ -29,6 +29,7 @@ export default function Products({ title }) {
                                 currency="LE"
                                 src={path}
                                 href="/product"
+                                position={JSON.parse(position)}
                             />
                         )
                     })}

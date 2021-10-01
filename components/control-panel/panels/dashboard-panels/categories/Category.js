@@ -32,7 +32,7 @@ function Category({ name, id, level, subCategories, buttonsT, setPopupEdit, setB
         <div className={active(expandCat,{activeClass:'expand',defaultClass:'category'})} data-level={level}>
             <div className="category-content">
                 <span onClick={()=>setExpandCat(!expandCat)} >
-                    {subCategories.length === 0 ? <i class="fas fa-minus"></i>: <i class="fas fa-chevron-right"></i>}
+                    {subCategories.length === 0 ? <i className="fas fa-minus"></i>: <i className="fas fa-chevron-right"></i>}
                     {name}
                 </span>
                 <div id={`expand_${id}`} className="action">
