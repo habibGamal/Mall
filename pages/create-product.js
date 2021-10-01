@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import { setPicture } from '../redux/actions/main'
 import invalid from '../helpers/invalid'
 function CreateProduct({pictures,setPicture}) {
+    const productFormKey = 'product_form';
     const productForm = useRef(null);
     const [previewT,setPreviewT] = useState(false);
     const [errors,setErrors] = useState(null);
@@ -109,6 +110,7 @@ function CreateProduct({pictures,setPicture}) {
                                 name="picture"
                                 id="picture"
                                 invalidMsg={invalid('pictures',errors)}
+                                formKey={productFormKey}
                             />
                             {pictures.map((picture,i)=><Preview imgSrc={picture.base} index={i} key={i} previewT={previewT} setPreviewT={setPreviewT}/>)}
                         </div>
@@ -120,6 +122,7 @@ function CreateProduct({pictures,setPicture}) {
                             name="name"
                             id="name"
                             invalidMsg={invalid('name',errors)}
+                            formKey={productFormKey}
                         />
                         <Input
                             label="Product Price"
@@ -130,6 +133,7 @@ function CreateProduct({pictures,setPicture}) {
                             id="price"
                             min={0}
                             invalidMsg={invalid('price',errors)}
+                            formKey={productFormKey}
                         />
                         <div className="form-row align-items-center">
                             <Input
@@ -137,6 +141,7 @@ function CreateProduct({pictures,setPicture}) {
                                 type="check"
                                 addClass="col-md-3"
                                 id="offer_price_check"
+                                formKey={productFormKey}
                             />
                             <Input
                                 label="Product price after sale"
@@ -144,6 +149,7 @@ function CreateProduct({pictures,setPicture}) {
                                 icon={<i className="fas fa-dollar-sign" />}
                                 name="offer_price"
                                 id="offer_price"
+                                formKey={productFormKey}
                             />
                         </div>
                         <div className="categories">
@@ -201,6 +207,7 @@ function CreateProduct({pictures,setPicture}) {
                                 ]}
                                 name="stock"
                                 id="stock"
+                                formKey={productFormKey}
                             />
                             <Input
                                 label="Can returned"
@@ -211,6 +218,7 @@ function CreateProduct({pictures,setPicture}) {
                                 ]}
                                 name="returnable"
                                 id="returnable"
+                                formKey={productFormKey}
                             />
                         </div>
                         <Input
@@ -223,6 +231,7 @@ function CreateProduct({pictures,setPicture}) {
                                 {value:2,as:'in branch 2'},
                                 {value:3,as:'in branch 3'},
                             ]}
+                            formKey={productFormKey}
                         />
                     </div>
                     <h3>Optional</h3>
@@ -254,6 +263,7 @@ function CreateProduct({pictures,setPicture}) {
                             icon={<i className="fas fa-box" />}
                             name="brand"
                             id="brand"
+                            formKey={productFormKey}
                         />
                         <div className="form-row align-items-end">
                             <Input
@@ -262,6 +272,7 @@ function CreateProduct({pictures,setPicture}) {
                                 icon={<i className="fas fa-box" />}
                                 name="warranty_time"
                                 id="warranty_time"
+                                formKey={productFormKey}
                             />
                             <Input
                                 label=""
@@ -273,6 +284,7 @@ function CreateProduct({pictures,setPicture}) {
                                 ]}
                                 name="warranty_date"
                                 id="warranty_date"
+                                formKey={productFormKey}
                             />
                         </div>
                     </div>

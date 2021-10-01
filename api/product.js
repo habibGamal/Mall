@@ -5,4 +5,8 @@ export default {
         let res = await api.post('/product',data);
         return res;
     },
+    index: async function(){
+        let res = await api.get('/product');
+        return res;
+    }
 }

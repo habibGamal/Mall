@@ -3,14 +3,25 @@ import { connect } from 'react-redux';
 import active from '../../helpers/active';
 import isdefined from '../../helpers/isdefined';
 import { setInputValue } from '../../redux/actions/form';
-import store from '../../redux/store';
-function Input({ name, id, label, type, options, min, icon, invalidMsg, formKey, addClass, onChange ,inputValue, setInputValue}) {
+function Input({ name, id, label, type, options, min, icon, invalidMsg, formKey, addClass, onChange, inputValue, setInputValue }) {
     // const [value, setValue] = useState('init');
     if (addClass === undefined) {
         addClass = 'col-md-6';
     }
     if (invalidMsg === undefined) {
         invalidMsg = '';
+    }
+    const [invMsg, setInvMsg] = useState(invalidMsg);
+    useEffect(() => {
+        // => initialize invMsg state from invalidMsg prop
+        setInvMsg(invalidMsg);
+    }, [invalidMsg]);
+    function handleOnChange(e) {
+        setInputValue(formKey, name, e.target.value);
+        // => if there is an error remove it when user writing
+        if (invMsg.length > 0) {
+            setInvMsg('');
+        }
     }
     switch (type) {
         case 'file':
@@ -73,7 +84,7 @@ function Input({ name, id, label, type, options, min, icon, invalidMsg, formKey,
             return (
                 <div className={`form-group ${addClass}`}>
                     {label === null ? '' : <label htmlFor={id}>{label}</label>}
-                    <select name={name} className="form-control" id={id} value={inputValue(formKey,name,options[0].value)} onChange={(e) => setInputValue(formKey,name,e.target.value)}>
+                    <select name={name} className="form-control" id={id} value={inputValue(formKey, name, options[0].value)} onChange={(e) => setInputValue(formKey, name, e.target.value)}>
                         {options.map((option, i) => <option key={i} value={option.value}>{option.as}</option>)}
                     </select>
                 </div>
@@ -82,7 +93,7 @@ function Input({ name, id, label, type, options, min, icon, invalidMsg, formKey,
             return (
                 <div className={`form-group ${addClass}`}>
                     {label === null ? '' : <label htmlFor={id}>{label}</label>}
-                    <input name={name} value={inputValue(formKey,name,'')} onChange={(e) => setInputValue(formKey,name,e.target.value)} type={type} min={min} className={active(invalidMsg.length !== 0, { activeClass: 'is-invalid', defaultClass: 'form-control' })} />
+                    <input name={name} value={inputValue(formKey, name, '')} onChange={handleOnChange} type={type} min={min} className={active(invMsg.length !== 0, { activeClass: 'is-invalid', defaultClass: 'form-control' })} />
                     {isdefined(icon, { trueReturn: icon })}
                     <div id={`${id}feedback`} className="invalid-feedback">
                         {invalidMsg}
@@ -94,16 +105,23 @@ function Input({ name, id, label, type, options, min, icon, invalidMsg, formKey,
 }
 
 const mapStateToProps = (state) => ({
-    inputValue: (key,name,defaultValue) => {
-        if(key !== undefined && name !== undefined){
-            if(state.form[key] !== undefined){
-                return state.form[key][name] === undefined ? defaultValue:state.form[key][name];
+    inputValue: (key, name, defaultValue) => {
+        // => key : represents form key in global store
+        // => name : represents input name
+        // => defaultValue : the value returnd if the input isn't registered yet in global state
+        // => function return current value of particular input in particular form
+        if (key !== undefined && name !== undefined) {
+            // => check if the key an name is definded or not
+            if (state.form[key] !== undefined) {
+                // => check if the key of the form is registered in the form state or not
+                // => return the value if it is defined or default value if it's not
+                return state.form[key][name] === undefined ? defaultValue : state.form[key][name];
             }
         }
         return defaultValue;
-    },
+    }
 })
 const mapDispatchToProps = (dispatch) => ({
-    setInputValue: (key,name,value)=>dispatch(setInputValue(key,name,value))
+    setInputValue: (key, name, value) => dispatch(setInputValue(key, name, value))
 })
-export default connect(mapStateToProps,mapDispatchToProps)(Input);
+export default connect(mapStateToProps, mapDispatchToProps)(Input);

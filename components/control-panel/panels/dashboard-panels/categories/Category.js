@@ -1,13 +1,13 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux';
 import category from '../../../../../api/category';
 import active from '../../../../../helpers/active';
 import { SetMessage } from '../../../../../redux/dispatchDirect';
 import { GetCategories, deleteCategory } from '../../../../../redux/actions/apiFlow';
 import { setPopup } from '../../../../../redux/actions/popup';
-import { setInputValue } from '../../../../../redux/actions/form';
-function Category({ name, count, id, buttonsT, setPopupEdit, setButtonsT, deleteCategory }) {
-    const btns = useRef(null)
+function Category({ name, id, level, subCategories, buttonsT, setPopupEdit, setButtonsT, deleteCategory }) {
+    const btns = useRef(null);
+    const [expandCat,setExpandCat] = useState(false);
     function toggle() {
         if (buttonsT !== `expand_${id}`) {
             setButtonsT(`expand_${id}`);
@@ -26,23 +26,38 @@ function Category({ name, count, id, buttonsT, setPopupEdit, setButtonsT, delete
         })
     }
     function editCat() {
-        setPopupEdit(true,{id,name});
+        setPopupEdit(true, { id, name });
     }
     return (
-        <tr>
-            <td>{name}</td>
-            <td>{count}</td>
-            <td id={`expand_${id}`} className="action">
-                <div onClick={toggle} className={active(buttonsT === `expand_${id}`, { defaultClass: 'expand' })}>
-                    <i className="fas fa-ellipsis-v"></i>
+        <div className={active(expandCat,{activeClass:'expand',defaultClass:'category'})} data-level={level}>
+            <div className="category-content">
+                <span onClick={()=>setExpandCat(!expandCat)} >
+                    {subCategories.length === 0 ? <i class="fas fa-minus"></i>: <i class="fas fa-chevron-right"></i>}
+                    {name}
+                </span>
+                <div id={`expand_${id}`} className="action">
+                    <div onClick={toggle} className={active(buttonsT === `expand_${id}`, { defaultClass: 'expand' })}>
+                        <i className="fas fa-ellipsis-v"></i>
+                    </div>
+                    <div ref={btns} className={active(buttonsT === `expand_${id}`, { defaultClass: 'buttons' })}>
+                        <button onClick={editCat} className="btn btn-outline-success m-1">Edit</button>
+                        <button onClick={deleteCat} className="btn btn-outline-danger m-1">Delete</button>
+                        <button className="btn btn-outline-secondary m-1">Show</button>
+                    </div>
                 </div>
-                <div ref={btns} className={active(buttonsT === `expand_${id}`, { defaultClass: 'buttons' })}>
-                    <button onClick={editCat} className="btn btn-outline-success m-1">Edit</button>
-                    <button onClick={deleteCat} className="btn btn-outline-danger m-1">Delete</button>
-                    <button className="btn btn-outline-secondary m-1">Show</button>
-                </div>
-            </td>
-        </tr>
+            </div>
+            {subCategories.map(c =>
+                <Category
+                    name={c.as}
+                    id={c.value}
+                    key={c.value}
+                    level={c.level}
+                    buttonsT={buttonsT}
+                    setButtonsT={setButtonsT}
+                    subCategories={c.children}
+                />
+            )}
+        </div>
     )
 }
 

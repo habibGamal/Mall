@@ -6,7 +6,9 @@ import { initPopup, setPopup, uninstallPopup } from '../../redux/actions/popup';
 function Popup({ keyPopup, children, show, initPopup, setPopup ,uninstallPopup }) {
     const router = useRouter();
     useEffect(() => {
+        // => registing the key of popup in the global state
         initPopup(keyPopup);
+        // => if the user hits back button in browser will remove the popup
         const handleRouteChange = (url) => {
             if (!url.includes('popup=true')) {
                 setPopup(keyPopup, false);
@@ -20,10 +22,18 @@ function Popup({ keyPopup, children, show, initPopup, setPopup ,uninstallPopup }
             uninstallPopup(keyPopup);
         }
     }, [])
+    useEffect(()=>{
+        // => push a query popup if the user click on it
+        if(show(keyPopup) && router.query.popup === undefined){
+            router.push({ query: { ...router.query, popup: true } }, null,{scroll:false})
+        }
+    },[show(keyPopup)])
     function escapeEffect() {
         setPopup(keyPopup, false);
         if(router.query.hasOwnProperty('popup')){
-            router.push({ query: {} })
+            let queries = router.query;
+            delete queries.popup;
+            router.push({ query: {...queries} }, null,{scroll:false})
         }
     }
     return (

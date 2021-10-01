@@ -6,10 +6,11 @@ import Stores from '../components/stores/Stores'
 import auth from '../api/auth'
 import {connect} from 'react-redux'
 import { Reauth } from '../redux/actions/auth'
+import axios from 'axios'
 function Home({Reauth}) {
   // for fast test login and logout functionality
   async function login(){
-    await auth.login({'email':'habibmisi3@gmail.com','password':'gh090807'}).then(res => console.log(res));
+    await auth.login({'email':'habibmisi3@gmail.com','password':'gh090807'});
     await Reauth();
   }
   async function logout(){
@@ -21,6 +22,9 @@ function Home({Reauth}) {
   }
   function getCookie(){
     auth.getCookie().then(res => console.log(res));
+  }
+  function clearTokens(){
+    auth.clearAllTokens().then(res=> console.log(res));
   }
   return (
     <>
@@ -45,6 +49,7 @@ function Home({Reauth}) {
       <button onClick={logout} className="btn btn-primary">Logout</button>
       <button onClick={testAuth} className="btn btn-primary">I am authenticated</button>
       <button onClick={getCookie} className="btn btn-primary">get cookie</button>
+      <button onClick={clearTokens} className="btn btn-primary">clear all tokens</button>
     </>
   )
 }

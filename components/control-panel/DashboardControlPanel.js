@@ -1,14 +1,32 @@
-import React, { useRef, useState , useReducer } from 'react';
+import React, { useRef, useState , useReducer, useEffect } from 'react';
 import Categories from './panels/dashboard-panels/categories/Categories';
 import Branches from './panels/dashboard-panels/Branches';
 import Products from './panels/dashboard-panels/Products'
 import Workers from './panels/dashboard-panels/workers/Workers';
 import Orders from './panels/dashboard-panels/Orders';
-import active from '../../helpers/active';
 import Navigation from '../general/navigation/Navigation';
 import Filtering from '../filter/Filtering';
-import store from '../../redux/store';
+import { useRouter } from 'next/router';
 export default function Dashboard() {
+    // => make the taps accessable by url query
+    const router = useRouter();
+    const [activeTap,setActiveTap] = useState(router.query.tap);
+    useEffect(() => {
+        if(router.query.tap){
+            if(!taps[router.query.tap]){
+                // => in case of wrong query reset it to product
+                router.push({ query: {...router.query,tap:'product'} });
+                setActiveTap('product');
+                return;
+            }
+            router.push({query:{...router.query,tap:activeTap}});
+            return;
+        }else{
+            // => in case of no tap query in url
+            router.push({ query: {...router.query,tap:'product'} })
+            setActiveTap('product');
+        }
+    }, [activeTap])
     const taps = {
         'product' : <Products />,
         'branches' : <Branches />,
@@ -16,8 +34,6 @@ export default function Dashboard() {
         'workers' : <Workers />,
         'orders' : <Orders />
     }
-    const [activeTap,setActiveTap] = useState('product');
-    const page = useRef();
     return (
         <section className="dashboard">
             <div className="container">

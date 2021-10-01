@@ -1,23 +1,28 @@
-function catLevel(level) {
-    let buffer = '';
-    for (let i = 0; i < level; i++) {
-        buffer += '→';
-    }
-    return buffer;
-}
-function mappingCategory(c) {
+function mappingAllCategories(c) {
     let buffer = [];
-    buffer.push({ value: c.id, as: catLevel(c.level) + c.name });
+    buffer.push({ value: c.id, as: c.name, level:c.level });
     if (c.sub_categories.length !== 0) {
-        c.sub_categories.forEach(cc => buffer.push(...mappingCategory(cc)));
+        c.sub_categories.forEach(cc => buffer.push(...mappingAllCategories(cc)));
     }
     return buffer;
 }
-export default function listCategories(categories) {
+function mappingBycategory(c){
+    let buffer;
+    buffer = { value: c.id, as: c.name, level:c.level ,children:[] };
+    if (c.sub_categories.length !== 0) {
+        c.sub_categories.forEach(cc => {buffer.children.push(mappingBycategory(cc))});
+    }
+    return buffer;
+}
+export default function listCategories(categories,byCategory=false) {
     if (categories !== null) {
         let buffer = [];
         categories.forEach(c => {
-            buffer.push(...mappingCategory(c));
+            if(byCategory){
+                buffer.push(mappingBycategory(c));
+            }else{
+                buffer.push(...mappingAllCategories(c));
+            }
         });
         return buffer;
     }

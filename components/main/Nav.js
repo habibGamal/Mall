@@ -11,7 +11,7 @@ import { Reauth } from '../../redux/actions/auth';
 import { connect } from 'react-redux';
 import { setPopup } from '../../redux/actions/popup';
 function Nav({ setPopupForm, Reauth,p}) {
-    console.log(p);
+    // console.log(p);
     const router = useRouter();
     const search = useRef();
     const activeLink = useRef();
@@ -53,7 +53,6 @@ function Nav({ setPopupForm, Reauth,p}) {
     const [state, dispatch] = useReducer(reducer, initialState);
     function loginPopup() {
         setPopupForm(true);
-        router.push({ query: { popup: true } })
     }
     function escapeEffect() {
         dispatch({ type: ACTIONS.ESCAPE });

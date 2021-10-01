@@ -12,7 +12,7 @@ import Popup from '../../../../popup/Popup'
 import EditCategory from '../../../../popup/EditCategory'
 import listCategories from '../../../../../helpers/listCategories';
 
-function Categories({ attachForm, unAttachForm, emptyForm, categories, clearCategories , GetCategories }) {
+function Categories({ attachForm, unAttachForm, emptyForm, categories, clearCategories, GetCategories }) {
     const formKey = 'add_cat';
     const [errors, setErrors] = useState(null);
     const [buttonsT, setButtonsT] = useState('');
@@ -98,30 +98,23 @@ function Categories({ attachForm, unAttachForm, emptyForm, categories, clearCate
                 </form>
             </div>
             <Popup keyPopup="edit-category">
-                <EditCategory keyPopup="edit-category"/>
+                <EditCategory keyPopup="edit-category" />
             </Popup>
-            <table className="table">
-                <thead className="thead-dark">
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Count</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {listCategories(categories).map(c => (
+            <div className="categories-list">
+                {listCategories(categories,true).map(c => {
+                    return (
                         <Category
                             name={c.as}
-                            count={25}
                             id={c.value}
                             key={c.value}
+                            level={c.level}
                             buttonsT={buttonsT}
                             setButtonsT={setButtonsT}
+                            subCategories={c.children}
                         />
-                    ))}
-                </tbody>
-            </table>
-
+                    )
+                })}
+            </div>
         </div>
     )
 }

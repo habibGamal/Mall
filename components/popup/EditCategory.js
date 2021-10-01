@@ -4,6 +4,7 @@ import category from '../../api/category';
 import active from '../../helpers/active';
 import invalid from '../../helpers/invalid';
 import listCategories from '../../helpers/listCategories';
+import { disableScroll } from '../../helpers/scroll';
 import { GetCategories } from '../../redux/actions/apiFlow';
 import { attachForm, setInputValue, unAttachForm } from '../../redux/actions/form';
 import { setPopup } from '../../redux/actions/popup';
@@ -23,6 +24,7 @@ function EditCategory({ show, keyPopup, attachForm, unAttachForm, categories, se
         if (args !== undefined) {
             setInputValue('name', args.name.replace('→',''));
         }
+        setErrors(null);
     }, [args]);
     function editCat(e) {
         e.preventDefault();
@@ -40,21 +42,20 @@ function EditCategory({ show, keyPopup, attachForm, unAttachForm, categories, se
                     setPopup(false);
                     // => success message
                     SetMessage('success', <>Category <strong>{form.get('name')}</strong> has been added successfully</>);
-                    // => clean Inputs
-                    // emptyForm(formKey);
                     // => clean errors if exists
-                    // setErrors(null);
+                    setErrors(null);
                 }
             })
         // => debug errors
-        // .catch(err => {
-        //     // => get error data,status code 
-        //     const { data, status } = err.response;
-        //     // => code 422 (invalid data)
-        //     if (status === 422) {
-        //         setErrors(data.errors);
-        //     }
-        // });
+        .catch(err => {
+            // => get error data,status code 
+            const { data, status } = err.response;
+            // => code 422 (invalid data)
+            if (status === 422) {
+                setErrors(data.errors);
+            }
+
+        });
 
     }
     return (

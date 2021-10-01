@@ -211,6 +211,44 @@ section.info {
         }
         > .categories {
             margin: 2rem;
+            .categories-list {
+                .category {
+                    @extend .isolate-3;
+                }
+                .category[data-level="0"] {
+                    padding: .5rem 0;
+                    margin: 1rem 0;
+                }
+                .category {
+                    .category {
+                        height: 0;
+                        overflow: hidden;
+                        margin-left: 1rem;
+                    }
+                    &.expand {
+                        > .category {
+                            height: auto;
+                        }
+                        > .category-content i.fa-chevron-right {
+                            transform: rotateZ(90deg);
+                        }
+                    }
+                    .category-content{
+                        padding: 0 1rem;
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        > span {
+                            cursor: pointer;
+                            > i {
+                                margin: 8px;
+                                transition: transform 100ms ease-in-out;
+                            }
+                        }
+                    }
+                }
+            }
             .action {
                 .expand {
                     display: none;
