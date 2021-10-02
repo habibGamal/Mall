@@ -64,6 +64,8 @@ function CreateProduct({pictures,setPicture}) {
         form.set('specifications',JSON.stringify(splitSpecifications(form.get('specifications'))));
         // => handle warranty
         form.set('warranty',form.get('warranty_time')+' '+form.get('warranty_date'));
+        // => delete Picture input
+        form.delete('picture');
         // => send product to backend
         product.store(form)
         // => debug successful states
