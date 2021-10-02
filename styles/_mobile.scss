@@ -106,11 +106,14 @@
     .products .product {
         display: block;
         width: 150px;
-        height: 300px;
+        height: 250px;
         margin: 5px;
 
-        .picture .img {
-            object-position: 60% 50%;
+        .picture {
+            height: 150px;
+            .img {
+                object-position: 60% 50%;
+            }
         }
     }
 
@@ -149,6 +152,7 @@
     .dashboard .dashboard-content {
         >.orders {
             margin: 2rem 1rem;
+
             .order {
                 ul {
                     padding-left: 1rem;
@@ -168,6 +172,7 @@
                 .expand {
                     display: block;
                     text-align: center;
+
                     &.active {
                         color: var(--success);
                     }
@@ -185,6 +190,7 @@
                     padding: .5rem;
                     z-index: 1;
                     transition: opacity 200ms ease-in-out;
+
                     &.active {
                         opacity: 1;
                         pointer-events: all;
@@ -391,13 +397,15 @@
             }
         }
     }
+
     // Slider
     .slider {
-        .photo > img {
+        .photo>img {
             height: 100%;
             min-height: 150px;
         }
     }
+
     // Dashboard
     .dashboard {
         .dashboard-content {

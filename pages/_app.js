@@ -16,7 +16,6 @@ import Messages from '../components/messages/Messages';
 import Popup from '../components/popup/Popup';
 import AuthForm from '../components/popup/AuthForm';
 
-
 function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>

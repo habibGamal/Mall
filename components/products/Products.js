@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import product from '../../api/product';
 import isdefined from '../../helpers/isdefined'
+import handlePath from '../../helpers/picturePath';
 import RowScroll from '../general/RowScroll'
 import Product from './Product'
 
@@ -19,7 +20,7 @@ export default function Products({ title }) {
                 <RowScroll>
                     {products.map(p => {
                         let {path,position} = JSON.parse(p.pictures)[0];
-                        path = process.env.NEXT_PUBLIC_BASE_URL_STORAGE+path.replace('public','');
+                        path = handlePath(path);
                         return (
                             <Product
                                 key={p.id}
@@ -28,7 +29,7 @@ export default function Products({ title }) {
                                 offerPrice={p.offer_price}
                                 currency="LE"
                                 src={path}
-                                href="/product"
+                                href={`/product/${p.id}`}
                                 position={JSON.parse(position)}
                             />
                         )

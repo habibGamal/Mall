@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import active from '../../helpers/active';
@@ -9,7 +9,8 @@ export default function Product({ selectable, selected, name, price, offerPrice,
     const [select, setSelect] = useState(false);
     const [menuT, setMenuT] = useState(false);
     const router = useRouter();
-    useMemo(() => setSelect(selected), [selected]);
+    useEffect(() => setSelect(selected), [selected]);
+    const img = useMemo(()=><Image src={src} layout="fill" objectPosition={`${p.leftP}% ${-1 * p.topP}%`} className="img" alt="T-shirt" />,[]);
     function selectHandle() {
         setSelect(!select);
     }
@@ -26,7 +27,7 @@ export default function Product({ selectable, selected, name, price, offerPrice,
                     <i className="fas fa-check" />
                 </span>
                 <div className="picture">
-                    <Image src={src} layout="fill" objectPosition={`${p.leftP}% ${-1 * p.topP}%`} className="img" alt="T-shirt" />
+                    {img}
                 </div>
                 <div className="product-details">
                     <div onClick={() => setMenuT(!menuT)} className="menu-bars">
@@ -57,7 +58,8 @@ export default function Product({ selectable, selected, name, price, offerPrice,
     return (
         <div className="product" onClick={(e) => clickHandle(e, href)}>
             <div className="picture">
-                <Image src={src} layout="fill" objectPosition={`${p.leftP}% ${-1 * p.topP}%`} className="img" alt="T-shirt" />
+                {/* <Image src={src} layout="fill" objectPosition={`${p.leftP}% ${-1 * p.topP}%`} className="img" alt="T-shirt" /> */}
+                {img}
             </div>
             <div className="product-details">
                 <div onClick={() => setMenuT(!menuT)} className="menu-bars">

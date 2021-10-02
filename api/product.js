@@ -8,5 +8,9 @@ export default {
     index: async function(){
         let res = await api.get('/product');
         return res;
+    },
+    show: async function(id){
+        let res = await api.get(`/product/${id}`);
+        return res;
     }
 }
