@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import active from '../../helpers/active'
 import ProductControlPanel from '../../components/control-panel/ProductControlPanel'
 import p from '../../api/product';
@@ -63,6 +64,9 @@ function Product({ product }) {
     function activePicture(index, obj = {}) {
         return active(pictureShow === index, obj)
     }
+    function pictureLoaded(obj) {
+        console.log(obj);
+    }
     return (
         <section className="single-product">
             <div className="container">
@@ -87,10 +91,11 @@ function Product({ product }) {
                         <div className="pictures">
                             <div className="mini">
                                 {pictures.map((p, i) => {
+                                    const position = JSON.parse(p.position);
                                     const path = handlePath(p.path);
                                     return (
                                         <div key={i} className={activePicture(i, { defaultClass: 'picture' })} onClick={() => setPictureShow(i)}>
-                                            <img src={path} alt="" />
+                                            <Image objectPosition={`${position.leftP}% ${position.topP}%`} layout="fill" src={path} alt="" />
                                         </div>
                                     )
                                 })}
@@ -99,14 +104,23 @@ function Product({ product }) {
                                 {pictures.map((p, i) => {
                                     const position = JSON.parse(p.position);
                                     const path = handlePath(p.path);
-                                    console.log(position);
                                     return (
                                         <div key={i} className={activePicture(i)}>
-                                            <img src={path} alt="" style={{
-                                                objectPosition: `${position.leftP}% ${position.topP}%`,
-                                                top: `${position.topP}%`,
-                                                height: `${position.heightP}%`
-                                            }} />
+                                            <div className="image-wrapper"
+                                                style={{
+                                                    top: `${position.topP}%`,
+                                                    height: `${position.heightP}%`
+                                                }}
+                                            >
+                                                <Image
+                                                    onLoadingComplete={pictureLoaded}
+                                                    src={path}
+                                                    alt=""
+                                                    objectPosition={`${position.leftP}% ${position.topP}%`}
+                                                    layout="fill"
+
+                                                />
+                                            </div>
                                         </div>
                                     )
                                 })}
