@@ -4,11 +4,10 @@ import category from '../../api/category';
 import active from '../../helpers/active';
 import invalid from '../../helpers/invalid';
 import listCategories from '../../helpers/listCategories';
-import { disableScroll } from '../../helpers/scroll';
 import { GetCategories } from '../../redux/actions/apiFlow';
 import { attachForm, setInputValue, unAttachForm } from '../../redux/actions/form';
 import { setPopup } from '../../redux/actions/popup';
-import { SetMessage } from '../../redux/dispatchDirect';
+import { Messages } from '../../redux/stateControllers/messages';
 import Input from '../inputs/Input';
 
 function EditCategory({ show, keyPopup, attachForm, unAttachForm, categories, setInputValue, args, GetCategories, setPopup }) {
@@ -41,7 +40,7 @@ function EditCategory({ show, keyPopup, attachForm, unAttachForm, categories, se
                     // => remove popup
                     setPopup(false);
                     // => success message
-                    SetMessage('success', <>Category <strong>{form.get('name')}</strong> has been added successfully</>);
+                    Messages.set('success', <>Category <strong>{form.get('name')}</strong> has been added successfully</>);
                     // => clean errors if exists
                     setErrors(null);
                 }

@@ -4,13 +4,13 @@ import category from '../../../../../api/category';
 import invalid from '../../../../../helpers/invalid';
 import isThat from '../../../../../helpers/isThat';
 import { attachForm, unAttachForm, emptyForm } from '../../../../../redux/actions/form';
-import { SetMessage } from '../../../../../redux/dispatchDirect';
 import { clearCategories, GetCategories } from '../../../../../redux/actions/apiFlow';
 import Input from '../../../../inputs/Input'
 import Category from './Category'
 import Popup from '../../../../popup/Popup'
 import EditCategory from '../../../../popup/EditCategory'
 import listCategories from '../../../../../helpers/listCategories';
+import { Messages } from '../../../../../redux/stateControllers/messages';
 
 function Categories({ attachForm, unAttachForm, emptyForm, categories, clearCategories, GetCategories }) {
     const formKey = 'add_cat';
@@ -54,7 +54,7 @@ function Categories({ attachForm, unAttachForm, emptyForm, categories, clearCate
                     // => get the new categories from backend
                     GetCategories();
                     // => success message
-                    SetMessage('success', <>Category <strong>{form.get('name')}</strong> has been added successfully</>);
+                    Messages.set('success', <>Category <strong>{form.get('name')}</strong> has been added successfully</>);
                     // => clean Inputs
                     emptyForm(formKey);
                     // => clean errors if exists

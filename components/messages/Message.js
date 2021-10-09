@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import active from '../../helpers/active';
-import { ClearMessage } from '../../redux/dispatchDirect';
+import { Messages } from '../../redux/stateControllers/messages';
 
 export default function Message({index,type,content}) {
     const [showT,setShowT] = useState(true)
@@ -10,7 +10,7 @@ export default function Message({index,type,content}) {
             setShowT(false);
         },1500);
         let t2 = setTimeout(()=>{
-            ClearMessage(index);
+            Messages.clear(index);
         },1650);
         return ()=> {
             clearTimeout(t);

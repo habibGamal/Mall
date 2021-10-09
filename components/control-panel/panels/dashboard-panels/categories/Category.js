@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux';
 import category from '../../../../../api/category';
 import active from '../../../../../helpers/active';
-import { SetMessage } from '../../../../../redux/dispatchDirect';
 import { deleteCategory } from '../../../../../redux/actions/apiFlow';
 import { setPopup } from '../../../../../redux/actions/popup';
+import { Messages } from '../../../../../redux/stateControllers/messages';
 import Subcategories from './Subcategories';
 function Category({ name, id, level, subCategories, buttonsT, setPopupEdit, setButtonsT, deleteCategory }) {
     const btns = useRef(null);
@@ -20,7 +20,7 @@ function Category({ name, id, level, subCategories, buttonsT, setPopupEdit, setB
         category.deleteCategory(id).then(res => {
             if (res.status === 200 && res.data == 1) {
                 // => success message
-                SetMessage('danger', <>Category <strong>{name}</strong> has been deleted successfully</>);
+                Messages.set('danger', <>Category <strong>{name}</strong> has been deleted successfully</>);
                 // => remove the category from categories state
                 // console.log(deleteCategory);
                 deleteCategory(id);

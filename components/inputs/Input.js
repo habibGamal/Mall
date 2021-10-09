@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import active from '../../helpers/active';
 import isdefined from '../../helpers/isdefined';
 import { setInputValue } from '../../redux/actions/form';
-function Input({ name, id, label, type, options, min, icon, invalidMsg, formKey, addClass, onChange, inputValue, setInputValue }) {
+function Input({ name, id, label, type, options, min, icon, invalidMsg, formKey, parentId,addClass, onChange, inputValue, setInputValue }) {
     // const [value, setValue] = useState('init');
     if (addClass === undefined) {
         addClass = 'col-md-6';
@@ -67,9 +67,12 @@ function Input({ name, id, label, type, options, min, icon, invalidMsg, formKey,
                 </div>
             )
         case 'check':
+            useEffect(()=>{
+                setInputValue(formKey, id, false);
+            },[]);
             return (
                 <div className={`form-check ${addClass}`}>
-                    <input className="form-check-input" name={name} hidden type="checkbox" id={id} defaultValue="option1" />
+                    <input className="form-check-input" data-parent-id={parentId} name={name} checked={inputValue(formKey, id, false)} value={id} onChange={(e) => setInputValue(formKey, id, e.target.checked)}  hidden type="checkbox" id={id} />
                     <label className="form-check-label" htmlFor={id}>
                         <span className="box">
                             <i className="fas fa-check" />
@@ -121,7 +124,5 @@ const mapStateToProps = (state) => ({
         return defaultValue;
     }
 })
-const mapDispatchToProps = (dispatch) => ({
-    setInputValue: (key, name, value) => dispatch(setInputValue(key, name, value))
-})
-export default connect(mapStateToProps, mapDispatchToProps)(Input);
+
+export default connect(mapStateToProps, { setInputValue })(Input);

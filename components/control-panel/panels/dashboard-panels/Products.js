@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import product from '../../../../api/product';
-import active from '../../../../helpers/active';
+import product from '../../../../api/product'
+import active from '../../../../helpers/active'
 import Product from '../../../products/Product'
+import p from '../../../../api/product'
 export default function Products() {
     const [selectable, setSelectable] = useState(false);
     const [selectAll, setSelectAll] = useState(false);
@@ -20,6 +21,28 @@ export default function Products() {
     function handleSelectAll(e) {
         setSelectAll(e.target.checked);
         setSelectable(e.target.checked);
+    }
+    function getSelectedProducts() {
+        // => get all elements{products} that have data-selected = true
+        const products = Array.prototype.slice.call(document.querySelectorAll('[data-selected=true]'));
+        // => get the ids from the selected elements
+        const ids = products.map(p => p.getAttribute('data-product-id'));
+        return ids;
+    }
+    async function deleteProducts() {
+        const ids = getSelectedProducts();
+        const res = await p.deleteList({ ids });
+        if (res.status === 200) {
+            let newProducts = products.filter(p => {
+                for (const id of ids) {
+                    if (p.id == id) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+            setProducts(newProducts);
+        }
     }
     return (
         <>
@@ -57,7 +80,7 @@ export default function Products() {
                         </select>
                     </div>
                     <div className={active(selectable, { defaultClass: 'buttons' })}>
-                        <button className="btn btn-danger">Delete</button>
+                        <button onClick={deleteProducts} className="btn btn-danger">Delete</button>
                         <button className="btn btn-dark">Draft</button>
                     </div>
                 </div>
@@ -65,7 +88,6 @@ export default function Products() {
             </div>
             <div className="products">
                 <div className="row justify-content-center">
-
                     {products.map(p => {
                         let { path, position } = JSON.parse(p.pictures)[0];
                         path = process.env.NEXT_PUBLIC_BASE_URL_STORAGE + path.replace('public', '');
@@ -74,26 +96,17 @@ export default function Products() {
                                 selectable={selectable}
                                 selected={selectAll}
                                 key={p.id}
+                                id={p.id}
                                 name={p.name}
                                 price={p.price}
                                 offerPrice={p.offer_price}
                                 currency="LE"
                                 src={path}
-                                href="/product"
+                                href={`/product/${p.id}`}
                                 position={JSON.parse(position)}
                             />
                         )
                     })}
-                    <Product
-                        selectable={selectable}
-                        selected={selectAll}
-                        name="Blouse"
-                        price="250"
-                        offerPrice="200"
-                        currency="LE"
-                        src="/images/cat_5.jpg"
-                        href="/products"
-                    />
                 </div>
             </div>
         </>

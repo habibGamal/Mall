@@ -3,9 +3,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import active from '../../helpers/active';
 import { useRouter } from 'next/dist/client/router';
-export default function Product({ selectable, selected, name, price, offerPrice, currency, src, href, position }) {
+export default function Product({ selectable, id, selected, name, price, offerPrice, currency, src, href, position }) {
     let p = position ? JSON.parse(JSON.stringify(position)) : { "leftP": 50, "topP": 0 }
-    // console.log(p["leftP"]);
     const [select, setSelect] = useState(false);
     const [menuT, setMenuT] = useState(false);
     const router = useRouter();
@@ -21,8 +20,9 @@ export default function Product({ selectable, selected, name, price, offerPrice,
         }
     }
     if (selectable !== undefined && selectable === true) {
+        // => data-selected is attribute to help in selecting the products selected
         return (
-            <div className="product" onClick={selectHandle} data-selected={select}>
+            <div className="product" onClick={selectHandle} data-selected={select} data-product-id={id}>
                 <span className={active(select, { activeClass: 'selected', defaultClass: 'selectable-box' })}>
                     <i className="fas fa-check" />
                 </span>
@@ -58,7 +58,6 @@ export default function Product({ selectable, selected, name, price, offerPrice,
     return (
         <div className="product" onClick={(e) => clickHandle(e, href)}>
             <div className="picture">
-                {/* <Image src={src} layout="fill" objectPosition={`${p.leftP}% ${-1 * p.topP}%`} className="img" alt="T-shirt" /> */}
                 {img}
             </div>
             <div className="product-details">

@@ -11,6 +11,6 @@ function Messages({messages}) {
     )
 }
 const mapStateToProps = state => ({
-    messages: state.messages,
+    messages: state.messages
 })
 export default connect(mapStateToProps)(Messages);

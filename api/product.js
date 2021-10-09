@@ -12,5 +12,9 @@ export default {
     show: async function(id){
         let res = await api.get(`/product/${id}`);
         return res;
+    },
+    deleteList: async function(ids){
+        let res = await api.post('/product/deleteList',ids);
+        return res;
     }
 }
