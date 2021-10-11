@@ -5,6 +5,7 @@ import active from '../../helpers/active'
 import ProductControlPanel from '../../components/control-panel/ProductControlPanel'
 import p from '../../api/product';
 import handlePath from '../../helpers/picturePath';
+import NotEmpty from '../../directives/NotEmpty'
 export const getServerSideProps = async (ctx) => {
     try {
         const res = await p.show(ctx.params.id);
@@ -160,18 +161,22 @@ function Product({ product }) {
                                     {product.offer_price ? <><del>{product.offer_price} LE</del><span> {product.price} LE</span></> : <span> {product.price} LE</span>}
                                 </div>
                             </div>
-                            <div className="block">
-                                <h4>Choose from available sizes</h4>
-                                <div className="context">
-                                    {options('sizes_option').map((option, i) => <span key={i} onClick={() => setSizeOption(i)} className={activeSize(i)}>{option}</span>)}
+                            <NotEmpty arr={options('sizes_option')}>
+                                <div className="block">
+                                    <h4>Choose from available sizes</h4>
+                                    <div className="context">
+                                        {options('sizes_option').map((option, i) => <span key={i} onClick={() => setSizeOption(i)} className={activeSize(i)}>{option}</span>)}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="block">
-                                <h4>Choose from available Colors</h4>
-                                <div className="context">
-                                    {options('colors_option').map((option, i) => <span key={i} onClick={() => setColorOption(i)} className={activeColor(i)}>{option}</span>)}
+                            </NotEmpty>
+                            <NotEmpty arr={options('colors_option')}>
+                                <div className="block">
+                                    <h4>Choose from available Colors</h4>
+                                    <div className="context">
+                                        {options('colors_option').map((option, i) => <span key={i} onClick={() => setColorOption(i)} className={activeColor(i)}>{option}</span>)}
+                                    </div>
                                 </div>
-                            </div>
+                            </NotEmpty>
                             <div className="interact block">
                                 <h4>Interact</h4>
                                 <div className="context">
