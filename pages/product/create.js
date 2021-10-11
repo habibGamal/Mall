@@ -10,15 +10,16 @@ import { setPicture } from '../../redux/actions/main'
 import { attachForm, unAttachForm } from '../../redux/actions/form'
 import invalid from '../../helpers/invalid'
 import SelectCategories from '../../components/general/selectCategories/SelectCategories'
-function CreateProduct({ pictures, setPicture,attachForm, unAttachForm  }) {
+import Chips from '../../components/inputs/Chips'
+function CreateProduct({ pictures, setPicture, attachForm, unAttachForm }) {
     const productFormKey = 'product_form';
     const productForm = useRef(null);
     const [previewT, setPreviewT] = useState(false);
     const [errors, setErrors] = useState(null);
-    useEffect(()=>{
+    useEffect(() => {
         attachForm(productFormKey);
-        return ()=>unAttachForm(productFormKey);
-    },[])
+        return () => unAttachForm(productFormKey);
+    }, [])
     function pictureInit(e) {
         let files = e.target.files;
         if (files.length !== 0) {
@@ -69,9 +70,16 @@ function CreateProduct({ pictures, setPicture,attachForm, unAttachForm  }) {
         // => handle specificaitons
         form.set('specifications', JSON.stringify(splitSpecifications(form.get('specifications'))));
         // => handle warranty
-        form.set('warranty', form.get('warranty_time') + ' ' + form.get('warranty_date'));
+        form.get('warranty_time') ? form.set('warranty', form.get('warranty_time') + ' ' + form.get('warranty_date')) : undefined;
+        form.delete('warranty_time');
+        form.delete('warranty_date');
         // => delete Picture input
         form.delete('picture');
+        // => handle chips
+        const color_chips = JSON.stringify([...document.querySelectorAll('[data-name="colors_option"]')].map(chip => chip.dataset.value));
+        const size_chips = JSON.stringify([...document.querySelectorAll('[data-name="sizes_option"]')].map(chip => chip.dataset.value));
+        form.set('colors_option', color_chips);
+        form.set('sizes_option', size_chips);
         // => send product to backend
         product.store(form)
             // => debug successful states
@@ -163,7 +171,7 @@ function CreateProduct({ pictures, setPicture,attachForm, unAttachForm  }) {
                         <div className="categories">
                             <label>Categories</label>
                             <div className="show-categories">
-                                <SelectCategories formKey={productFormKey}/>
+                                <SelectCategories formKey={productFormKey} />
                             </div>
                         </div>
                         <div className="form-row align-items-center">
@@ -207,15 +215,17 @@ function CreateProduct({ pictures, setPicture,attachForm, unAttachForm  }) {
                     <h3>Optional</h3>
                     <div className="groups">
                         <div className="form-row">
-                            <Input
+                            <Chips
                                 label="Available Colors"
-                                type="text"
                                 icon={<i className="fas fa-palette" />}
+                                name="colors_option"
+                                formKey={productFormKey}
                             />
-                            <Input
+                            <Chips
                                 label="Available Sizes"
-                                type="text"
                                 icon={<i className="fas fa-box" />}
+                                name="sizes_option"
+                                formKey={productFormKey}
                             />
                         </div>
                         <div className="form-group">
@@ -272,4 +282,4 @@ const mapPropsFromState = state => ({
     pictures: state.main.pictures,
     picturesPosition: state.main.picturesPosition,
 })
-export default connect(mapPropsFromState, { setPicture,  attachForm, unAttachForm  })(CreateProduct);
+export default connect(mapPropsFromState, { setPicture, attachForm, unAttachForm })(CreateProduct);

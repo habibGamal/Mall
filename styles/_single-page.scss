@@ -1,11 +1,12 @@
-// start light theme
 .single-page-form {
-    .head  h2 , .product-form  h3{
+
+    .head h2,
+    .product-form h3 {
         color: $second-color;
     }
 }
-// end light theme
-.preview-container{
+
+.preview-container {
     .toggle-container {
         width: 100px;
         aspect-ratio: 4/7;
@@ -15,67 +16,85 @@
         box-sizing: content-box;
         margin: 1rem;
         position: relative;
+
         .toggle {
             width: 100%;
             height: 100%;
             object-fit: cover;
             position: relative;
             object-position: 50% 50%;
+
             &:hover {
                 cursor: pointer;
                 text-decoration: underline;
             }
         }
+
         .close {
-            position:absolute;
+            position: absolute;
             z-index: 1;
             top: -5px;
             right: 0px;
         }
     }
+
     .preview {
         z-index: 3;
         position: fixed;
         visibility: hidden;
         top: 50%;
         left: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         text-align: center;
+
         &.active {
             visibility: visible;
         }
+
+        .close.toggle {
+            font-size: 2rem;
+            color: #fff;
+            float: unset;
+        }
+
         .img-boundries {
             margin: 0 auto;
             max-width: 300px;
-            width: 70vw;
+            width: calc((4*(100vh - 161px))/7);
             aspect-ratio: 4/7;
             border: 2px dashed #000;
             overflow: hidden;
             box-sizing: content-box;
+
             .img-drag {
                 display: inline-block;
                 position: relative;
+
                 img {
                     width: 100%;
                     transition: width 75ms ease-in-out;
                 }
             }
-        } 
+        }
+
         .range {
             width: fit-content;
             margin: 1rem auto;
         }
     }
 }
+
 .single-page-form {
     .title {
         text-transform: uppercase;
         padding: 2rem;
         text-align: center;
-        > h2 {
+
+        >h2 {
             width: fit-content;
             margin: 0 auto;
             position: relative;
+
             &::after {
                 content: '';
                 display: block;
@@ -87,14 +106,41 @@
             }
         }
     }
+
     .form {
         margin: 1rem;
+
+        .chips {
+            .chip {
+                background-color: var(--secondary);
+                color: #fff;
+                font-size: large;
+                padding: .2rem .3rem;
+                display: inline-block;
+                border-radius: 5px;
+
+                margin : {
+                    right: .5rem;
+                    bottom: .5rem;
+                }
+
+                .close {
+                    cursor: pointer;
+                    margin-left: .2rem;
+                    color: #fff;
+                    line-height: .9;
+                }
+            }
+        }
+
         .form-group {
             position: relative;
-            > i {
+
+            >i {
                 display: none;
             }
-            > input:not(.is-valid):not(.is-invalid) + i {
+
+            >input:not(.is-valid):not(.is-invalid)+i {
                 display: block;
                 position: absolute;
                 color: $second-color;
@@ -102,34 +148,43 @@
                 bottom: 10px;
                 transition: opacity 200ms ease-in-out;
             }
-            > input:focus + i {
+
+            >input:focus+i {
                 opacity: 0;
             }
-            > input[type="number"] {
-                & + i {
-                    transition: none!important;
+
+            >input[type="number"] {
+                &+i {
+                    transition: none !important;
                 }
-                &:hover + i {
+
+                &:hover+i {
                     opacity: 0;
                 }
             }
         }
+
         .categories {
             margin: 1rem 0;
+
             .show-categories {
                 @extend .isolate;
                 padding: 1.5rem;
-                .category > .children {
+
+                .category>.children {
                     margin-left: 1rem;
                 }
             }
         }
-        > h3 {
+
+        >h3 {
             font-weight: 400;
         }
-        > .groups {
+
+        >.groups {
             margin-top: 1rem;
             margin-left: 1rem;
+
             .form-group .plus {
                 @extend .isolate;
                 display: flex;
@@ -139,12 +194,14 @@
                 height: 200px;
                 margin: 1rem;
                 cursor: pointer;
-                > i {
+
+                >i {
                     font-size: 3rem;
                 }
             }
         }
-        > .btns {
+
+        >.btns {
             width: fit-content;
             margin: 1rem auto;
         }

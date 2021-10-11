@@ -8,7 +8,6 @@ import handlePath from '../../helpers/picturePath';
 export const getServerSideProps = async (ctx) => {
     try {
         const res = await p.show(ctx.params.id);
-        console.log(p.show);
         return {
             props: {
                 product: res.data
@@ -64,8 +63,41 @@ function Product({ product }) {
     function activePicture(index, obj = {}) {
         return active(pictureShow === index, obj)
     }
-    function pictureLoaded(obj) {
-        console.log(obj);
+    function categoryPath() {
+        let catPath = [];
+        if (product.category) {
+            catPath.unshift(product.category.name);
+            if (product.category.parent_category) {
+                catPath.unshift(product.category.parent_category.name);
+                if (product.category.parent_category.parent_category) {
+                    catPath.unshift(product.category.parent_category.parent_category.name);
+                }
+            }
+        }
+        return catPath.map((name, i) => {
+            // => if that is last category
+            if (catPath.length - 1 == i) {
+                return (
+                    <React.Fragment key={i}>
+                        <Link href="/category">
+                            {name}
+                        </Link>
+                    </React.Fragment>
+                )
+            }
+            return (
+                <React.Fragment key={i}>
+                    <Link href="/category">
+                        {name}
+                    </Link>
+                    &#x2192;
+                </React.Fragment>
+            )
+        });
+    }
+    function options(optionName) {
+        const { body } = product.options.filter(option => option.name === optionName)[0];
+        return body ? JSON.parse(body) : [];
     }
     return (
         <section className="single-product">
@@ -78,13 +110,7 @@ function Product({ product }) {
                             </a>
                         </Link>
                         <div className="category-path">
-                            <Link href="/category">
-                                Fashion
-                            </Link>
-                            &#x2192;
-                            <Link href="/category">
-                                Men
-                            </Link>
+                            {categoryPath()}
                         </div>
                     </div>
                     <div className="content">
@@ -113,7 +139,6 @@ function Product({ product }) {
                                                 }}
                                             >
                                                 <Image
-                                                    onLoadingComplete={pictureLoaded}
                                                     src={path}
                                                     alt=""
                                                     objectPosition={`${position.leftP}% ${position.topP}%`}
@@ -132,21 +157,19 @@ function Product({ product }) {
                             <div className="price block">
                                 <h4>Price</h4>
                                 <div className="context">
-                                    <del>250 EL</del><span> 200 El</span>
+                                    {product.offer_price ? <><del>{product.offer_price} LE</del><span> {product.price} LE</span></> : <span> {product.price} LE</span>}
                                 </div>
                             </div>
                             <div className="block">
-                                <h4>Available Size</h4>
+                                <h4>Choose from available sizes</h4>
                                 <div className="context">
-                                    <span onClick={() => setSizeOption(0)} className={activeSize(0)}>L</span>
-                                    <span onClick={() => setSizeOption(1)} className={activeSize(1)}>XL</span>
+                                    {options('sizes_option').map((option, i) => <span key={i} onClick={() => setSizeOption(i)} className={activeSize(i)}>{option}</span>)}
                                 </div>
                             </div>
                             <div className="block">
-                                <h4>Available Colors</h4>
+                                <h4>Choose from available Colors</h4>
                                 <div className="context">
-                                    <span onClick={() => setColorOption(0)} className={activeColor(0)}>orange</span>
-                                    <span onClick={() => setColorOption(1)} className={activeColor(1)}>red</span>
+                                    {options('colors_option').map((option, i) => <span key={i} onClick={() => setColorOption(i)} className={activeColor(i)}>{option}</span>)}
                                 </div>
                             </div>
                             <div className="interact block">

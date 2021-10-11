@@ -94,7 +94,7 @@ function Nav({ setPopupForm, Reauth,p}) {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/create-product">
+                                <Link href="/product/create">
                                     <a onClick={navLink}>Create Product</a>
                                 </Link>
                             </li>

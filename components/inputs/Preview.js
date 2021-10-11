@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 import active from '../../helpers/active';
 import preview from '../../helpers/preview';
 import { removePicture, setPicturePosition } from '../../redux/actions/main';
-function Preview({ imgSrc, previewT, setPreviewT, index, setPicturePosition,removePicture }) {
+function Preview({ imgSrc, previewT, setPreviewT, index, setPicturePosition, removePicture }) {
     const toggleImg = useRef(null);
     const imgBoundry = useRef(null);
     const imgDrag = useRef(null);
     const img = useRef(null);
     const [range, setRange] = useState(0);
     const [toggle, setToggle] = useState(false);
-    const [removePreview,setRemovePreview] = useState(false);
     useMemo(() => {
         if (!previewT) {
             setToggle(false);
@@ -19,8 +18,10 @@ function Preview({ imgSrc, previewT, setPreviewT, index, setPicturePosition,remo
     async function handle(e) {
         setRange(e.target.value);
         img.current.style.width = (imgBoundry.current.clientWidth * parseFloat(e.target.value)) + 'px';
-        imgDrag.current.style.top = '0';
-        imgDrag.current.style.left = '0';
+        if(parseInt(img.current.style.width) <= -parseInt(imgDrag.current.style.left) || parseInt(img.current.style.height) <= -parseInt(imgDrag.current.style.top) ){
+            imgDrag.current.style.top = '0';
+            imgDrag.current.style.left = '0';
+        }
     }
     function ImgLoaded() {
         let boundries = [imgBoundry.current.clientWidth, imgBoundry.current.clientHeight];
@@ -40,21 +41,20 @@ function Preview({ imgSrc, previewT, setPreviewT, index, setPicturePosition,remo
         // => store the percentages in the global store
         setPicturePosition({ index, percentages: { heightP, leftP, topP } });
     }
-    function remove(){
-        // => remove component from ui
+    function remove() {
         // => remove picutre from the global store
         removePicture(index);
     }
     return (
-        <div className={active(removePreview,{activeClass:'remove',defaultClass:'preview-container'})}>
+        <div className="preview-container">
             <div className="toggle-container">
                 <button onClick={remove} type="button" className="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <img ref={toggleImg} className="toggle" onClick={() => { setPreviewT(true); setToggle(true) }} src={imgSrc} />
             </div>
-            <div className={active(toggle,{defaultClass:'preview'})}>
-                <span className="toggle" onClick={() => { setPreviewT(false); setToggle(false) }}>close</span>
+            <div className={active(toggle, { defaultClass: 'preview' })}>
+                <span className="toggle close" onClick={() => { setPreviewT(false); setToggle(false) }}>&times;</span>
                 <div ref={imgBoundry} className="img-boundries">
                     <div ref={imgDrag} className="img-drag">
                         <img ref={img} onLoad={ImgLoaded} src={imgSrc} draggable="false" />
@@ -71,4 +71,4 @@ function Preview({ imgSrc, previewT, setPreviewT, index, setPicturePosition,remo
 }
 
 
-export default connect(null, { setPicturePosition,removePicture })(Preview);
+export default connect(null, { setPicturePosition, removePicture })(Preview);

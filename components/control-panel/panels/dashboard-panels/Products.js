@@ -3,6 +3,7 @@ import product from '../../../../api/product'
 import active from '../../../../helpers/active'
 import Product from '../../../products/Product'
 import p from '../../../../api/product'
+import handlePath from '../../../../helpers/picturePath'
 export default function Products() {
     const [selectable, setSelectable] = useState(false);
     const [selectAll, setSelectAll] = useState(false);
@@ -90,7 +91,7 @@ export default function Products() {
                 <div className="row justify-content-center">
                     {products.map(p => {
                         let { path, position } = JSON.parse(p.pictures)[0];
-                        path = process.env.NEXT_PUBLIC_BASE_URL_STORAGE + path.replace('public', '');
+                        path = handlePath(path);
                         return (
                             <Product
                                 selectable={selectable}

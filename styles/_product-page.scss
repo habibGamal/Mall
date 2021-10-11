@@ -27,8 +27,8 @@
             }
         }
         > .content {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: auto auto;
             .pictures {
                 display: flex;
                 .mini {
@@ -113,6 +113,12 @@
                         > .form-group {
                             display: inline-block;
                             vertical-align: middle;
+                        }
+                    }
+                    &.price {
+                        span {
+                            font-weight: bold;
+                            font-size: large;
                         }
                     }
                     &.interact .option {

@@ -111,6 +111,7 @@
 
         .picture {
             height: 150px;
+
             .img {
                 object-position: 60% 50%;
             }
@@ -335,9 +336,13 @@
 
     // Single Product
     .single-product {
-        .product>.content .pictures {
-            width: 100%;
-            justify-content: center;
+        .product>.content {
+            grid-template-columns: auto;
+
+            .pictures {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
         .extra {

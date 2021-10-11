@@ -1,47 +1,19 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
-import Input from '../../inputs/Input'
-import { setInputValue } from '../../../redux/actions/form'
+import React from 'react'
 import SubCategory from './SubCategory';
+import CheckBox from '../../inputs/CheckBox';
 
-function Category({ id, name, formKey, subCategories, parentId, setInputValue }) {
-    useEffect(() => {
-        // => get the category that is selected
-        const selectedCat = document.getElementById(id);
-        selectedCat.addEventListener('change',()=>{
-            nestedSelect(selectedCat)
-        });
-    }, []);
-    function nestedSelect(cat) {
-        // => get parent Id
-        const parentCatId = cat.getAttribute('data-parent-id');
-        // => if the parent category id not null
-        if (parentCatId) {
-            // => change its state
-            setInputValue(formKey, parentCatId, cat.checked);
-            nestedSelect(document.getElementById(parentCatId))
-        }
-
-    }
+export default function Category({ id, name, formKey, subCategories }) {
     return (
         <div className="category">
-            <Input
+            <CheckBox
                 label={name}
-                type="check"
                 name='category'
                 id={id}
                 addClass=""
                 formKey={formKey}
-                parentId={parentId}
+                value={id}
             />
-            <SubCategory formKey={formKey} parentId={id} subCategories={subCategories} />
+            <SubCategory formKey={formKey} subCategories={subCategories} />
         </div>
     )
 }
-
-const mapStateToProps = (state) => ({
-    getInputValue: (key, name) => {
-        return state.form[key][name];
-    }
-})
-export default connect(mapStateToProps, { setInputValue })(Category)

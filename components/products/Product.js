@@ -9,7 +9,7 @@ export default function Product({ selectable, id, selected, name, price, offerPr
     const [menuT, setMenuT] = useState(false);
     const router = useRouter();
     useEffect(() => setSelect(selected), [selected]);
-    const img = useMemo(()=><Image src={src} layout="fill" objectPosition={`${p.leftP}% ${-1 * p.topP}%`} className="img" alt="T-shirt" />,[]);
+    const img = useMemo(() => <Image src={src} layout="fill" objectPosition={`${p.leftP}% ${-1 * p.topP}%`} className="img" alt="T-shirt" />, []);
     function selectHandle() {
         setSelect(!select);
     }
@@ -45,11 +45,13 @@ export default function Product({ selectable, id, selected, name, price, offerPr
                     <span className="name">{name}</span>
                     <span className="separator"></span>
                     <span className="price">
-                        <span className="old">
-                            <del>{price} {currency}</del>
-                            <span className="badge badge-success">11%</span>
-                        </span>
-                        <strong>{offerPrice}</strong> {currency}
+                        {offerPrice ?
+                            <span className="old">
+                                <del>{price} {currency}</del>
+                                <span className="badge badge-success">11%</span>
+                            </span> : ''
+                        }
+                        <strong>{offerPrice ? offerPrice : price}</strong> {currency}
                     </span>
                 </div>
             </div>
@@ -76,11 +78,13 @@ export default function Product({ selectable, id, selected, name, price, offerPr
                 <span className="name">{name}</span>
                 <span className="separator"></span>
                 <span className="price">
-                    <span className="old">
-                        <del>{price} {currency}</del>
-                        <span className="badge badge-success">11%</span>
-                    </span>
-                    <strong>{offerPrice}</strong> {currency}
+                    {offerPrice ?
+                        <span className="old">
+                            <del>{price} {currency}</del>
+                            <span className="badge badge-success">11%</span>
+                        </span> : ''
+                    }
+                    <strong>{offerPrice ? offerPrice : price}</strong> {currency}
                 </span>
             </div>
         </div>
