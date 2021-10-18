@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux';
 import isdefined from '../../helpers/isdefined';
-import { setInputValue } from '../../redux/actions/form'
-function Chips({ addClass, id, name, label, icon, formKey, inputValue, setInputValue, }) {
+// import { setInputValue } from '../../redux/actions/form'
+import { Forms } from '../../redux/dispatcher';
+function Chips({ addClass, id, name, label, icon, formKey, inputValue, }) {
     const [chips, setChips] = useState([]);
     if (addClass === undefined) {
         addClass = 'col-md-6';
     }
     function handler(e) {
-        setInputValue(formKey, name, e.target.value);
+        Forms.setInputValue(formKey, name, e.target.value);
     }
     function removeChip(index) {
         setChips(old => old.filter(chip => chip.index !== index));
@@ -23,7 +24,7 @@ function Chips({ addClass, id, name, label, icon, formKey, inputValue, setInputV
                     name: e.target.value,
                 }
             ]);
-            setInputValue(formKey, name, '');
+            Forms.setInputValue(formKey, name, '');
         }
     }
     return (
@@ -52,14 +53,14 @@ const mapStateToProps = (state) => ({
         // => function return current value of particular input in particular form
         if (key !== undefined && name !== undefined) {
             // => check if the key an name is definded or not
-            if (state.form[key] !== undefined) {
+            if (state.forms[key] !== undefined) {
                 // => check if the key of the form is registered in the form state or not
                 // => return the value if it is defined or default value if it's not
-                return state.form[key][name] === undefined ? defaultValue : state.form[key][name];
+                return state.forms[key][name] === undefined ? defaultValue : state.forms[key][name];
             }
         }
         return defaultValue;
     },
 })
 
-export default connect(mapStateToProps, { setInputValue })(Chips);
+export default connect(mapStateToProps)(Chips);

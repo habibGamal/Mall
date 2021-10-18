@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import active from '../../helpers/active';
-import { Messages } from '../../redux/stateControllers/messages';
+import { Messages } from '../../redux/dispatcher';
 
 export default function Message({index,type,content}) {
     const [showT,setShowT] = useState(true)

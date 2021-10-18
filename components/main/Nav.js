@@ -7,11 +7,10 @@ import MiniCart from '../cart/MiniCart';
 import Unauthenticated from '../../directives/Unauthenticated';
 import Authenticated from '../../directives/Authenticated';
 import auth from '../../api/auth';
-import { Reauth } from '../../redux/actions/auth';
 import { connect } from 'react-redux';
-import { setPopup } from '../../redux/actions/popup';
-function Nav({ setPopupForm, Reauth,p}) {
-    // console.log(p);
+import { $Async } from '../../redux/asyncActions';
+import { Popup } from '../../redux/dispatcher';
+function Nav({ setPopupForm}) {
     const router = useRouter();
     const search = useRef();
     const activeLink = useRef();
@@ -66,7 +65,7 @@ function Nav({ setPopupForm, Reauth,p}) {
     // api section
     async function logout() {
         await auth.logout().then(res => console.log(res));
-        await Reauth();
+        $Async.Reauth();
         router.push('/');
     }
     return (
@@ -196,8 +195,7 @@ function Nav({ setPopupForm, Reauth,p}) {
 
 const mapDispatchToProps = dispatch => (
     {
-        setPopupForm: (value) => dispatch(setPopup('auth-form', value)),
-        Reauth: ()=> dispatch(Reauth()),
+        setPopupForm: (value) =>  Popup.setPopup('auth-form', value),
     }
 )
-export default connect(state=>({p:state.messages}), mapDispatchToProps)(Nav);
+export default connect(null, mapDispatchToProps)(Nav);

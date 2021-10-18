@@ -2,8 +2,8 @@ import React, { useMemo, useRef, useState } from 'react'
 import { connect } from 'react-redux';
 import active from '../../helpers/active';
 import preview from '../../helpers/preview';
-import { removePicture, setPicturePosition } from '../../redux/actions/main';
-function Preview({ imgSrc, previewT, setPreviewT, index, setPicturePosition, removePicture }) {
+import { Main } from '../../redux/dispatcher';
+function Preview({ imgSrc, previewT, setPreviewT, index }) {
     const toggleImg = useRef(null);
     const imgBoundry = useRef(null);
     const imgDrag = useRef(null);
@@ -39,11 +39,11 @@ function Preview({ imgSrc, previewT, setPreviewT, index, setPicturePosition, rem
         toggleImg.current.style.objectPosition = `${leftP}%`;
         toggleImg.current.style.top = topP + '%';
         // => store the percentages in the global store
-        setPicturePosition({ index, percentages: { heightP, leftP, topP } });
+        Main.setPicturePosition( index,{ heightP, leftP, topP });
     }
     function remove() {
         // => remove picutre from the global store
-        removePicture(index);
+        Main.removePicture(index);
     }
     return (
         <div className="preview-container">
@@ -71,4 +71,4 @@ function Preview({ imgSrc, previewT, setPreviewT, index, setPicturePosition, rem
 }
 
 
-export default connect(null, { setPicturePosition, removePicture })(Preview);
+export default connect(null)(Preview);

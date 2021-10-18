@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
-import { setRouter } from '../redux/actions/router'
-function DefineRouter({ children, setRouter }) {
+import { Router } from '../redux/dispatcher';
+function DefineRouter({ children }) {
     const router = useRouter();
-    useEffect(() => setRouter(router), []);
+    useEffect(() => Router.set(router), []);
     return (
         <>
             {children}
@@ -12,4 +12,4 @@ function DefineRouter({ children, setRouter }) {
     )
 }
 
-export default connect(null, { setRouter })(DefineRouter);
+export default connect(null)(DefineRouter);

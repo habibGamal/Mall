@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import active from '../../helpers/active';
 import isdefined from '../../helpers/isdefined';
-import { setInputValue } from '../../redux/actions/form';
-function Input({ name, id, label, type, options, min, icon, invalidMsg, formKey, parentId, addClass, onChange, inputValue, setInputValue }) {
+import { Forms } from '../../redux/dispatcher';
+function Input({ name, id, label, type, options, min, icon, invalidMsg, formKey, parentId, addClass, onChange, inputValue }) {
     // const [value, setValue] = useState('init');
     if (addClass === undefined) {
         addClass = 'col-md-6';
@@ -18,7 +18,7 @@ function Input({ name, id, label, type, options, min, icon, invalidMsg, formKey,
     }, [invalidMsg]);
 
     function handleOnChange(e) {
-        setInputValue(formKey, name, e.target.value);
+        Forms.setInputValue(formKey, name, e.target.value);
         // => if there is an error remove it when user writing
         if (invMsg.length > 0) {
             setInvMsg('');
@@ -70,7 +70,7 @@ function Input({ name, id, label, type, options, min, icon, invalidMsg, formKey,
         case 'check':
             return (
                 <div className={`form-check ${addClass}`}>
-                    <input className="form-check-input" data-parent-id={parentId} name={name} checked={inputValue(formKey, id, false)} value={id} onChange={(e) => setInputValue(formKey, id, e.target.checked)} hidden type="checkbox" id={id} />
+                    <input className="form-check-input" data-parent-id={parentId} name={name} checked={inputValue(formKey, id, false)} value={id} onChange={(e) => Forms.setInputValue(formKey, id, e.target.checked)} hidden type="checkbox" id={id} />
                     <label className="form-check-label" htmlFor={id}>
                         <span className="box">
                             <i className="fas fa-check" />
@@ -85,7 +85,7 @@ function Input({ name, id, label, type, options, min, icon, invalidMsg, formKey,
             return (
                 <div className={`form-group ${addClass}`}>
                     {label === null ? '' : <label htmlFor={id}>{label}</label>}
-                    <select name={name} className="form-control" id={id} value={inputValue(formKey, name, options[0].value)} onChange={(e) => setInputValue(formKey, name, e.target.value)}>
+                    <select name={name} className="form-control" id={id} value={inputValue(formKey, name, options[0].value)} onChange={(e) => Forms.setInputValue(formKey, name, e.target.value)}>
                         {options.map((option, i) => <option key={i} value={option.value}>{option.as}</option>)}
                     </select>
                 </div>
@@ -113,14 +113,14 @@ const mapStateToProps = (state) => ({
         // => function return current value of particular input in particular form
         if (key !== undefined && name !== undefined) {
             // => check if the key an name is definded or not
-            if (state.form[key] !== undefined) {
+            if (state.forms[key] !== undefined) {
                 // => check if the key of the form is registered in the form state or not
                 // => return the value if it is defined or default value if it's not
-                return state.form[key][name] === undefined ? defaultValue : state.form[key][name];
+                return state.forms[key][name] === undefined ? defaultValue : state.forms[key][name];
             }
         }
         return defaultValue;
     }
 })
 
-export default connect(mapStateToProps, { setInputValue })(Input);
+export default connect(mapStateToProps)(Input);

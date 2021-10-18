@@ -1,7 +1,7 @@
 import axios from "axios";
 import store from "../redux/store";
 import { Router } from "../redux/getStateDirect";
-import { Messages } from "../redux/stateControllers/messages";
+import { Messages } from "../redux/dispatcher";
 export const api = axios.create({
     baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}api/`,
     headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json', 'Accept': 'application/json' },

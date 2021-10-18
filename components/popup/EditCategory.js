@@ -4,24 +4,22 @@ import category from '../../api/category';
 import active from '../../helpers/active';
 import invalid from '../../helpers/invalid';
 import listCategories from '../../helpers/listCategories';
-import { GetCategories } from '../../redux/actions/apiFlow';
-import { attachForm, setInputValue, unAttachForm } from '../../redux/actions/form';
-import { setPopup } from '../../redux/actions/popup';
-import { Messages } from '../../redux/stateControllers/messages';
+import { $Async } from '../../redux/asyncActions';
+import { Messages, Forms, Popup } from '../../redux/dispatcher';
 import Input from '../inputs/Input';
 
-function EditCategory({ show, keyPopup, attachForm, unAttachForm, categories, setInputValue, args, GetCategories, setPopup }) {
+function EditCategory({ show, keyPopup, categories, setInputValue, args, setPopup }) {
     const formKey = 'edit_cat';
     const [errors, setErrors] = useState(null);
     useEffect(() => {
-        attachForm(formKey);
+        Forms.attachForm(formKey);
         return () => {
-            unAttachForm(formKey);
+            Forms.unattachForm(formKey);
         }
     }, []);
     useEffect(() => {
         if (args !== undefined) {
-            setInputValue('name', args.name.replace('→',''));
+            setInputValue('name', args.name.replace('→', ''));
         }
         setErrors(null);
     }, [args]);
@@ -33,10 +31,9 @@ function EditCategory({ show, keyPopup, attachForm, unAttachForm, categories, se
         category.edit(args.id, form)
             // => debug successful states
             .then(res => {
-                console.log(res);
                 if (res.status === 200) {
                     // => get the new categories from backend
-                    GetCategories();
+                    $Async.GetCategories();
                     // => remove popup
                     setPopup(false);
                     // => success message
@@ -45,16 +42,20 @@ function EditCategory({ show, keyPopup, attachForm, unAttachForm, categories, se
                     setErrors(null);
                 }
             })
-        // => debug errors
-        .catch(err => {
-            // => get error data,status code 
-            const { data, status } = err.response;
-            // => code 422 (invalid data)
-            if (status === 422) {
-                setErrors(data.errors);
-            }
+            // => debug errors
+            .catch(err => {
+                // => get error data,status code 
+                if(err.response){
+                    const { data, status } = err.response;
+                    // => code 422 (invalid data)
+                    if (status === 422) {
+                        setErrors(data.errors);
+                    }
+                }else {
+                    console.log(err);
+                }
 
-        });
+            });
 
     }
     return (
@@ -88,15 +89,12 @@ function EditCategory({ show, keyPopup, attachForm, unAttachForm, categories, se
 const mapStateToProps = state => ({
     show: (key) => state.popup[key],
     args: state.popup.args,
-    categories: state.apiFlow.categories,
+    categories: state.apiData.categories,
 })
 
 const mapDispatchToProps = dispatch => ({
-    attachForm: fromKey => dispatch(attachForm(fromKey)),
-    unAttachForm: fromKey => dispatch(unAttachForm(fromKey)),
-    setInputValue: (inputName, inputValue) => dispatch(setInputValue('edit_cat', inputName, inputValue)),
-    GetCategories: () => dispatch(GetCategories()),
-    setPopup: (value) => dispatch(setPopup('edit-category', value))
+    setInputValue: (inputName, inputValue)=>Forms.setInputValue('edit_cat', inputName, inputValue),
+    setPopup: (value) => Popup.setPopup('edit-category', value),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditCategory);

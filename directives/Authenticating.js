@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
-import { Reauth } from '../redux/actions/auth';
-function Authenticating({ authenticated, Reauth, children }) {
+import { $Async } from '../redux/asyncActions';
+function Authenticating({ authenticated, children }) {
   useEffect(()=>{
-    Reauth();
+    $Async.Reauth();
   },[])
   return (
     <>
@@ -19,8 +19,5 @@ const mapStateToProps = state => ({
   authenticated: state.main.authenticated,
 })
 
-const mapDispatchToProps = {
-  Reauth,
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Authenticating);
+export default connect(mapStateToProps)(Authenticating);

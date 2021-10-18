@@ -5,17 +5,16 @@ import Slider from '../components/slider/Slider'
 import Stores from '../components/stores/Stores'
 import auth from '../api/auth'
 import {connect} from 'react-redux'
-import { Reauth } from '../redux/actions/auth'
-import axios from 'axios'
-function Home({Reauth}) {
+import { $Async } from '../redux/asyncActions'
+function Home() {
   // for fast test login and logout functionality
   async function login(){
     await auth.login({'email':'habibmisi3@gmail.com','password':'gh090807'});
-    await Reauth();
+    $Async.Reauth();
   }
   async function logout(){
     await auth.logout().then(res => console.log(res));
-    await Reauth();
+    $Async.Reauth();
   }
   function testAuth(){
     auth.isAuthenticated().then(res => console.log(res));
@@ -57,10 +56,6 @@ function Home({Reauth}) {
 const mapStateToProps = state => ({
   authenticated: state.main.authenticated,
   router: state.router,
-})
+});
 
-const mapDispatchToProps = {
-  Reauth,
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);

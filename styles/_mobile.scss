@@ -180,11 +180,12 @@
                 }
 
                 .buttons {
+                    border: $border;
                     display: flex;
                     position: absolute;
                     opacity: 0;
                     right: 0;
-                    top: -110%;
+                    top: -270%;
                     pointer-events: none;
                     background-color: #f6f6f6;
                     border-radius: 10px;

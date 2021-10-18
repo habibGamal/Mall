@@ -8,24 +8,24 @@ export default function Product() {
     const [colorOption, setColorOption] = useState(0);
     const [pictureShow, setPictureShow] = useState(0);
     const [like, setLike] = useState(false);
-    function showScroll(e){
+    function showScroll(e) {
         const showW = show.current.clientWidth;
-        const n = show.current.scrollLeft/(showW+16);
+        const n = show.current.scrollLeft / (showW + 16);
         const to = (i) => show.current.scrollTo({
-            left: (showW+16)*i,
+            left: (showW + 16) * i,
             behavior: 'smooth'
         })
-        const x = e.clientX >= show.current.offsetLeft && e.clientX < (show.current.offsetLeft + showW*.5) ;
-        const next = (i)=>(i-1 <= n && n < i) ? to(i):undefined;
-        const back = (i)=>(i < n && n <= i+1) ? to(i):undefined;
-        if(x){
+        const x = e.clientX >= show.current.offsetLeft && e.clientX < (show.current.offsetLeft + showW * .5);
+        const next = (i) => (i - 1 <= n && n < i) ? to(i) : undefined;
+        const back = (i) => (i < n && n <= i + 1) ? to(i) : undefined;
+        if (x) {
             // back
-            for(let i = 0;i <= show.current.children.length -2;i++){
+            for (let i = 0; i <= show.current.children.length - 2; i++) {
                 back(i);
             }
-        }else{
+        } else {
             // next
-            for(let i = 1;i <= show.current.children.length -1;i++){
+            for (let i = 1; i <= show.current.children.length - 1; i++) {
                 next(i);
             }
         }
@@ -36,7 +36,7 @@ export default function Product() {
     function activeColor(index) {
         return active(colorOption === index, { defaultClass: 'option' })
     }
-    function activePicture(index,obj={}) {
+    function activePicture(index, obj = {}) {
         return active(pictureShow === index, obj)
     }
     return (
@@ -45,7 +45,7 @@ export default function Product() {
                 <div className="container">
                     <div className="product">
                         <div className="path">
-                            <Link  href="/store">
+                            <Link href="/store">
                                 <a className="store-logo">
                                     <img src="/images/logo_1.jpg" />
                                 </a>
@@ -63,13 +63,13 @@ export default function Product() {
                         <div className="content">
                             <div className="pictures">
                                 <div className="mini">
-                                    <div className={activePicture(0,{defaultClass:'picture'})} onClick={() => setPictureShow(0)}>
+                                    <div className={activePicture(0, { defaultClass: 'picture' })} onClick={() => setPictureShow(0)}>
                                         <img src="/images/cat_1.jpg" alt="" />
                                     </div>
-                                    <div className={activePicture(1,{defaultClass:'picture'})} onClick={() => setPictureShow(1)}>
+                                    <div className={activePicture(1, { defaultClass: 'picture' })} onClick={() => setPictureShow(1)}>
                                         <img src="/images/cat_2.jpg" alt="" />
                                     </div>
-                                    <div className={activePicture(2,{defaultClass:'picture'})} onClick={() => setPictureShow(2)}>
+                                    <div className={activePicture(2, { defaultClass: 'picture' })} onClick={() => setPictureShow(2)}>
                                         <img src="/images/cat_3.jpg" alt="" />
                                     </div>
                                 </div>

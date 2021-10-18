@@ -3,25 +3,24 @@ import { connect } from 'react-redux';
 import category from '../../../../../api/category';
 import invalid from '../../../../../helpers/invalid';
 import isThat from '../../../../../helpers/isThat';
-import { attachForm, unAttachForm, emptyForm } from '../../../../../redux/actions/form';
-import { clearCategories, GetCategories } from '../../../../../redux/actions/apiFlow';
 import Input from '../../../../inputs/Input'
 import Category from './Category'
 import Popup from '../../../../popup/Popup'
 import EditCategory from '../../../../popup/EditCategory'
 import listCategories from '../../../../../helpers/listCategories';
-import { Messages } from '../../../../../redux/stateControllers/messages';
+import { ApiData, Forms, Messages } from '../../../../../redux/dispatcher';
+import { $Async } from '../../../../../redux/asyncActions';
 
-function Categories({ attachForm, unAttachForm, emptyForm, categories, clearCategories, GetCategories }) {
+function Categories({ categories }) {
     const formKey = 'add_cat';
     const [errors, setErrors] = useState(null);
     const [buttonsT, setButtonsT] = useState('');
     useEffect(() => {
-        GetCategories();
-        attachForm(formKey);
+        $Async.GetCategories();
+        Forms.attachForm(formKey);
         return () => {
-            unAttachForm(formKey);
-            clearCategories();
+            Forms.unattachForm(formKey);
+            ApiData.clearCategories();
         }
     }, []);
     useEffect(() => {
@@ -29,7 +28,7 @@ function Categories({ attachForm, unAttachForm, emptyForm, categories, clearCate
         const escape = e => {
             if (buttonsT !== '') {
                 let clicked = e.target;
-                // => if the clicked element is not div.expand and i.fa-ellipsis-v
+                // => if the clicked element is not div.expand-btns and i.fa-ellipsis-v
                 if (!isThat(clicked, 'DIV', { className: 'expand' }) && !isThat(clicked, 'I', { className: 'fa-ellipsis-v' })) {
                     // => clear the buttons toggle
                     setButtonsT('');
@@ -52,11 +51,11 @@ function Categories({ attachForm, unAttachForm, emptyForm, categories, clearCate
             .then(res => {
                 if (res.status === 200) {
                     // => get the new categories from backend
-                    GetCategories();
+                    $Async.GetCategories();
                     // => success message
                     Messages.set('success', <>Category <strong>{form.get('name')}</strong> has been added successfully</>);
                     // => clean Inputs
-                    emptyForm(formKey);
+                    Forms.emptyForm(formKey);
                     // => clean errors if exists
                     setErrors(null);
                 }
@@ -101,7 +100,7 @@ function Categories({ attachForm, unAttachForm, emptyForm, categories, clearCate
                 <EditCategory keyPopup="edit-category" />
             </Popup>
             <div className="categories-list">
-                {listCategories(categories,true).map(c => {
+                {listCategories(categories, true).map(c => {
                     return (
                         <Category
                             name={c.as}
@@ -119,13 +118,6 @@ function Categories({ attachForm, unAttachForm, emptyForm, categories, clearCate
     )
 }
 const mapStateToProps = state => ({
-    categories: state.apiFlow.categories,
+    categories: state.apiData.categories,
 })
-const mapDispatchToProps = {
-    attachForm,
-    unAttachForm,
-    emptyForm,
-    clearCategories,
-    GetCategories,
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default connect(mapStateToProps)(Categories);

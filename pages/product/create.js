@@ -6,26 +6,26 @@ import active from '../../helpers/active'
 import imageCompression from 'browser-image-compression'
 import product from '../../api/product'
 import { connect } from 'react-redux'
-import { setPicture } from '../../redux/actions/main'
-import { attachForm, unAttachForm } from '../../redux/actions/form'
 import invalid from '../../helpers/invalid'
 import SelectCategories from '../../components/general/selectCategories/SelectCategories'
 import Chips from '../../components/inputs/Chips'
-function CreateProduct({ pictures, setPicture, attachForm, unAttachForm }) {
+import { Forms, Main } from '../../redux/dispatcher'
+function CreateProduct({ pictures }) {
+    console.log(pictures);
     const productFormKey = 'product_form';
     const productForm = useRef(null);
     const [previewT, setPreviewT] = useState(false);
     const [errors, setErrors] = useState(null);
     useEffect(() => {
-        attachForm(productFormKey);
-        return () => unAttachForm(productFormKey);
+        Forms.attachForm(productFormKey);
+        return () => Forms.unattachForm(productFormKey);
     }, [])
     function pictureInit(e) {
         let files = e.target.files;
         if (files.length !== 0) {
             for (let i = 0; i < files.length; i++) {
                 showFiles(files[i]).then(e => {
-                    setPicture({ picture: files[i], base: e.target.result });
+                    Main.setPicture({ picture: files[i], base: e.target.result });
                 });
             }
         }
@@ -282,4 +282,4 @@ const mapPropsFromState = state => ({
     pictures: state.main.pictures,
     picturesPosition: state.main.picturesPosition,
 })
-export default connect(mapPropsFromState, { setPicture, attachForm, unAttachForm })(CreateProduct);
+export default connect(mapPropsFromState)(CreateProduct);

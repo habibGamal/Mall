@@ -228,6 +228,7 @@ section.info {
                     &.expand {
                         > .category {
                             height: auto;
+                            overflow: unset;
                         }
                         > .category-content i.fa-chevron-right {
                             transform: rotateZ(90deg);
