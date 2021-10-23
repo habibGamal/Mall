@@ -117,6 +117,11 @@ function Nav({ setPopupForm}) {
                                     <a onClick={navLink}>Store</a>
                                 </Link>
                             </li>
+                            <li>
+                                <Link href="/store/create">
+                                    <a onClick={navLink}>Create Store</a>
+                                </Link>
+                            </li>
                         </ul>
                         <div className="options">
                             <Authenticated>
@@ -163,7 +168,7 @@ function Nav({ setPopupForm}) {
                     </Authenticated>
                 </div>
             </nav>
-            <ul className="nav-categories">
+            <ul className="nav-categories d-none">
                 <NavCategory
                     content={<><i className="fas fa-angle-right"></i> All</>}
                     href='/'

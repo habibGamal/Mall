@@ -24,7 +24,7 @@ class State {
         this.state = state;
     }
     setPicture(picture) {
-        return { ...this.state, pictures: [...this.state.pictures, { picture: picture, base: picture.base, position: null }] };
+        return { ...this.state, pictures: [...this.state.pictures, { picture: picture.picture, base: picture.base, position: null }] };
     }
     removePicture(index) {
         let pictures = this.state.pictures.filter((_, i) => i !== index);
@@ -35,8 +35,8 @@ class State {
         pictures[index].position = percentage;
         return {...this.state,pictures:pictures};
     }
-    authenticating(bool){
-        return {...this.state,authenticated:bool};
+    authenticating(auth){
+        return {...this.state,authenticated:auth};
     }
 }
 

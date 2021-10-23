@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import Text from '../../components/inputs/Text'
 import Input from '../../components/inputs/Input'
 import Preview from '../../components/inputs/Preview'
 import showFiles from '../../helpers/showFiles'
@@ -10,6 +11,10 @@ import invalid from '../../helpers/invalid'
 import SelectCategories from '../../components/general/selectCategories/SelectCategories'
 import Chips from '../../components/inputs/Chips'
 import { Forms, Main } from '../../redux/dispatcher'
+import Number from '../../components/inputs/Number'
+import CheckBox from '../../components/inputs/CheckBox'
+import Select from '../../components/inputs/Select'
+import File from '../../components/inputs/File'
 function CreateProduct({ pictures }) {
     console.log(pictures);
     const productFormKey = 'product_form';
@@ -107,8 +112,8 @@ function CreateProduct({ pictures }) {
                             type="select"
                             addClass=""
                             options={[
-                                'قميص رجالي',
-                                'تيشيرت رجالي'
+                                {value:0,as:'قميص رجالي'},
+                                {value:1,as:'تيشيرت رجالي'},
                             ]}
                         />
                     </form>
@@ -118,9 +123,8 @@ function CreateProduct({ pictures }) {
                     <div className="groups">
                         <div className="row align-items-center">
                             <div onClick={() => setPreviewT(false)} className={active(previewT, { defaultClass: 'escape-effect' })}></div>
-                            <Input
+                            <File
                                 label="Product Picture"
-                                type="file"
                                 addClass=""
                                 onChange={pictureInit}
                                 name="picture"
@@ -130,9 +134,8 @@ function CreateProduct({ pictures }) {
                             />
                             {pictures.map((picture, i) => <Preview imgSrc={picture.base} index={i} key={i} previewT={previewT} setPreviewT={setPreviewT} />)}
                         </div>
-                        <Input
+                        <Text
                             label="Product Name"
-                            type="text"
                             addClass=""
                             icon={<i className="fas fa-box" />}
                             name="name"
@@ -140,9 +143,8 @@ function CreateProduct({ pictures }) {
                             invalidMsg={invalid('name', errors)}
                             formKey={productFormKey}
                         />
-                        <Input
+                        <Number 
                             label="Product Price"
-                            type="number"
                             addClass=""
                             icon={<i className="fas fa-dollar-sign" />}
                             name="price"
@@ -152,16 +154,15 @@ function CreateProduct({ pictures }) {
                             formKey={productFormKey}
                         />
                         <div className="form-row align-items-center">
-                            <Input
+                            <CheckBox 
                                 label="Has an offer"
                                 type="check"
                                 addClass="col-md-3"
                                 id="offer_price_check"
                                 formKey={productFormKey}
                             />
-                            <Input
+                            <Text
                                 label="Product price after sale"
-                                type="text"
                                 icon={<i className="fas fa-dollar-sign" />}
                                 name="offer_price"
                                 id="offer_price"
@@ -175,9 +176,8 @@ function CreateProduct({ pictures }) {
                             </div>
                         </div>
                         <div className="form-row align-items-center">
-                            <Input
+                            <Select 
                                 label="Stock"
-                                type="select"
                                 options={[
                                     { value: 1, as: 'In stock' },
                                     { value: 2, as: 'Upcoming' },
@@ -187,9 +187,8 @@ function CreateProduct({ pictures }) {
                                 id="stock"
                                 formKey={productFormKey}
                             />
-                            <Input
+                            <Select
                                 label="Can returned"
-                                type="select"
                                 options={[
                                     { value: 1, as: 'This product can be returned' },
                                     { value: 0, as: 'This product can NOT be returned' },
@@ -199,7 +198,7 @@ function CreateProduct({ pictures }) {
                                 formKey={productFormKey}
                             />
                         </div>
-                        <Input
+                        <Select
                             label="Branch"
                             type="select"
                             addClass=""
@@ -236,7 +235,7 @@ function CreateProduct({ pictures }) {
                             <label>Specifications</label>
                             <textarea className="form-control" name="specifications" rows={3} defaultValue={""} />
                         </div>
-                        <Input
+                        <Text
                             label="Brand"
                             type="text"
                             addClass=""
@@ -246,7 +245,7 @@ function CreateProduct({ pictures }) {
                             formKey={productFormKey}
                         />
                         <div className="form-row align-items-end">
-                            <Input
+                            <Text
                                 label="Warranty"
                                 type="text"
                                 icon={<i className="fas fa-box" />}
@@ -254,7 +253,7 @@ function CreateProduct({ pictures }) {
                                 id="warranty_time"
                                 formKey={productFormKey}
                             />
-                            <Input
+                            <Select
                                 label=""
                                 type="select"
                                 options={[

@@ -9,9 +9,20 @@ export default {
         }
         return res;
     },
+    adminLogin: async function(data){
+        let res = await api.post('/admin-login',data);
+        if(res.status === 200){
+            await self.post('/setKey',{key:res.data});
+            api.defaults.headers.common['Authorization'] = `Bearer ${res.data}`;
+        }
+        return res;
+    },
     logout: async function(){
-        // await web.get('/sanctum/csrf-cookie');
         let res = await api.post('/logout');
+        return res;
+    },
+    adminLogout: async function(){
+        let res = await api.post('/admin-logout');
         return res;
     },
     isAuthenticated: async function(){

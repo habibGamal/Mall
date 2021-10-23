@@ -12,7 +12,7 @@ function Unauthenticated({ authenticated, children }) {
 }
 
 const mapStateToProps = state => ({
-authenticated: state.main.authenticated,
+authenticated: state.main.authenticated.user,
 })
   
 export default connect(mapStateToProps)(Unauthenticated);

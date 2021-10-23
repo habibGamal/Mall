@@ -1,72 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react'
-import SliderPhoto from './SliderPhoto';
+import React from 'react'
+import active from '../../helpers/active';
 export default function Slider() {
-    const slider = useRef();
-    useEffect(()=>{
-        const optimizeSlider = ()=>{
-            let children = slider.current.children;
-            slider.current.style.height = children[children.length-1].clientHeight+'px';
-        }
-        optimizeSlider();
-        window.onresize = optimizeSlider
-        return ()=>{
-            window.onresize = undefined;
-        }
-    },[])
-    const [left,setLeft] = useState({
-        order:0,
-        executer:function(i){
-            return 100*(i+this.order)+'vw'
-        }
-    });
     const photos = [
-        'slide-1.png',
-        'slide-2.png',
         'slide-3.png',
+        'slide-2.png',
+        'slide-1.png',
     ]
-    function toLeft(){
-        if(left.order !== 0){
-            setLeft(old => ({
-                order:old.order-1,
-                executer:function(i){
-                    return 100*(i-this.order)+'vw'
-                }
-            }));
-        }else {
-            setLeft(old => ({
-                order:2,
-                executer:function(i){
-                    return 100*(i-this.order)+'vw'
-                }
-            }));
-        }
-    }
-    function toRight(){
-        if(left.order <  (photos.length - 1) ){
-            setLeft(old => ({
-                order:old.order+1,
-                executer:function(i){
-                    return 100*(i-this.order)+'vw'
-                }
-            }));
-        }else {
-            setLeft(old => ({
-                order:0,
-                executer:function(i){
-                    return 100*(i-this.order)+'vw'
-                }
-            }));
-        }
-    }
     return (
-        <div ref={slider} className="slider">
-            <div onClick={toRight} className="right-arrow">
-                <i className="fas fa-chevron-right"></i>
+        <>
+            <div id="mainSlider" className="carousel slide" data-ride="carousel">
+                <ol className="carousel-indicators">
+                    <li data-target="#mainSlider" data-slide-to="0" className="active"></li>
+                    <li data-target="#mainSlider" data-slide-to="1"></li>
+                    <li data-target="#mainSlider" data-slide-to="2"></li>
+                </ol>
+                <div className="carousel-inner">
+                    {photos.map((photo,i) => (
+                        <div key={i} className={active(i==0,{defaultClass:'carousel-item'})}>
+                            <img src={`./images/${photo}`} className="d-block w-100" alt="..." />
+                        </div>
+                    ))}
+                </div>
+                <a className="carousel-control-prev" href="#mainSlider" role="button" data-slide="prev">
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="sr-only">Previous</span>
+                </a>
+                <a className="carousel-control-next" href="#mainSlider" role="button" data-slide="next">
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="sr-only">Next</span>
+                </a>
             </div>
-            <div onClick={toLeft} id="prev-slide" className="left-arrow">
-                <i className="fas fa-chevron-left"></i>
-            </div>
-            {photos.map((photo,i)=><SliderPhoto key={i} name={photo} left={left.executer(i)}/>)}
-        </div>
+        </>
     )
 }

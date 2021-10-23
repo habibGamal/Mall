@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import active from '../../helpers/active';
 import { useRouter } from 'next/dist/client/router';
+import Admin from '../../directives/Admin';
 export default function Product({ selectable, id, selected, name, price, offerPrice, currency, src, href, position }) {
     let p = position ? JSON.parse(JSON.stringify(position)) : { "leftP": 50, "topP": 0 }
     const [select, setSelect] = useState(false);
@@ -19,7 +20,7 @@ export default function Product({ selectable, id, selected, name, price, offerPr
             router.push(href);
         }
     }
-    if (selectable !== undefined && selectable === true) {
+    if (selectable) {
         // => data-selected is attribute to help in selecting the products selected
         return (
             <div className="product" onClick={selectHandle} data-selected={select} data-product-id={id}>
@@ -30,18 +31,20 @@ export default function Product({ selectable, id, selected, name, price, offerPr
                     {img}
                 </div>
                 <div className="product-details">
-                    <div onClick={() => setMenuT(!menuT)} className="menu-bars">
-                        <i className="fas fa-bars"></i>
-                    </div>
-                    <div className={active(menuT, { defaultClass: 'menu' })}>
-                        <Link href="/product/edit">
-                            <a>
-                                <i className="fas fa-edit"></i> Edit
-                            </a>
-                        </Link>
-                        <button className="btn btn-mini"><i className="fas fa-trash"></i> Delete</button>
-                        <button className="btn btn-mini"><i className="fas fa-file"></i> Draft</button>
-                    </div>
+                    <Admin>
+                        <div onClick={() => setMenuT(!menuT)} className="menu-bars">
+                            <i className="fas fa-bars"></i>
+                        </div>
+                        <div className={active(menuT, { defaultClass: 'menu' })}>
+                            <Link href="/product/edit">
+                                <a>
+                                    <i className="fas fa-edit"></i> Edit
+                                </a>
+                            </Link>
+                            <button className="btn btn-mini"><i className="fas fa-trash"></i> Delete</button>
+                            <button className="btn btn-mini"><i className="fas fa-file"></i> Draft</button>
+                        </div>
+                    </Admin>
                     <span className="name">{name}</span>
                     <span className="separator"></span>
                     <span className="price">
@@ -63,18 +66,20 @@ export default function Product({ selectable, id, selected, name, price, offerPr
                 {img}
             </div>
             <div className="product-details">
-                <div onClick={() => setMenuT(!menuT)} className="menu-bars">
-                    <i className="fas fa-bars"></i>
-                </div>
-                <div className={active(menuT, { defaultClass: 'menu' })}>
-                    <Link href="/product/edit">
-                        <a>
-                            <i className="fas fa-edit"></i> Edit
-                        </a>
-                    </Link>
-                    <button className="btn btn-mini"><i className="fas fa-trash"></i> Delete</button>
-                    <button className="btn btn-mini"><i className="fas fa-file"></i> Draft</button>
-                </div>
+                <Admin>
+                    <div onClick={() => setMenuT(!menuT)} className="menu-bars">
+                        <i className="fas fa-bars"></i>
+                    </div>
+                    <div className={active(menuT, { defaultClass: 'menu' })}>
+                        <Link href="/product/edit">
+                            <a>
+                                <i className="fas fa-edit"></i> Edit
+                            </a>
+                        </Link>
+                        <button className="btn btn-mini"><i className="fas fa-trash"></i> Delete</button>
+                        <button className="btn btn-mini"><i className="fas fa-file"></i> Draft</button>
+                    </div>
+                </Admin>
                 <span className="name">{name}</span>
                 <span className="separator"></span>
                 <span className="price">

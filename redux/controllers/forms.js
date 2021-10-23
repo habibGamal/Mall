@@ -19,7 +19,10 @@ class State {
         this.state = state;
     }
     attachForm(formKey){
-        return {...this.state,[formKey]:{}}
+        if(!this.state[formKey]){
+            return {...this.state,[formKey]:{}};
+        }
+        return this.state;
     }
     unattachForm(formKey){
         delete this.state[formKey];

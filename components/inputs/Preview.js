@@ -40,6 +40,8 @@ function Preview({ imgSrc, previewT, setPreviewT, index }) {
         toggleImg.current.style.top = topP + '%';
         // => store the percentages in the global store
         Main.setPicturePosition( index,{ heightP, leftP, topP });
+        setPreviewT(false); 
+        setToggle(false);
     }
     function remove() {
         // => remove picutre from the global store
