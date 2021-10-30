@@ -352,18 +352,21 @@ body {
     border-radius: 20px;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(var(--scale, 0));
+    transform: translate(-50%, -50%) scale(var(--scale, .95));
     z-index: $z-index-form;
     padding: 2rem;
-    transition: transform .3s ease-in-out;
+    transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
     overflow-y: scroll;
-
+    pointer-events: none;
+    opacity: 0;
     &::-webkit-scrollbar {
         width: 0px;
     }
 
     &.active {
         --scale: 1;
+        pointer-events: all;
+        opacity: 1;
     }
 
     &.form {

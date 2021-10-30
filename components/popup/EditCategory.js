@@ -6,7 +6,8 @@ import invalid from '../../helpers/invalid';
 import listCategories from '../../helpers/listCategories';
 import { $Async } from '../../redux/asyncActions';
 import { Messages, Forms, Popup } from '../../redux/dispatcher';
-import Input from '../inputs/Input';
+import Select from '../inputs/Select';
+import Text from '../inputs/Text';
 
 function EditCategory({ show, keyPopup, categories, setInputValue, args, setPopup }) {
     const formKey = 'edit_cat';
@@ -61,18 +62,16 @@ function EditCategory({ show, keyPopup, categories, setInputValue, args, setPopu
     return (
         <div className={active(show(keyPopup), { defaultClass: 'popup edit-category' })}>
             <form onSubmit={editCat}>
-                <Input
+                <Text
                     label="Category Name"
-                    type="text"
                     addClass=""
                     name="name"
                     id="category_name"
                     invalidMsg={invalid('name', errors)}
                     formKey={formKey}
                 />
-                <Input
+                <Select
                     label="Parent Category"
-                    type="select"
                     addClass=""
                     options={[{ value: 0, as: 'No parent' }, ...listCategories(categories)]}
                     name="parent_id"

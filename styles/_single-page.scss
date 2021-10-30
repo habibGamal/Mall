@@ -170,6 +170,17 @@
 
         >.groups {
             margin: .5rem 0;
+            > h3 {
+                font-weight: 600;
+                font-size: 1.125rem;
+                line-height: 1.75rem;
+                text-transform: capitalize;
+                font-family: Roboto;
+                color: rgba(55, 65, 81, 1);
+            }
+            .form-group label {
+                color: rgba(55, 65, 81, 1);
+            }
             &.branch {
                 border: 1px solid $line-color;
                 border-radius: 10px;

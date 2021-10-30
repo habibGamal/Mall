@@ -171,24 +171,30 @@
                 position: relative;
 
                 .expand {
-                    display: block;
-                    text-align: center;
-
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #fff;
+                    height: 38px;
+                    width: 38px;
+                    border-radius: 6px;
                     &.active {
-                        color: var(--success);
+                        border: 1px solid var(--primary);
+                        box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
                     }
                 }
 
                 .buttons {
-                    border: $border;
                     display: flex;
+                    flex-direction: column;
                     position: absolute;
                     opacity: 0;
                     right: 0;
-                    top: -270%;
+                    top: -435%;
                     pointer-events: none;
-                    background-color: #f6f6f6;
+                    background-color: #fff;
                     border-radius: 10px;
+                    box-shadow: $shadow;
                     padding: .5rem;
                     z-index: 1;
                     transition: opacity 200ms ease-in-out;

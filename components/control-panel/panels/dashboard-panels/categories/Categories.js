@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import category from '../../../../../api/category';
 import invalid from '../../../../../helpers/invalid';
 import isThat from '../../../../../helpers/isThat';
-import Input from '../../../../inputs/Input'
 import Category from './Category'
 import Popup from '../../../../popup/Popup'
 import EditCategory from '../../../../popup/EditCategory'
 import listCategories from '../../../../../helpers/listCategories';
 import { ApiData, Forms, Messages } from '../../../../../redux/dispatcher';
 import { $Async } from '../../../../../redux/asyncActions';
+import Text from '../../../../inputs/Text';
+import Select from '../../../../inputs/Select';
 
 function Categories({ categories }) {
     const formKey = 'add_cat';
@@ -75,18 +76,16 @@ function Categories({ categories }) {
             <div className="add-category">
                 <h4>Add New Category</h4>
                 <form onSubmit={addCategory}>
-                    <Input
+                    <Text
                         label="Category Name"
-                        type="text"
                         addClass=""
                         name="name"
                         id="category_name"
                         invalidMsg={invalid('name', errors)}
                         formKey={formKey}
                     />
-                    <Input
+                    <Select
                         label="Parent Category"
-                        type="select"
                         addClass=""
                         options={[{ value: 0, as: 'No parent' }, ...listCategories(categories)]}
                         name="parent_id"

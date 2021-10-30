@@ -1,7 +1,12 @@
 import { web ,api, self } from './instance'
 export default {
+    // register
+    register: async function(data){
+        let res = await api.post('/register',data);
+        return res;
+    },
+    // login
     login: async function(data){
-        // await web.get('/sanctum/csrf-cookie');
         let res = await api.post('/login',data);
         if(res.status === 200){
             await self.post('/setKey',{key:res.data});
@@ -17,6 +22,7 @@ export default {
         }
         return res;
     },
+    // logout
     logout: async function(){
         let res = await api.post('/logout');
         return res;
@@ -25,6 +31,7 @@ export default {
         let res = await api.post('/admin-logout');
         return res;
     },
+    // check authenication
     isAuthenticated: async function(){
         if(api.defaults.headers.common['Authorization'] === undefined){
             let key = await this.getCookie();
@@ -33,6 +40,7 @@ export default {
         let res = await api.get('/state');
         return res;
     },
+    // get the cookie
     getCookie: async function(){
         let res = await self.get('/getKey');
         if(res.status === 200){

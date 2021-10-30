@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import CheckBox from '../../components/inputs/CheckBox';
 import Email from '../../components/inputs/Email';
 import Number from '../../components/inputs/Number';
@@ -12,8 +12,10 @@ import Period from '../../components/inputs/Period';
 import { connect } from 'react-redux';
 import File from '../../components/inputs/File';
 import BranchForm from '../../components/general/BranchForm';
+import loader from '../../gps/loader';
 function Create({ getInputValue }) {
     const formKey = 'store_form';
+    const map = useRef(null);
     const [errors, setErrors] = useState(null);
     const [branches, setBranches] = useState([]);
     const [inputDep, setInputDep] = useState({
@@ -39,38 +41,81 @@ function Create({ getInputValue }) {
     async function storeCreate(e) {
         e.preventDefault();
         let form = new FormData(e.target);
+        // => handle holidays
         form.getAll('holidays').forEach(day => form.append('holidays[]', day));
+        // => work hours structure
         form.append('work_hours[from]', form.getAll('work_hours')[0]);
         form.append('work_hours[p1]', form.getAll('work_hours')[1]);
         form.append('work_hours[to]', form.getAll('work_hours')[2]);
         form.append('work_hours[p2]', form.getAll('work_hours')[3]);
+        // gps will be implemented !!!
+        form.append('gps','gps location');
         let res = await store.store(form);
     }
     useEffect(() => {
+        // => one branch(0) or mulitble(1)
         const bool = parseInt(getInputValue('branches')); // return 0 or 1
-        setInputDep((old) => ({ ...old, same_branches: bool, branches_number: bool, store_info: !bool }))
+        // => toggle [same_branches ,branches_number ,store_name ,logo] inputs
+        // => toggle store_info section with inverse of bool
+        setInputDep((old) => ({
+            ...old,
+            same_branches: bool,
+            branches_number: bool,
+            store_name: bool,
+            logo: bool,
+            store_info: !bool
+        }));
+        if (!bool) {
+            // => if one branch empty branches
+            setBranches([]);
+        }
     }, [getInputValue('branches')]);
+
     useEffect(() => {
+        // => branches have same name(1) or not (0)
         const bool = parseInt(getInputValue('same_branches')); // return 0 or 1
+        // => toggle [store_name,logo] inputs
         setInputDep((old) => ({ ...old, store_name: bool, logo: bool }))
     }, [getInputValue('same_branches')]);
+
     useEffect(() => {
-        if (getInputValue('branches_number') !== null) {
-            let buffer = [];
-            for (let i = 1; i <= getInputValue('branches_number'); i++) {
-                buffer.push(
-                    <BranchForm
-                        key={i - 1}
-                        index={i}
-                        full={!parseInt(getInputValue('same_branches'))}
-                        formKey={formKey}
-                        errors={errors}
-                    />
-                )
+        if (parseInt(getInputValue('branches'))) {
+            if (getInputValue('branches_number') !== null) {
+                if (getInputValue('branches_number') > 5) {
+                    Forms.setInputValue(formKey, 'branches_number', 5)
+                }
+                if (getInputValue('branches_number') < 2) {
+                    Forms.setInputValue(formKey, 'branches_number', 2)
+                }
+                let buffer = [];
+                for (let i = 1; i <= getInputValue('branches_number'); i++) {
+                    buffer.push(
+                        <BranchForm
+                            key={i - 1}
+                            index={i}
+                            full={!parseInt(getInputValue('same_branches'))}
+                            formKey={formKey}
+                            errors={errors}
+                        />
+                    )
+                }
+                setBranches(buffer);
             }
-            setBranches(buffer);
         }
-    }, [getInputValue('branches_number'), getInputValue('same_branches'),]);
+    }, [getInputValue('branches_number'), getInputValue('same_branches'), getInputValue('branches')]);
+
+    useEffect(() => {
+        loader.load().then(() => {
+            let googleMap = new google.maps.Map(map.current, {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 8,
+            });
+            new google.maps.Marker({
+                position: { lat: -34.397, lng: 150.644 },
+                map: googleMap,
+            })
+        });
+    });
     return (
         <section className="single-page-form">
             <div className="container">
@@ -79,6 +124,13 @@ function Create({ getInputValue }) {
                         <h2>Create your store</h2>
                     </div>
                 </div>
+                <div
+                    ref={map}
+                    id="map"
+                    style={{
+                        height: '500px',
+                    }}
+                ></div>
                 <form onSubmit={storeCreate} className="form">
                     <div className="groups">
                         <h3>Personal Info</h3>
@@ -121,11 +173,11 @@ function Create({ getInputValue }) {
                         <div className="form-row">
                             <Password
                                 label="Confirm Password"
-                                id="confirm_password"
-                                name="confirm_password"
+                                id="password_confirmation"
+                                name="password_confirmation"
                                 icon={<i className="fas fa-key" />}
                                 formKey={formKey}
-                                invalidMsg={invalid('confirm_password', errors)}
+                                invalidMsg={invalid('password_confirmation', errors)}
                             />
                             <Text
                                 label="Id Card"

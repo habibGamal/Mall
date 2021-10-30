@@ -23,9 +23,13 @@ export default function Signup({ form, setTap }) {
         e.preventDefault();
         let data = new FormData(form.current);
         try {
-            let res = await auth.login(data);
-            if (res.status === 200) {
+            let res = await auth.register(data);
+            if (res.status === 201) {
                 Forms.emptyForm(formKey);
+                await auth.login({
+                    'email':data.get('email'),
+                    'password':data.get('password'),
+                });
                 $Async.Reauth();
                 router.push('/');
             }
@@ -64,6 +68,14 @@ export default function Signup({ form, setTap }) {
                 name="password"
                 formKey={formKey}
                 invalidMsg={invalid('password', errors)}
+            />
+            <Password
+                label="Confirm Password"
+                addClass=""
+                id="password_confirmation"
+                name="password_confirmation"
+                formKey={formKey}
+                invalidMsg={invalid('password_confirmation', errors)}
             />
             <Select 
                 label="Gender"
