@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import invalid from '../../helpers/invalid'
+import pictureInit from '../../helpers/pictureInit'
+import { Main } from '../../redux/dispatcher'
 import File from '../inputs/File'
+import Preview from '../inputs/Preview'
 import Text from '../inputs/Text'
 
-export default function BranchForm({ index, full, formKey, errors }) {
+function BranchForm({ index, full, formKey, errors ,logo }) {
+    function branchLogoInit(e){
+        Main.removePictureById(index);
+        pictureInit(e,index);
+    }
+    function getBranchLogo(){
+        return logo.filter(l => l.pictureId == index)[0];
+    }
     if (!full) {
         return (
             <div className="groups branch">
@@ -15,7 +26,7 @@ export default function BranchForm({ index, full, formKey, errors }) {
                         id={`short_branch_name-${index}`}
                         placeholder="مثال : فرع النميس"
                         icon={<i className="fas fa-store"></i>}
-                        invalidMsg={invalid('short_branch_name-'+index, errors)}
+                        invalidMsg={invalid('short_branch_name-' + index, errors)}
                         formKey={formKey}
                     />
                     <Text
@@ -23,7 +34,7 @@ export default function BranchForm({ index, full, formKey, errors }) {
                         name={`address-${index}`}
                         id={`address-${index}`}
                         icon={<i className="fas fa-map-marker-alt"></i>}
-                        invalidMsg={invalid('address-'+index, errors)}
+                        invalidMsg={invalid('address-' + index, errors)}
                         formKey={formKey}
                     />
                 </div>
@@ -43,7 +54,7 @@ export default function BranchForm({ index, full, formKey, errors }) {
                     name={`branch_name-${index}`}
                     id={`branch_name-${index}`}
                     icon={<i className="fas fa-store"></i>}
-                    invalidMsg={invalid('branch_name-'+index, errors)}
+                    invalidMsg={invalid('branch_name-' + index, errors)}
                     formKey={formKey}
                 />
                 <Text
@@ -51,19 +62,29 @@ export default function BranchForm({ index, full, formKey, errors }) {
                     name={`address-${index}`}
                     id={`address-${index}`}
                     icon={<i className="fas fa-map-marker-alt"></i>}
-                    invalidMsg={invalid('address-'+index, errors)}
+                    invalidMsg={invalid('address-' + index, errors)}
                     formKey={formKey}
                 />
             </div>
             <div className="form-row">
-                <File
-                    label="Store Logo"
-                    onChange={() => { }}
-                    name={`logo-${index}`}
-                    id={`logo-${index}`}
-                    invalidMsg={invalid('logo-'+index, errors)}
-                    formKey={formKey}
-                />
+                <div className="col-md-6">
+                    <div className="row align-items-center">
+                        <File
+                            label="Store Logo"
+                            onChange={branchLogoInit}
+                            name={`logo-${index}`}
+                            multiple={false}
+                            id={`logo-${index}`}
+                            invalidMsg={invalid('logo-' + index, errors)}
+                            formKey={formKey}
+                        />
+                        <div className="col-md-6">
+                            <div className="row justify-content-center">
+                                {getBranchLogo() ? <Preview imgSrc={getBranchLogo().base} index={index} byId={true} to="logo" /> : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="form-group">
                     <label htmlFor="productName">Gps Location</label>
                     <input type="button" className="form-control btn btn-primary" defaultValue="Locate" />
@@ -72,3 +93,9 @@ export default function BranchForm({ index, full, formKey, errors }) {
         </div>
     )
 }
+
+const mapStateToProps = (state) => ({
+    logo: state.main.pictures,
+})
+
+export default connect(mapStateToProps)(BranchForm)

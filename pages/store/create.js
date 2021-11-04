@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import imageCompression from 'browser-image-compression'
 import CheckBox from '../../components/inputs/CheckBox';
 import Email from '../../components/inputs/Email';
 import Number from '../../components/inputs/Number';
@@ -6,14 +7,18 @@ import Password from '../../components/inputs/Password';
 import Select from '../../components/inputs/Select';
 import Text from '../../components/inputs/Text'
 import invalid from '../../helpers/invalid'
-import { Forms } from '../../redux/dispatcher'
+import { Forms, Main } from '../../redux/dispatcher'
 import store from '../../api/store'
 import Period from '../../components/inputs/Period';
 import { connect } from 'react-redux';
 import File from '../../components/inputs/File';
 import BranchForm from '../../components/general/BranchForm';
 import loader from '../../gps/loader';
-function Create({ getInputValue }) {
+import pictureInit from '../../helpers/pictureInit';
+import Preview from '../../components/inputs/Preview';
+import { compressPictures } from '../../helpers/compressPictures';
+function Create({ getInputValue, logo }) {
+    console.log(logo);
     const formKey = 'store_form';
     const map = useRef(null);
     const [errors, setErrors] = useState(null);
@@ -48,9 +53,62 @@ function Create({ getInputValue }) {
         form.append('work_hours[p1]', form.getAll('work_hours')[1]);
         form.append('work_hours[to]', form.getAll('work_hours')[2]);
         form.append('work_hours[p2]', form.getAll('work_hours')[3]);
-        // gps will be implemented !!!
-        form.append('gps','gps location');
-        let res = await store.store(form);
+        // => no branches
+        if (!parseInt(getInputValue('branches'))) {
+            // gps will be implemented !!!
+            form.append('gps', JSON.stringify({ lat: -34.397, lng: 150.644 }));
+            // => handle logo
+            if (logo[0]) {
+                let compressedLogo = await imageCompression(logo[0].picture, { maxSizeMB: .05 });
+                form.set('logo', compressedLogo);
+                form.append('logo_position', JSON.stringify(logo[0].position));
+            }
+        } else {
+            // => have branches
+            let length = parseInt(getInputValue('branches_number'));
+            if (parseInt(getInputValue('same_branches'))) {
+                // => same name , logo but different short names
+                // => handle logo
+                if (logo[0]) {
+                    let compressedLogo = await imageCompression(logo[0].picture, { maxSizeMB: .05 });
+                    form.set('logo', compressedLogo);
+                    form.append('logo_position', JSON.stringify(logo[0].position));
+                }
+                for (let i = 1; i <= length; i++) {
+                    form.append('short_branch_names[]', form.get(`short_branch_name-${i}`));
+                    form.delete(`short_branch_name-${i}`);
+                }
+            } else {
+                // => different name , logo
+                let compressedPictures = await Promise.all(compressPictures(logo));
+                compressedPictures.forEach((picture, i) => {
+                    form.append('logos[]', picture, logo[i].pictureId);
+                    form.append('logos_position[]', JSON.stringify(logo[i].position));
+                });
+                if (compressedPictures.length == 0) {
+                    form.append('logos[]', '');
+                }
+                for (let i = 1; i <= length; i++) {
+                    form.append('branch_names[]', form.get(`branch_name-${i}`));
+                    form.delete(`branch_name-${i}`);
+                    form.delete(`logo-${i}`);
+                }
+            }
+            for (let i = 1; i <= length; i++) {
+                form.append('addresses[]', form.get(`address-${i}`));
+                form.delete(`address-${i}`);
+            }
+        }
+        try {
+            let res = await store.store(form);
+        } catch (err) {
+            if (err.response) {
+                let { data, status } = err.response;
+                if (status == 422) {
+                    setErrors(data.errors);
+                }
+            }
+        }
     }
     useEffect(() => {
         // => one branch(0) or mulitble(1)
@@ -75,7 +133,11 @@ function Create({ getInputValue }) {
         // => branches have same name(1) or not (0)
         const bool = parseInt(getInputValue('same_branches')); // return 0 or 1
         // => toggle [store_name,logo] inputs
-        setInputDep((old) => ({ ...old, store_name: bool, logo: bool }))
+        setInputDep((old) => ({ ...old, store_name: bool, logo: bool }));
+        // => if not same then empty the pictures
+        if (!bool) {
+            Main.emptyPictures();
+        }
     }, [getInputValue('same_branches')]);
 
     useEffect(() => {
@@ -104,18 +166,23 @@ function Create({ getInputValue }) {
         }
     }, [getInputValue('branches_number'), getInputValue('same_branches'), getInputValue('branches')]);
 
-    useEffect(() => {
-        loader.load().then(() => {
-            let googleMap = new google.maps.Map(map.current, {
-                center: { lat: -34.397, lng: 150.644 },
-                zoom: 8,
-            });
-            new google.maps.Marker({
-                position: { lat: -34.397, lng: 150.644 },
-                map: googleMap,
-            })
-        });
-    });
+    // useEffect(() => {
+    //     loader.load().then(() => {
+    //         let googleMap = new google.maps.Map(map.current, {
+    //             center: { lat: -34.397, lng: 150.644 },
+    //             zoom: 8,s
+    //         });
+    //         new google.maps.Marker({
+    //             position: { lat: -34.397, lng: 150.644 },
+    //             map: googleMap,
+    //         })
+    //     });
+    // });
+    function logoInit(e) {
+        // => save just one picture
+        Main.emptyPictures();
+        pictureInit(e);
+    }
     return (
         <section className="single-page-form">
             <div className="container">
@@ -124,13 +191,13 @@ function Create({ getInputValue }) {
                         <h2>Create your store</h2>
                     </div>
                 </div>
-                <div
+                {/* <div
                     ref={map}
                     id="map"
                     style={{
                         height: '500px',
                     }}
-                ></div>
+                ></div> */}
                 <form onSubmit={storeCreate} className="form">
                     <div className="groups">
                         <h3>Personal Info</h3>
@@ -323,15 +390,23 @@ function Create({ getInputValue }) {
                                     invalidMsg={invalid('store_name', errors)}
                                     formKey={formKey}
                                 />
-                                <File
-                                    label="Store Logo"
-                                    onChange={() => { }}
-                                    name="logo"
-                                    id="logo"
-                                    addClass=""
-                                    invalidMsg={invalid('logo', errors)}
-                                    formKey={formKey}
-                                />
+                                <div className="row align-items-center flex-wrap">
+                                    <File
+                                        label="Store Logo"
+                                        onChange={logoInit}
+                                        name="logo"
+                                        multiple={false}
+                                        id="logo"
+                                        addClass="col-sm-6"
+                                        invalidMsg={invalid('logo', errors)}
+                                        formKey={formKey}
+                                    />
+                                    <div className="col-sm-6">
+                                        <div className="row justify-content-center">
+                                            {logo.length > 0 ? <Preview imgSrc={logo[0].base} index={0} to="logo" /> : ''}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             : ''
                     }
@@ -343,10 +418,10 @@ function Create({ getInputValue }) {
                                 <div className="form-row">
                                     <Text
                                         label="Shop Name"
-                                        name="branch_name"
-                                        id="branch_name"
+                                        name="store_name"
+                                        id="store_name"
                                         icon={<i className="fas fa-store"></i>}
-                                        invalidMsg={invalid('branch_name', errors)}
+                                        invalidMsg={invalid('store_name', errors)}
                                         formKey={formKey}
                                     />
                                     <Text
@@ -359,14 +434,24 @@ function Create({ getInputValue }) {
                                     />
                                 </div>
                                 <div className="form-row">
-                                    <File
-                                        label="Store Logo"
-                                        onChange={() => { }}
-                                        name="logo"
-                                        id="logo"
-                                        invalidMsg={invalid('logo', errors)}
-                                        formKey={formKey}
-                                    />
+                                    <div className="col-md-6">
+                                        <div className="row align-items-center">
+                                            <File
+                                                label="Store Logo"
+                                                onChange={logoInit}
+                                                name="logo"
+                                                multiple={false}
+                                                id="logo"
+                                                invalidMsg={invalid('logo', errors)}
+                                                formKey={formKey}
+                                            />
+                                            <div className="col-md-6">
+                                                <div className="row justify-content-center">
+                                                    {logo.length > 0 ? <Preview imgSrc={logo[0].base} index={0} to="logo" /> : ''}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div className="form-group">
                                         <label htmlFor="productName">Gps Location</label>
                                         <input type="button" className="form-control btn btn-primary" defaultValue="Locate" />
@@ -392,6 +477,7 @@ const mapStateToProps = (state) => ({
         }
         return null;
     },
+    logo: state.main.pictures,
 })
 
 export default connect(mapStateToProps)(Create)

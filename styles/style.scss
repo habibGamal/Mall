@@ -821,7 +821,6 @@ nav {
     margin: 3rem 0;
 }
 
-// to be general rule
 .store {
     cursor: pointer;
     margin-right: 2rem;
@@ -830,7 +829,8 @@ nav {
         width: 150px;
         height: 150px;
         margin: 0 auto;
-        border-radius: 20px;
+        border-radius: 150%;
+        border: 3px solid $line-color;
         overflow: hidden;
 
         >img {

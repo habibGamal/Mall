@@ -23,20 +23,41 @@ class State {
     constructor(state) {
         this.state = state;
     }
-    setPicture(picture) {
-        return { ...this.state, pictures: [...this.state.pictures, { picture: picture.picture, base: picture.base, position: null }] };
+    setPicture(picture, pictureId = null) {
+        let pictures = [...this.state.pictures, { picture: picture.picture, base: picture.base, position: null, pictureId }];
+        pictures.sort((a, b) => a.pictureId - b.pictureId);
+        return { ...this.state, pictures};
     }
     removePicture(index) {
         let pictures = this.state.pictures.filter((_, i) => i !== index);
         return { ...this.state, pictures: pictures };
     }
-    setPicturePosition(index,percentage){
+    removePictureById(id) {
+        let pictures = this.state.pictures.filter(picture => picture.pictureId !== id);
+        return { ...this.state, pictures: pictures };
+    }
+    setPicturePositionById(id, percentage) {
+        let pictures = this.state.pictures;
+        let i;
+        pictures.forEach((picture, ii) => {
+            if (picture.pictureId === id) {
+                i = ii;
+            }
+        });
+        pictures[i].position = percentage;
+        return { ...this.state, pictures: pictures };
+    }
+    setPicturePosition(index, percentage) {
         let pictures = this.state.pictures;
         pictures[index].position = percentage;
-        return {...this.state,pictures:pictures};
+        return { ...this.state, pictures: pictures };
     }
-    authenticating(auth){
-        return {...this.state,authenticated:auth};
+    emptyPictures() {
+        // => clear pictures array
+        return { ...this.state, pictures: [] };
+    }
+    authenticating(auth) {
+        return { ...this.state, authenticated: auth };
     }
 }
 

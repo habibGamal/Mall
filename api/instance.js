@@ -19,16 +19,18 @@ export const self = axios.create({
 
 function interceptor(error) {
     let res = error.response
-    // => redirection
-    if (res.status === 302) {
-        let location = res.data.location === undefined ? '/' : res.data.location
-        Router().push(location);
-        return res;
-    }
-    // => too many requests
-    if (res.status === 429) {
-        Messages.set('warning', <>You are performing<strong>too many requsets</strong>. Please wait a second or use <strong>Bulk action</strong></>)
-        return res;
+    if (res) {
+        // => redirection
+        if (res.status === 302) {
+            let location = res.data.location === undefined ? '/' : res.data.location
+            Router().push(location);
+            return res;
+        }
+        // => too many requests
+        if (res.status === 429) {
+            Messages.set('warning', <>You are performing<strong>too many requsets</strong>. Please wait a second or use <strong>Bulk action</strong></>)
+            return res;
+        }
     }
     return Promise.reject(error);
 }

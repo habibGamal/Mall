@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import Text from '../../components/inputs/Text'
 import Input from '../../components/inputs/Input'
 import Preview from '../../components/inputs/Preview'
-import showFiles from '../../helpers/showFiles'
-import active from '../../helpers/active'
 import imageCompression from 'browser-image-compression'
 import product from '../../api/product'
 import { connect } from 'react-redux'
@@ -15,34 +13,18 @@ import Number from '../../components/inputs/Number'
 import CheckBox from '../../components/inputs/CheckBox'
 import Select from '../../components/inputs/Select'
 import File from '../../components/inputs/File'
+import pictureInit from '../../helpers/pictureInit'
+import { compressPictures } from '../../helpers/compressPictures'
 function CreateProduct({ pictures }) {
-    console.log(pictures);
     const productFormKey = 'product_form';
-    const productForm = useRef(null);
-    const [previewT, setPreviewT] = useState(false);
     const [errors, setErrors] = useState(null);
     useEffect(() => {
         Forms.attachForm(productFormKey);
-        return () => Forms.unattachForm(productFormKey);
-    }, [])
-    function pictureInit(e) {
-        let files = e.target.files;
-        if (files.length !== 0) {
-            for (let i = 0; i < files.length; i++) {
-                showFiles(files[i]).then(e => {
-                    Main.setPicture({ picture: files[i], base: e.target.result });
-                });
-            }
-        }
-    }
-    function compressPictures(pictures) {
-        // => this will return array of promises
-        return pictures.map(async p => {
-            // => compress the picture and buffer it 
-            let buffer = await imageCompression(p.picture, { maxSizeMB: .05 })
-            return buffer;
-        });
-    }
+        return () => {
+            Forms.unattachForm(productFormKey);
+            Main.emptyPictures();
+        };
+    }, []);
     function splitSpecifications(spec) {
         /**
          * it takes ===>
@@ -65,7 +47,7 @@ function CreateProduct({ pictures }) {
     }
     async function productStore(e) {
         e.preventDefault();
-        let form = new FormData(productForm.current);
+        let form = new FormData(e.target);
         // => handle pictures
         let compressedPictures = await Promise.all(compressPictures(pictures));
         compressedPictures.forEach((p, i) => {
@@ -118,21 +100,21 @@ function CreateProduct({ pictures }) {
                         />
                     </form>
                 </div>
-                <form ref={productForm} id={productFormKey} onSubmit={productStore} className="form" encType="multipart/form-data">
+                <form id={productFormKey} onSubmit={productStore} className="form" encType="multipart/form-data">
                     <h3>Required</h3>
                     <div className="groups">
                         <div className="row align-items-center">
-                            <div onClick={() => setPreviewT(false)} className={active(previewT, { defaultClass: 'escape-effect' })}></div>
                             <File
                                 label="Product Picture"
                                 addClass=""
                                 onChange={pictureInit}
                                 name="picture"
+                                multiple={true}
                                 id="picture"
                                 invalidMsg={invalid('pictures', errors)}
                                 formKey={productFormKey}
                             />
-                            {pictures.map((picture, i) => <Preview imgSrc={picture.base} index={i} key={i} previewT={previewT} setPreviewT={setPreviewT} />)}
+                            {pictures.map((picture, i) => <Preview imgSrc={picture.base} index={i} to="product" key={i}/>)}
                         </div>
                         <Text
                             label="Product Name"

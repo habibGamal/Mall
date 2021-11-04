@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import active from '../../helpers/active';
 
-export default function File({addClass,id,label,name,onChange,invalidMsg}) {
+export default function File({addClass,id,label,name,multiple,onChange,invalidMsg}) {
     
     if (addClass === undefined) {
         addClass = 'col-md-6';
@@ -22,7 +22,7 @@ export default function File({addClass,id,label,name,onChange,invalidMsg}) {
                     <i className="fas fa-upload" />
                 </div>
             </label>
-            <input onChange={onChange} name={name} type="file" multiple hidden className={active(invalidMsg.length !== 0, { activeClass: 'is-invalid', defaultClass: 'form-control-file' })} id={id} />
+            <input onChange={onChange} name={name} type="file" multiple={multiple} hidden className={active(invalidMsg.length !== 0, { activeClass: 'is-invalid', defaultClass: 'form-control-file' })} id={id} />
             <div id={`${id}feedback`} className="invalid-feedback">
                 {invMsg}
             </div>
