@@ -17,6 +17,7 @@ import loader from '../../gps/loader';
 import pictureInit from '../../helpers/pictureInit';
 import Preview from '../../components/inputs/Preview';
 import { compressPictures } from '../../helpers/compressPictures';
+import InputGroup from '../../components/inputs/InputGroup';
 function Create({ getInputValue, logo }) {
     console.log(logo);
     const formKey = 'store_form';
@@ -38,6 +39,7 @@ function Create({ getInputValue, logo }) {
         'Tuesday',
         'Wednesday',
         'Thursday',
+        'Work every day'
     ]
     useEffect(() => {
         Forms.attachForm(formKey);
@@ -285,27 +287,30 @@ function Create({ getInputValue, logo }) {
                         <div className="form-row">
                             <div className="form-group col-md-6">
                                 <label htmlFor="productName">Holidays</label>
-                                <div className="form-row">
-                                    {
-                                        week.map((day, i) => (
-                                            <CheckBox
-                                                key={i}
-                                                label={day}
-                                                type="check"
-                                                addClass=""
-                                                id={day}
-                                                name="holidays"
-                                                value={day}
-                                                formKey={formKey}
-                                            />
-                                        ))
-                                    }
-                                </div>
+                                <InputGroup id="holidays" addClass="form-row" invalidMsg={invalid('holidays', errors)}>
+                                    <div className="form-row">
+                                        {
+                                            week.map((day, i) => (
+                                                <CheckBox
+                                                    key={i}
+                                                    label={day}
+                                                    type="check"
+                                                    addClass=""
+                                                    id={day.toLocaleLowerCase().split(' ').join('_')}
+                                                    name="holidays"
+                                                    value={day}
+                                                    formKey={formKey}
+                                                />
+                                            ))
+                                        }
+                                    </div>
+                                </InputGroup>
                             </div>
                             <Period
                                 label="Work hours"
                                 name="work_hours"
-                                invalidMsg={invalid('work_hours', errors)}
+                                formKey={formKey}
+                                invalidMsg={invalid('work_hours', errors,'period')}
                             />
                         </div>
                         <div className="form-row">
