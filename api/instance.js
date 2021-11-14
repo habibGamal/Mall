@@ -14,7 +14,7 @@ export const web = axios.create({
 });
 
 export const self = axios.create({
-    baseURL: `${process.env.NEXT_PUBLIC_BASE_URL_SELF}api/`,
+    baseURL: `/api/`,
 })
 
 function interceptor(error) {

@@ -68,6 +68,18 @@ function Nav({ setPopupForm}) {
         $Async.Reauth();
         router.push('/');
     }
+    useEffect(()=>{
+        window.onscroll = ()=>{
+            if(window.scrollY > 0){
+                document.getElementsByTagName('nav')[0].classList.add('stick');
+            }else{
+                document.getElementsByTagName('nav')[0].classList.remove('stick');
+            }
+        }
+        return ()=>{
+            window.onscroll = ()=>{}
+        };
+    },[]);
     return (
         <>
             <nav className="d-flex justify-content-between">
