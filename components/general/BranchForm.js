@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import invalid from '../../helpers/invalid'
 import pictureInit from '../../helpers/pictureInit'
@@ -8,6 +8,9 @@ import Preview from '../inputs/Preview'
 import Text from '../inputs/Text'
 
 function BranchForm({ index, full, formKey, errors ,logo }) {
+    useEffect(()=>{
+        console.log(errors);
+    },[errors]);
     function branchLogoInit(e){
         Main.removePictureById(index);
         pictureInit(e,index);
@@ -15,6 +18,7 @@ function BranchForm({ index, full, formKey, errors ,logo }) {
     function getBranchLogo(){
         return logo.filter(l => l.pictureId == index)[0];
     }
+    console.log('branch_names.' + (index - 1),invalid('branch_names.' + (index - 1), errors));
     if (!full) {
         return (
             <div className="groups branch">
@@ -26,7 +30,7 @@ function BranchForm({ index, full, formKey, errors ,logo }) {
                         id={`short_branch_name-${index}`}
                         placeholder="مثال : فرع النميس"
                         icon={<i className="fas fa-store"></i>}
-                        invalidMsg={invalid('short_branch_name-' + index, errors)}
+                        invalidMsg={invalid('short_branch_names.' + (index - 1), errors)}
                         formKey={formKey}
                     />
                     <Text
@@ -34,7 +38,7 @@ function BranchForm({ index, full, formKey, errors ,logo }) {
                         name={`address-${index}`}
                         id={`address-${index}`}
                         icon={<i className="fas fa-map-marker-alt"></i>}
-                        invalidMsg={invalid('address-' + index, errors)}
+                        invalidMsg={invalid('addresses.' + (index - 1), errors)}
                         formKey={formKey}
                     />
                 </div>
@@ -54,7 +58,7 @@ function BranchForm({ index, full, formKey, errors ,logo }) {
                     name={`branch_name-${index}`}
                     id={`branch_name-${index}`}
                     icon={<i className="fas fa-store"></i>}
-                    invalidMsg={invalid('branch_name-' + index, errors)}
+                    invalidMsg={invalid('branch_names.' + (index - 1), errors)}
                     formKey={formKey}
                 />
                 <Text
@@ -62,7 +66,7 @@ function BranchForm({ index, full, formKey, errors ,logo }) {
                     name={`address-${index}`}
                     id={`address-${index}`}
                     icon={<i className="fas fa-map-marker-alt"></i>}
-                    invalidMsg={invalid('address-' + index, errors)}
+                    invalidMsg={invalid('addresses.' + (index - 1), errors)}
                     formKey={formKey}
                 />
             </div>
@@ -75,7 +79,7 @@ function BranchForm({ index, full, formKey, errors ,logo }) {
                             name={`logo-${index}`}
                             multiple={false}
                             id={`logo-${index}`}
-                            invalidMsg={invalid('logo-' + index, errors)}
+                            invalidMsg={invalid('logos.' + (index - 1), errors)}
                             formKey={formKey}
                         />
                         <div className="col-md-6">

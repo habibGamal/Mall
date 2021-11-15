@@ -1,18 +1,22 @@
 export default function invalid(name, errors, specialType) {
-    if (errors !== null) {
-        if (specialType) {
-            switch (specialType) {
-                case 'period':
-                    // => ex: work_hours -> check for work_hours.from or work_hours.to
-                    if (errors.hasOwnProperty(`${name}.form`)) {
-                        return errors[`${name}.form`];
+    if (specialType) {
+        switch (specialType) {
+            case 'period':
+                // => ex: work_hours -> check for work_hours.from or work_hours.to
+                if (errors) {
+                    if (errors.hasOwnProperty(`${name}.from`) || errors.hasOwnProperty(`${name}.to`)) {
+                        return { from: errors[`${name}.from`] ?? '', to: errors?.[`${name}.to`] ?? '' };
                     }
-                    if (errors.hasOwnProperty(`${name}.to`)) {
-                        return errors[`${name}.to`];
-                    }
-                    return;
-            }
+                    return { from: '', to: '' };
+                }
+                return { from: '', to: '' };
+            default:
+                return;
+
         }
+    }
+    if (errors) {
+        // console.log(name,errors);
         if (errors.hasOwnProperty(name)) {
             return errors[name];
         }

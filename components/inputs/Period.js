@@ -2,60 +2,56 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import active from '../../helpers/active';
 import { Forms } from '../../redux/dispatcher';
+import Time from './Time';
 
-function Period({ label, addClass, name, invalidMsg, formKey, inputValue }) {
+function Period({ label, addClass, name, invalidMsg, formKey }) {
     if (addClass === undefined) {
         addClass = 'col-md-6';
     }
-    if (invalidMsg === undefined) {
-        invalidMsg = [''];
-    }
-    const [invMsg, setInvMsg] = useState(invalidMsg[0]);
-    useEffect(() => {
-        // => initialize invMsg state from invalidMsg prop
-        setInvMsg(invalidMsg[0]);
-    }, [invalidMsg]);
 
+    const [invMsg, setInvMsg] = useState(invalidMsg);
+    useEffect(() => {
+        // => initialize invMsg state from invalidMsg prop and renew it
+        setInvMsg(invalidMsg);
+    }, [invalidMsg]);
     function handleOnChange(e) {
         Forms.setInputValue(formKey, e.target.id, e.target.value);
         // => if there is an error remove it when user writing
-        if (invMsg.length > 0) {
-            setInvMsg('');
+        if (e.target.id === `${name}-from`) {
+            if (invMsg['from'].length > 0) {
+                setInvMsg(old => ({ ...old, from: '' }));
+            }
+        }
+        if (e.target.id === `${name}-from`) {
+            if (invMsg['to'].length > 0) {
+                setInvMsg(old => ({ ...old, to: '' }));
+            }
         }
     }
+    console.log(invMsg);
     return (
         <div className={`form-group ${addClass}`}>
             <label>{label}</label>
-            <div className="form-row">
-                <div className="form-group col-8 row align-items-center">
-                    <label htmlFor={`${name}-from`} className="col-4">From</label>
-                    <input name={name} type="number" id={`${name}-from`} value={inputValue(formKey, `${name}-from`, '')} onChange={handleOnChange} min={1} step={1} max={12} className={active(invMsg.length !== 0, { activeClass: 'is-invalid', defaultClass: 'form-control col-6 offset-1' })} />
-                    <div className="offset-1"></div>
-                </div>
-                <div className="form-group col-4">
-                    <select name={name} id={`${name}-p1`} value={inputValue(formKey, `${name}-p1`, 'am')} onChange={handleOnChange} className="form-control" id="return">
-                        <option value="am">AM</option>
-                        <option value="pm">PM</option>
-                    </select>
-                </div>
-            </div>
-            <div className="form-row">
-                <div className="form-group col-8 row align-items-center">
-                    <label htmlFor={`${name}-to`} className="col-4">To</label>
-                    <input name={name} type="number" id={`${name}-to`} value={inputValue(formKey, `${name}-to`, '')} onChange={handleOnChange} min={1} step={1} max={12} className={active(invMsg.length !== 0, { activeClass: 'is-invalid', defaultClass: 'form-control col-6 offset-1' })} />
-                    <div className="offset-1"></div>
-                </div>
-                <div className="form-group col-4">
-                    <select name={name} id={`${name}-p2`} value={inputValue(formKey, `${name}-p2`, 'pm')} onChange={handleOnChange} className="form-control">
-                        <option value="am">AM</option>
-                        <option value="pm">PM</option>
-                    </select>
-                </div>
-            </div>
-            <div className={active(invMsg.length !== 0, { activeClass: 'is-invalid'})}></div>
-            <div id={`${name}feedback`} className="invalid-feedback">
+            <Time
+                label="From"
+                name={name}
+                id={`${name}-from`}
+                formKey={formKey}
+                invMsg={invMsg.from}
+                handleOnChange={handleOnChange}
+            />
+            <Time
+                label="To"
+                name={name}
+                id={`${name}-to`}
+                formKey={formKey}
+                invMsg={invMsg.to}
+                handleOnChange={handleOnChange}
+            />
+            <div className={active(invMsg.length !== 0, { activeClass: 'is-invalid' })}></div>
+            {/* <div id={`${name}feedback`} className="invalid-feedback">
                 {invMsg}
-            </div>
+            </div> */}
         </div>
     )
 }
