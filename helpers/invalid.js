@@ -10,6 +10,11 @@ export default function invalid(name, errors, specialType) {
                     return { from: '', to: '' };
                 }
                 return { from: '', to: '' };
+            case 'listOfErrors':
+                if(errors){
+                    return errors[name] ?? [];
+                }
+                return [];
             default:
                 return;
 

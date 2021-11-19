@@ -74,8 +74,8 @@ function Categories({ categories }) {
     return (
         <div className="categories">
             <div className="add-category">
-                <h4>Add New Category</h4>
-                <form onSubmit={addCategory}>
+                <h4 className="form-title">Add New Category</h4>
+                <form className="mx-1" onSubmit={addCategory}>
                     <Text
                         label="Category Name"
                         addClass=""

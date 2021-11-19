@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default function Branches() {
     return (
         <>
-            <div className="controllers">
+            <div className="controllers mt-3">
                 <button className="btn btn-add mx-auto"><i className="fas fa-plus-circle" /> Add Branch</button>
             </div>
             <table className="dashboard-table">

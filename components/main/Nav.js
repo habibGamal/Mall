@@ -134,6 +134,11 @@ function Nav({ setPopupForm}) {
                                     <a onClick={navLink}>Create Store</a>
                                 </Link>
                             </li>
+                            <li>
+                                <Link href="/branch/create">
+                                    <a onClick={navLink}>Create Branch</a>
+                                </Link>
+                            </li>
                         </ul>
                         <div className="options">
                             <Authenticated>

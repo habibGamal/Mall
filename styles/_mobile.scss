@@ -178,6 +178,7 @@
                     height: 38px;
                     width: 38px;
                     border-radius: 6px;
+
                     &.active {
                         border: 1px solid var(--primary);
                         box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
@@ -339,6 +340,44 @@
     }
 }
 
+
+
+@media screen and (max-width:1200px) {
+
+    // Cart
+    .cart-page {
+        >.container {
+            grid-template-columns: auto;
+            grid-template-rows: auto auto;
+        }
+    }
+
+    // Product page
+    .single-product .product>.content .pictures .show .active {
+        margin: 0 2rem;
+    }
+
+    // Dashboard 
+    .dashboard {
+        .dashboard-content {
+            // Control panel
+            .control-panel {
+                grid-template-columns: auto;
+                row-gap: 4rem;
+                justify-content: center;
+                &::after {
+                    top: 90px;
+                }
+            }
+            > .controllers {
+                margin: 0 3rem;
+            }
+            
+        }
+    }
+
+}
+
 @media screen and (max-width:991px) {
 
     // Single Product
@@ -366,9 +405,12 @@
 
     // Control panel
     .control-panel {
+        padding: 1.5rem;
+
         >.navigation {
             display: flex;
             position: relative;
+            justify-content: center;
 
             >.sm-only {
                 display: block;
@@ -382,24 +424,34 @@
             }
 
             >ul {
-                display: none;
+                display: grid;
+                grid-template-columns: auto;
+                pointer-events: none;
+                opacity: 0;
                 position: absolute;
-
+                transition: opacity 200ms ease-in-out , top 200ms ease-in-out;
+                top: 40px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-radius: 10px;
+                z-index: 1;
+                box-shadow: 0 0 5px $shodow-color;
+                background-color: #fff;
                 &.expand {
-                    display: block;
+                    pointer-events: all;
                     top: 50px;
-                    left: 50%;
-                    z-index: 1;
-                    transform: translateX(-50%);
-                    box-shadow: 0 0 5px $shodow-color;
-                    background-color: #fff;
+                    opacity: 1;
                 }
 
                 >li {
                     display: block;
-                    width: max-content;
-                    padding: 1rem;
-
+                    white-space: nowrap;
+                    padding: 1rem 2rem;
+                    margin: 0;
+                    user-select: none;
+                    &:hover {
+                        background-color: whitesmoke;
+                    }
                     &.active {
                         &::after {
                             display: none;
@@ -421,6 +473,12 @@
     // Dashboard
     .dashboard {
         .dashboard-content {
+            >.control-panel {
+                row-gap: 3rem;
+                &::after {
+                    top: 72px;
+                }
+            }
             >.controllers {
                 display: flex;
                 flex-direction: column;
@@ -436,41 +494,6 @@
                     margin-top: 1rem
                 }
             }
-        }
-    }
-}
-
-@media screen and (max-width:1200px) {
-
-    // Cart
-    .cart-page {
-        >.container {
-            grid-template-columns: auto;
-            grid-template-rows: auto auto;
-        }
-    }
-
-    // Product page
-    .single-product .product>.content .pictures .show .active {
-        margin: 0 2rem;
-    }
-
-    // Dashboard 
-    .dashboard {
-        .dashboard-content {
-            >.controllers {
-                margin: 0rem 3rem;
-            }
-        }
-    }
-
-    // Control panel
-    .control-panel {
-        align-items: center;
-        flex-direction: column;
-
-        >ul.filters {
-            margin-top: 3rem
         }
     }
 }

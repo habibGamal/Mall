@@ -79,6 +79,7 @@
                 width: calc((4*(100vh - 161px))/7);
                 aspect-ratio: 4/7;
             }
+
             &.logo {
                 max-width: 300px;
                 width: calc((1*(100vh - 161px))/1);
@@ -152,7 +153,7 @@
                 position: absolute;
                 color: $second-color;
                 right: 12px;
-                bottom: 10px;
+                top: 43px;
                 transition: opacity 200ms ease-in-out;
             }
 

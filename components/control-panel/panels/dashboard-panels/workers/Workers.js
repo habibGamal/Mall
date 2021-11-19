@@ -4,7 +4,7 @@ import Worker from './Worker'
 export default function Workers() {
     return (
         <>
-            <div className="controllers">
+            <div className="controllers mt-3">
                 <button className="btn btn-add mx-auto"><i className="fas fa-plus-circle" /> Add Worker</button>
             </div>
             <div className="workers">

@@ -8,9 +8,6 @@ import Preview from '../inputs/Preview'
 import Text from '../inputs/Text'
 
 function BranchForm({ index, full, formKey, errors ,logo }) {
-    useEffect(()=>{
-        console.log(errors);
-    },[errors]);
     function branchLogoInit(e){
         Main.removePictureById(index);
         pictureInit(e,index);
@@ -18,7 +15,6 @@ function BranchForm({ index, full, formKey, errors ,logo }) {
     function getBranchLogo(){
         return logo.filter(l => l.pictureId == index)[0];
     }
-    console.log('branch_names.' + (index - 1),invalid('branch_names.' + (index - 1), errors));
     if (!full) {
         return (
             <div className="groups branch">

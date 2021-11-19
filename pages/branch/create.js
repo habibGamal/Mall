@@ -12,8 +12,10 @@ import { Forms, Main } from '../../redux/dispatcher';
 import { compressPictures } from '../../helpers/compressPictures';
 import imageCompression from 'browser-image-compression'
 import branch from '../../api/branch';
+import PermenantMessage from '../../components/messages/PermenantMessage';
 
-function Create({ getInputValue, logo }) {
+function CreateBranch({ getInputValue, logo }) {
+    console.log(logo);
     const formKey = 'branch_form';
     const map = useRef(null);
     const [errors, setErrors] = useState(null);
@@ -25,11 +27,12 @@ function Create({ getInputValue, logo }) {
         store_name: false,
         logo: false
     });
-
+    // => attach form
     useEffect(() => {
         Forms.attachForm(formKey);
         return () => Forms.unattachForm(formKey);
     }, [])
+    // => decide one branch or more
     useEffect(() => {
         // => one branch(0) or mulitble(1)
         const bool = parseInt(getInputValue('branches')); // return 0 or 1
@@ -48,7 +51,7 @@ function Create({ getInputValue, logo }) {
             setBranches([]);
         }
     }, [getInputValue('branches')]);
-
+    // => decide same branches or different branches
     useEffect(() => {
         // => branches have same name(1) or not (0)
         const bool = parseInt(getInputValue('same_branches')); // return 0 or 1
@@ -59,7 +62,11 @@ function Create({ getInputValue, logo }) {
             Main.emptyPictures();
         }
     }, [getInputValue('same_branches')]);
-
+    // => clear errors when moving from tap to another tap
+    useEffect(()=>{
+        setErrors([]);
+    },[getInputValue('branches_number'), getInputValue('same_branches'), getInputValue('branches')]);
+    // => render forms with number of required branches and update them with errors
     useEffect(() => {
         if (parseInt(getInputValue('branches'))) {
             if (getInputValue('branches_number') !== null) {
@@ -85,8 +92,7 @@ function Create({ getInputValue, logo }) {
                 setBranches(buffer);
             }
         }
-    }, [getInputValue('branches_number'), getInputValue('same_branches'), getInputValue('branches')]);
-
+    }, [getInputValue('branches_number'), getInputValue('same_branches'), getInputValue('branches'), errors]);
     // useEffect(() => {
     //     loader.load().then(() => {
     //         let googleMap = new google.maps.Map(map.current, {
@@ -99,6 +105,7 @@ function Create({ getInputValue, logo }) {
     //         })
     //     });
     // });
+
 
     function logoInit(e) {
         // => save just one picture
@@ -137,15 +144,14 @@ function Create({ getInputValue, logo }) {
             } else {
                 // => different name , logo
                 let compressedPictures = await Promise.all(compressPictures(logo));
+                // => list all logos in logo[]
                 compressedPictures.forEach((picture, i) => {
                     form.append('logos[]', picture, logo[i].pictureId);
                     form.append('logos_position[]', JSON.stringify(logo[i].position));
                 });
-                if (compressedPictures.length == 0) {
-                    form.append('logos[]', '');
-                }
                 for (let i = 1; i <= length; i++) {
                     form.append('branch_names[]', form.get(`branch_name-${i}`));
+                    // => prevent normal inputs' value from being sent to backend
                     form.delete(`branch_name-${i}`);
                     form.delete(`logo-${i}`);
                 }
@@ -305,6 +311,8 @@ function Create({ getInputValue, logo }) {
                             </div>
                             : ''
                     }
+
+                    {invalid('logos', errors, 'listOfErrors').map((e,i) => <PermenantMessage key={i} type="danger" content={e} />)}
                     <button className="btn btn-outline-primary btn-block">Submit</button>
                 </form>
             </div>
@@ -325,4 +333,4 @@ const mapStateToProps = (state) => ({
     logo: state.main.pictures,
 })
 
-export default connect(mapStateToProps)(Create)
+export default connect(mapStateToProps)(CreateBranch)

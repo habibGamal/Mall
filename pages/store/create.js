@@ -18,7 +18,7 @@ import pictureInit from '../../helpers/pictureInit';
 import Preview from '../../components/inputs/Preview';
 import { compressPictures } from '../../helpers/compressPictures';
 import InputGroup from '../../components/inputs/InputGroup';
-function Create({ getInputValue, logo }) {
+function CreateStore({ getInputValue, logo }) {
     const formKey = 'store_form';
     const [errors, setErrors] = useState(null);
     const week = [
@@ -216,4 +216,4 @@ const mapStateToProps = (state) => ({
     logo: state.main.pictures,
 })
 
-export default connect(mapStateToProps)(Create)
+export default connect(mapStateToProps)(CreateStore)
