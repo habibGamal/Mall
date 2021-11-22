@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { Forms } from '../../redux/dispatcher';
 
-function Select({ addClass, id, label, name, formKey, invalidMsg, inputValue, options }) {
+function Select({ addClass, id, label, name, formKey, invalidMsg, inputValue, options , defaultOption }) {
+    // formKey == 'MiniCart'? console.log(defaultOption):'';
     if (addClass === undefined) {
         addClass = 'col-md-6';
     }
@@ -15,7 +16,7 @@ function Select({ addClass, id, label, name, formKey, invalidMsg, inputValue, op
         setInvMsg(invalidMsg[0]);
     }, [invalidMsg]);
     useEffect(()=>{
-        Forms.setInputValue(formKey, name, options[0].value);
+        Forms.setInputValue(formKey, name, options[defaultOption ?? 0].value);
     },[]);
     function handleOnChange(e) {
         Forms.setInputValue(formKey, name, e.target.value);
@@ -30,7 +31,7 @@ function Select({ addClass, id, label, name, formKey, invalidMsg, inputValue, op
             <select
                 name={name}
                 className="form-control" id={id}
-                value={inputValue(formKey, name, options[0].value)}
+                value={inputValue(formKey, name, options[defaultOption ?? 0].value)}
                 onChange={handleOnChange}
             >
                 {options.map((option, i) => <option key={i} value={option.value}>{option.as}</option>)}

@@ -30,7 +30,7 @@ export default function Products({ title }) {
                                 currency="LE"
                                 src={path}
                                 href={`/product/${p.id}`}
-                                position={JSON.parse(position)}
+                                position={position}
                             />
                         )
                     })}

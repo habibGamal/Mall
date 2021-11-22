@@ -23,3 +23,5 @@ export let Main = new Proxy({ to: 'Main' }, dispatcher);
 export let Popup = new Proxy({ to: 'Popup' }, dispatcher);
 
 export let Router = new Proxy({ to: 'Router' }, dispatcher);
+
+export let customerEnv = new Proxy({ to: 'CustomerEnv' }, dispatcher);

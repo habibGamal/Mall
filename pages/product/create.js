@@ -89,7 +89,7 @@ function CreateProduct({ pictures }) {
                         <h2>Create new product</h2>
                     </div>
                     <form className="prototype">
-                        <Input
+                        <Select
                             label="Prototype"
                             type="select"
                             addClass=""

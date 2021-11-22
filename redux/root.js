@@ -5,10 +5,12 @@ import messages from './controllers/messages';
 import popup from './controllers/popup';
 import forms from './controllers/forms';
 import apiData from './controllers/apiData';
+import customerEnv from './controllers/customerEnv';
 const rootReducer = combineReducers({
     main,
     router,
     apiData,
+    customerEnv,
     popup,
     messages,
     forms,

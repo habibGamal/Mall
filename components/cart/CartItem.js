@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
-import Input from '../inputs/Input'
 import Link from 'next/link'
+import Select from '../inputs/Select'
 
 export default function CartItem({src,name,price,shopName,quantity}) {
     return (
@@ -14,13 +14,13 @@ export default function CartItem({src,name,price,shopName,quantity}) {
                 <span className="name">{name}</span>
                 <div className="interact">
                     <span>Price : <strong>{price}</strong> LE</span>
-                    <Input
+                    <Select
                         label={null}
                         type="select"
                         addClass=""
                         options={[
-                            '1',
-                            '2'
+                            { value: 1, as: '1' },
+                            { value: 2, as: '2' },
                         ]}
                     />
                     <button className="btn btn-warning">Save in wish list</button>

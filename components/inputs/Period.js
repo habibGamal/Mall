@@ -28,7 +28,6 @@ function Period({ label, addClass, name, invalidMsg, formKey }) {
             }
         }
     }
-    console.log(invMsg);
     return (
         <div className={`form-group ${addClass}`}>
             <label>{label}</label>

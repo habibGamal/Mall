@@ -6,6 +6,8 @@ import ProductControlPanel from '../../components/control-panel/ProductControlPa
 import p from '../../api/product';
 import handlePath from '../../helpers/picturePath';
 import NotEmpty from '../../directives/NotEmpty'
+import cart from '../../api/cart'
+import { $Async } from '../../redux/asyncActions'
 export const getServerSideProps = async (ctx) => {
     try {
         const res = await p.show(ctx.params.id);
@@ -100,6 +102,9 @@ function Product({ product }) {
         const { body } = product.options.filter(option => option.name === optionName)[0];
         return body ? JSON.parse(body) : [];
     }
+    function addToCart(){
+        $Async.AddCartItem({product_id:product.id});
+    }
     return (
         <section className="single-product">
             <div className="container">
@@ -118,7 +123,7 @@ function Product({ product }) {
                         <div className="pictures">
                             <div className="mini">
                                 {pictures.map((p, i) => {
-                                    const position = JSON.parse(p.position);
+                                    const position = p.position;
                                     const path = handlePath(p.path);
                                     return (
                                         <div key={i} className={activePicture(i, { defaultClass: 'picture' })} onClick={() => setPictureShow(i)}>
@@ -129,7 +134,7 @@ function Product({ product }) {
                             </div>
                             <div ref={show} onClick={showScroll} className="show">
                                 {pictures.map((p, i) => {
-                                    const position = JSON.parse(p.position);
+                                    const position = p.position;
                                     const path = handlePath(p.path);
                                     return (
                                         <div key={i} className={activePicture(i)}>
@@ -198,7 +203,7 @@ function Product({ product }) {
                                         </select>
                                     </div>
                                     <button className="btn btn-warning">Save to wish list</button>
-                                    <button className="btn btn-success">Add to cart</button>
+                                    <button onClick={addToCart} className="btn btn-success">Add to cart</button>
                                 </div>
                             </div>
                         </div>
