@@ -4,37 +4,37 @@ import Products from '../components/products/Products'
 import Slider from '../components/slider/Slider'
 import Stores from '../components/stores/Stores'
 import auth from '../api/auth'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { $Async } from '../redux/asyncActions'
 function Home() {
   // for fast test login and logout functionality
-  async function login(){
-    await auth.login({'email':'habibmisi3@gmail.com','password':'gh090807'});
+  async function login() {
+    await auth.login({ 'email': 'habibmisi3@gmail.com', 'password': 'gh090807' });
     $Async.Reauth();
   }
-  async function adminLogin(){
-    await auth.adminLogin({'email':'admin@gmail.com','password':'tp060504'});
+  async function adminLogin() {
+    await auth.adminLogin({ 'email': 'admin@gmail.com', 'password': 'tp060504' });
     $Async.Reauth();
   }
-  async function logout(){
+  async function logout() {
     await auth.logout().then(res => console.log(res));
     $Async.Reauth();
   }
-  async function adminLogout(){
+  async function adminLogout() {
     await auth.adminLogout().then(res => console.log(res));
     $Async.Reauth();
   }
-  function testAuth(){
+  function testAuth() {
     auth.isAuthenticated().then(res => console.log(res));
   }
-  function getCookie(){
+  function getCookie() {
     auth.getCookie().then(res => console.log(res));
   }
-  function clearTokens(){
-    auth.clearAllTokens().then(res=> console.log(res));
+  function clearTokens() {
+    auth.clearAllTokens().then(res => console.log(res));
   }
-  function registerAdmin(){
-    auth.adminRegister({'name':'Habib','email':'admin@gmail.com','password':'tp060504'})
+  function registerAdmin() {
+    auth.adminRegister({ 'name': 'Habib', 'email': 'admin@gmail.com', 'password': 'tp060504' })
   }
   return (
     <>
@@ -46,8 +46,8 @@ function Home() {
       <Slider />
       <Stores />
       <Categories />
-      <Products 
-        title="Top Sales" 
+      <Products
+        title="Top Sales"
       />
       <Products
         title="Men"

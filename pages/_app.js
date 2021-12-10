@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Nav from '../components/main/Nav';
 import 'bootstrap/dist/css/bootstrap.min.css';
 if (typeof window !== "undefined") {
@@ -15,23 +15,30 @@ import DefineRouter from '../directives/DefineRouter';
 import Messages from '../components/messages/Messages';
 import Popup from '../components/popup/Popup';
 import AuthForm from '../components/popup/AuthForm';
+import Loading from '../directives/Loading';
 
 function MyApp({ Component, pageProps }) {
+  const [loaded ,setLoaded] = useState(false);
+  useEffect(() => {
+    setLoaded(true);
+  }, [])
   return (
-    <Provider store={store}>
-      <Authenticating>
-        <DefineRouter>
-          <Messages />
-          <header>
-            <Nav />
-            <Popup keyPopup="auth-form">
-              <AuthForm keyPopup="auth-form"/>
-            </Popup>
-          </header>
+    <Loading state={loaded}>
+      <Provider store={store}>
+        <Authenticating>
+          <DefineRouter>
+            <Messages />
+            <header>
+              <Nav />
+              <Popup keyPopup="auth-form">
+                <AuthForm keyPopup="auth-form" />
+              </Popup>
+            </header>
             <Component {...pageProps} />
-        </DefineRouter>
-      </Authenticating>
-    </Provider>
+          </DefineRouter>
+        </Authenticating>
+      </Provider>
+    </Loading>
   )
 }
 

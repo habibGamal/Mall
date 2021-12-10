@@ -1,9 +1,14 @@
 import React from 'react'
 
-export default function Loading() {
+export default function Loading({ children, state }) {
+
     return (
-        <div>
-            Loading...
-        </div>
+        <>
+            {state
+                ? children
+                : <div className="loading">
+                </div>
+            }
+        </>
     )
 }

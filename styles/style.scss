@@ -1182,6 +1182,33 @@ nav {
 /*
     Name : Row-Show Kit
 */
+@keyframes loading {
+    from {
+        transform: rotateZ(0deg);
+    }
+    to {
+        transform: rotateZ(360deg);
+    }
+}
+
+.loading {
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 150px;
+    height: 150px;
+    background-color: transparent;
+    border: 3px solid var(--primary);
+    border-bottom: 3px solid transparent;
+    border-radius: 100%;
+    animation: loading 800ms linear infinite forwards;
+}
+
+
+/*
+    Name : Row-Show Kit
+*/
 .row-show-container {
     position: relative;
 }

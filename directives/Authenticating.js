@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { $Async } from '../redux/asyncActions';
+import Loading from './Loading';
 function Authenticating({ authenticated, children }) {
-  useEffect(()=>{
+  useEffect(() => {
     $Async.Reauth();
-  },[])
+  }, [])
   return (
-    <>
-      {
-        authenticated === null ? 'loading' : children
-      }
-    </>
+    <Loading state={authenticated !== null}>
+      {children}
+    </Loading>
   )
 }
 
