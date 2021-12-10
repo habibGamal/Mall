@@ -41,7 +41,7 @@ function CreateProduct({ pictures }) {
             .split(',')
             // => map over each specification and split it by (:) to get property name and property value
             .map(s => s.split(':'))
-            // => set them in the structure
+            // => set them in the structure 
             .map(a => ({ [a[0]]: a[1] }))
     }
     async function productStore(e) {
