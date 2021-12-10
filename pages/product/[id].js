@@ -17,7 +17,7 @@ export const getServerSideProps = async (ctx) => {
             }
         }
     } catch (err) {
-        const status = err.response.status;
+        const status = err?.response?.status;
         if (status === 404) {
             return {
                 notFound: true,

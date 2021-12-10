@@ -14,7 +14,7 @@ function MiniCart({ expand, close, authenticated, cart }) {
         if (authenticated && cart) {
             const items = cart.map(item => {
                 const src = JSON.parse(item.pictures);
-                return <CartItem key={item.id} formKey={formKey} quantity={item.pivot.product_count} id={item.id} name={item.name} src={handlePath(src[0].path)} price={item.price}/>
+                return <CartItem key={item.id} formKey={formKey} quantity={item.pivot.product_count} id={item.id} name={item.name} src={handlePath(src[0].path)} price={item.price} />
             })
             setCartItems(items);
         }
@@ -28,7 +28,14 @@ function MiniCart({ expand, close, authenticated, cart }) {
                 </div>
             </div>
             <div className="content">
-                {cartItems}
+                {
+                    cartItems.length === 0 ?
+                        <div className='empty-cart'>
+                            <i className="fas fa-shopping-cart"></i>
+                            <strong>Empty cart</strong>
+                        </div>
+                        : cartItems
+                }
             </div>
             <Link href="/cart">
                 <a className="btn btn-outline-primary btn-block">

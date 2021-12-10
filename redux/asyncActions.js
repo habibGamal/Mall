@@ -1,6 +1,7 @@
 import auth from "../api/auth";
 import cart from "../api/cart";
 import category from "../api/category";
+import { Messages } from "./dispatcher";
 import store from "./store";
 
 class AsyncActions {
@@ -34,13 +35,21 @@ class AsyncActions {
     }
     static AddCartItem(data) {
         return async (dispatch) => {
-            let res = await cart.addProduct(data);
-            if (res.status === 200) {
-                dispatch({
-                    to: 'CustomerEnv',
-                    type: 'addCartItem',
-                    payload: [res.data]
-                })
+            try{
+                let res = await cart.addProduct(data);
+                if (res.status === 200) {
+                    dispatch({
+                        to: 'CustomerEnv',
+                        type: 'addCartItem',
+                        payload: [res.data]
+                    })
+                    Messages.set('success','Item is added to cart');
+                }
+            }catch(error){
+                let {status} = error?.response;
+                if(status === 403){
+                    Messages.set('warning','Item has already added to cart');
+                }
             }
         }
     }
@@ -69,6 +78,7 @@ class AsyncActions {
                         payload: [id]
                     })
                 }
+                Messages.set('warning','Item has been removed from cart');
             }
         }
     }

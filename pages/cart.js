@@ -20,25 +20,14 @@ function Cart({authenticated, cart }) {
             <div className="container">
                 <div className="cart">
                     <h2>Your Cart (3)</h2>
-                    {cartItems}
-                    {/* <CartItem
-                        src="/images/cat_1.jpg"
-                        name="Dri-FIT Swoosh Training T-Shirt White/University Red XL"
-                        price={320}
-                        shopName="Brave"
-                    />
-                    <CartItem
-                        src="/images/cat_4.jpg"
-                        name="Dri-FIT Swoosh Training T-Shirt White/University Red XL"
-                        price={320}
-                        shopName="Brave"
-                    />
-                    <CartItem
-                        src="/images/cat_6.jpg"
-                        name="Dri-FIT Swoosh Training T-Shirt White/University Red XL"
-                        price={320}
-                        shopName="Brave"
-                    /> */}
+                    {
+                        cartItems.length === 0 ? 
+                            <div className='empty-cart'>
+                                <i className="fas fa-shopping-cart"></i>
+                                <strong>Empty cart</strong>
+                            </div> 
+                            : cartItems
+                    }
                     <button className="btn btn-outline-danger m-2">Empty the cart</button>
                     <Link href="/">
                         <a className="btn btn-outline-primary m-2">Continue Shopping</a>

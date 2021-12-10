@@ -30,6 +30,21 @@ html {
     scroll-behavior: smooth;
 }
 
+.empty-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2rem;
+    > i {
+        font-size: 3rem;
+        color: #dfdfdf;
+    }
+    > strong {
+        color: $text-layer-2;
+    }
+}
+
 .form-title {
     font-weight: 600;
     font-size: 1.125rem;
@@ -85,6 +100,7 @@ span.count {
 
     label {
         user-select: none;
+        cursor: pointer;
         display: flex;
         align-items: center;
 
@@ -137,9 +153,10 @@ body {
 .message {
     position: fixed;
     top: 0;
-    left: 5%;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 5;
-    width: 90%;
+    width: clamp(150px, 90vw, 500px);
 }
 
 .btn-black {
@@ -232,7 +249,7 @@ body {
         background-color: #fff;
         padding: 1rem;
         transform: translate(-50%, -50%);
-        overflow-y: scroll;
+        overflow-y: auto;
 
         &.active {
             display: block;
@@ -372,7 +389,7 @@ body {
     z-index: $z-index-form;
     padding: 2rem;
     transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
-    overflow-y: scroll;
+    overflow-y: auto;
     pointer-events: none;
     opacity: 0;
 
@@ -620,7 +637,7 @@ nav {
         }
 
         .content {
-            overflow-y: scroll;
+            overflow-y: auto;
             height: calc(100% - 3rem - 92px);
 
             margin: {
@@ -855,7 +872,7 @@ nav {
 
         >img {
             width: 100%;
-            height: clamp(150px, 50vh, 500px);
+        height: clamp(150px, 50vh, 500px);
             object-fit: cover;
         }
     }

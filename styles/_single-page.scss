@@ -30,10 +30,7 @@
 
         .toggle {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
             position: relative;
-            object-position: 50% 50%;
 
             &:hover {
                 cursor: pointer;
@@ -92,7 +89,6 @@
 
                 img {
                     width: 100%;
-                    transition: width 75ms ease-in-out;
                 }
             }
         }
@@ -116,7 +112,7 @@
     }
 
     .form {
-        margin: 1rem;
+        margin: 1rem 0;
 
         .chips {
             .chip {
@@ -231,9 +227,16 @@
                 height: 200px;
                 margin: 1rem;
                 cursor: pointer;
-
+                transition: background-color 300ms ease-in-out;
                 >i {
                     font-size: 3rem;
+                    transition: color 300ms ease-in-out;
+                }
+                &:hover {
+                    background-color: var(--primary);
+                    > i {
+                        color: #fff;
+                    }
                 }
             }
         }

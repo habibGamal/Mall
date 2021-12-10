@@ -36,6 +36,11 @@ class State {
         let pictures = this.state.pictures.filter(picture => picture.pictureId !== id);
         return { ...this.state, pictures: pictures };
     }
+    setPicturePosition(index, percentage) {
+        let pictures = this.state.pictures;
+        pictures[index].position = percentage;
+        return { ...this.state, pictures: pictures };
+    }
     setPicturePositionById(id, percentage) {
         let pictures = this.state.pictures;
         let i;
@@ -45,11 +50,6 @@ class State {
             }
         });
         pictures[i].position = percentage;
-        return { ...this.state, pictures: pictures };
-    }
-    setPicturePosition(index, percentage) {
-        let pictures = this.state.pictures;
-        pictures[index].position = percentage;
         return { ...this.state, pictures: pictures };
     }
     emptyPictures() {

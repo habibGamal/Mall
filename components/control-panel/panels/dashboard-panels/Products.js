@@ -88,7 +88,7 @@ export default function Products() {
                 <button className="btn btn-add"><i className="fas fa-plus-circle" /> Add Product</button>
             </div>
             <div className="products">
-                <div className="row justify-content-center">
+                <div className="row">
                     {products.map(p => {
                         let { path, position } = JSON.parse(p.pictures)[0];
                         path = handlePath(path);
@@ -104,7 +104,7 @@ export default function Products() {
                                 currency="LE"
                                 src={path}
                                 href={`/product/${p.id}`}
-                                position={JSON.parse(position)}
+                                position={position}
                             />
                         )
                     })}

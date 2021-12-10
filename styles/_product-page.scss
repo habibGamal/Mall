@@ -1,36 +1,44 @@
 .single-product {
     margin-top: 1rem;
     margin-bottom: 1rem;
+
     .product {
         @extend .isolate;
         padding: 1.5rem 2rem;
         margin: 1rem 0;
-        > .path {
+
+        >.path {
             display: flex;
             align-items: center;
             margin-bottom: 1rem;
+
             .store-logo {
                 display: block;
                 border-radius: 50%;
                 width: 60px;
                 height: 60px;
                 overflow: hidden;
-                > img {
+
+                >img {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
                     object-position: center center;
                 }
             }
+
             .category-path {
                 margin-left: 1rem;
             }
         }
-        > .content {
+
+        >.content {
             display: grid;
             grid-template-columns: 50% 50%;
+
             .pictures {
                 display: flex;
+
                 .mini {
                     .picture {
                         position: relative;
@@ -41,26 +49,32 @@
                         overflow: hidden;
                         padding: .5rem;
                         cursor: pointer;
+
                         &.active {
                             border-color: $main-color;
                         }
-                        &:not(:first-child){
+
+                        &:not(:first-child) {
                             margin: .5rem 0;
                         }
+
                         img {
                             object-fit: cover;
                             transition: transform 300ms ease-in-out;
-                            &:hover{
+
+                            &:hover {
                                 transform: scale(.9);
                             }
                         }
                     }
                 }
+
                 .show {
                     .active {
                         display: block;
                     }
-                    > div {
+
+                    >div {
                         position: relative;
                         display: none;
                         width: 300px;
@@ -68,8 +82,10 @@
                         aspect-ratio: 4/7;
                         border-radius: 10px;
                         overflow: hidden;
+
                         .image-wrapper {
                             position: relative;
+
                             img {
                                 object-fit: cover;
                             }
@@ -77,59 +93,74 @@
                     }
                 }
             }
+
             .details {
-                > h2 {
+                >h2 {
                     font-size: 1.2rem;
                     color: $text-layer-1;
                 }
-                > h3 {
+
+                >h3 {
                     color: $second-color;
                 }
+
                 .block {
                     margin: 1rem 0;
-                    > h4 {
+
+                    >h4 {
                         font-size: 1rem;
                         color: $text-layer-3;
                         font-weight: 400;
+                        line-height: 3rem;
                     }
-                    > .context {
+
+                    >.context {
                         margin-left: 1rem;
-                        > .option , > .form-group , > button {
+
+                        >.option,
+                        >.form-group,
+                        >button {
                             margin-right: .5rem;
                             margin-bottom: .5rem;
                         }
-                        > .option {
+
+                        >.option {
                             @extend .isolate;
                             display: inline-block;
                             padding: .5rem 1rem;
                             cursor: pointer;
                             transition: background-color 200ms ease-in-out;
                             color: $text-layer-2;
+
                             &.active {
                                 background-color: $main-color;
                                 color: #fff;
                             }
                         }
-                        > .form-group {
+
+                        >.form-group {
                             display: inline-block;
                             vertical-align: middle;
                         }
                     }
+
                     &.price {
                         span {
                             font-weight: bold;
                             font-size: large;
                         }
                     }
+
                     &.interact .option {
-                        > i {
+                        >i {
                             color: $text-layer-3;
-                            transition-property: color,transform;
+                            transition-property: color, transform;
                             transition-duration: 200ms;
                             transition-timing-function: ease-in-out;
                         }
+
                         &.like {
-                            > i {
+                            >i {
                                 color: red;
                                 transform: scale(1.1);
                             }
@@ -139,76 +170,96 @@
             }
         }
     }
+
     .extra {
         @extend .isolate;
         margin: 1rem 0;
-        .description , .specifications , .comments , .shop-details {
+
+        .description,
+        .specifications,
+        .comments,
+        .shop-details {
             margin: 2rem 4rem;
             padding: 1rem;
         }
+
         .sub-title {
             border-left: 3px solid $main-color;
             padding: 0 .5rem;
         }
-        .description > .content {
+
+        .description>.content {
             margin: 1rem;
         }
+
         .specifications {
             table {
                 width: 100%;
+
                 tr {
-                    > td {
+                    >td {
                         padding: .5rem 1rem;
                     }
+
                     &:nth-child(odd) {
                         @extend .isolate-3;
                     }
                 }
             }
         }
+
         .comments {
             .comment {
                 display: flex;
                 align-items: flex-start;
-                &:not(:first-child){
+
+                &:not(:first-child) {
                     margin: 1rem 0;
                 }
-                > .avatar {
+
+                >.avatar {
                     width: 50px;
                     height: 50px;
                     flex-shrink: 0;
                     position: relative;
                     border-radius: 100%;
                     background-color: $second-color;
-                    > i {
+
+                    >i {
                         position: absolute;
                         top: 50%;
                         left: 50%;
-                        transform: translate(-50%,-50%);
+                        transform: translate(-50%, -50%);
                         color: #fff;
                         font-size: 1.8rem;
                     }
                 }
-                > .content {
+
+                >.content {
                     @extend .isolate-2;
                     padding: 1rem;
                     padding-bottom: 0;
                     margin: 0 1rem;
-                    > h5 {
+
+                    >h5 {
                         font-size: 1rem;
                     }
                 }
+
                 &.write {
                     align-items: center;
+
                     form {
                         width: 90%;
                     }
+
                     .content {
                         @extend .isolate-2;
                         margin: 0 1rem;
                         border: none;
                         width: 100%;
                         padding: .5rem 1rem;
+
                         &:focus-visible {
                             outline: none;
                         }

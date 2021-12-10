@@ -40,9 +40,9 @@ function Category({ name, id, level, subCategories, buttonsT, setPopupEdit, setB
                         <i className="fas fa-ellipsis-v"></i>
                     </div>
                     <div ref={btns} className={active(buttonsT === `expand_${id}`, { defaultClass: 'buttons' })}>
-                        <button onClick={editCat} className="btn btn-outline-success m-1">Edit</button>
-                        <button onClick={deleteCat} className="btn btn-outline-danger m-1">Delete</button>
-                        <button className="btn btn-outline-secondary m-1">Show</button>
+                        <button onClick={editCat} className="btn"><i className="far fa-edit"></i> Edit</button>
+                        <button onClick={deleteCat} className="btn"><i className="far fa-trash-alt"></i> Delete</button>
+                        <button className="btn"><i className="far fa-eye"></i> Show</button>
                     </div>
                 </div>
             </div>

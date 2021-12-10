@@ -13,9 +13,9 @@ import { compressPictures } from '../../helpers/compressPictures';
 import imageCompression from 'browser-image-compression'
 import branch from '../../api/branch';
 import PermenantMessage from '../../components/messages/PermenantMessage';
+import Form from '../../packeges/Form';
 
 function CreateBranch({ getInputValue, logo }) {
-    console.log(logo);
     const formKey = 'branch_form';
     const map = useRef(null);
     const [errors, setErrors] = useState(null);
@@ -63,9 +63,9 @@ function CreateBranch({ getInputValue, logo }) {
         }
     }, [getInputValue('same_branches')]);
     // => clear errors when moving from tap to another tap
-    useEffect(()=>{
+    useEffect(() => {
         setErrors([]);
-    },[getInputValue('branches_number'), getInputValue('same_branches'), getInputValue('branches')]);
+    }, [getInputValue('branches_number'), getInputValue('same_branches'), getInputValue('branches')]);
     // => render forms with number of required branches and update them with errors
     useEffect(() => {
         if (parseInt(getInputValue('branches'))) {
@@ -115,52 +115,49 @@ function CreateBranch({ getInputValue, logo }) {
 
     async function branchCreate(e) {
         e.preventDefault();
-        let form = new FormData(e.target);
-        // => no branches
-        if (!parseInt(getInputValue('branches'))) {
-            // gps will be implemented !!!
-            form.append('gps', JSON.stringify({ lat: -34.397, lng: 150.644 }));
-            // => handle logo
+        let formInstanse = new Form(e.target);
+        let { form } = formInstanse;
+        let structure = [];
+        const addSingleLogo = async () => {
             if (logo[0]) {
                 let compressedLogo = await imageCompression(logo[0].picture, { maxSizeMB: .05 });
-                form.set('logo', compressedLogo);
-                form.append('logo_position', JSON.stringify(logo[0].position));
+                return [
+                    ['logo', { from: compressedLogo, type: 'free' }],
+                    ['logo_position', { from: logo[0].position, type: 'free-json' }],
+                ]
             }
+            return [];
+        }
+        // => no branches
+        if (!parseInt(getInputValue('branches'))) {
+            // => if no branches add the compressed logo if it exists
+            structure = await addSingleLogo();
         } else {
             // => have branches
             let length = parseInt(getInputValue('branches_number'));
             if (parseInt(getInputValue('same_branches'))) {
                 // => same name , logo but different short names
-                // => handle logo
-                if (logo[0]) {
-                    let compressedLogo = await imageCompression(logo[0].picture, { maxSizeMB: .05 });
-                    form.set('logo', compressedLogo);
-                    form.append('logo_position', JSON.stringify(logo[0].position));
-                }
-                for (let i = 1; i <= length; i++) {
-                    form.append('short_branch_names[]', form.get(`short_branch_name-${i}`));
-                    form.delete(`short_branch_name-${i}`);
-                }
+                // => if no branches add the compressed logo if it exists
+                const logoStr = await addSingleLogo();
+                structure = [
+                    ...logoStr,
+                    ['short_branch_names[]', { from: 'short_branch_name-*', type: 'array', length }]
+                ]
             } else {
                 // => different name , logo
                 let compressedPictures = await Promise.all(compressPictures(logo));
-                // => list all logos in logo[]
-                compressedPictures.forEach((picture, i) => {
-                    form.append('logos[]', picture, logo[i].pictureId);
-                    form.append('logos_position[]', JSON.stringify(logo[i].position));
-                });
-                for (let i = 1; i <= length; i++) {
-                    form.append('branch_names[]', form.get(`branch_name-${i}`));
-                    // => prevent normal inputs' value from being sent to backend
-                    form.delete(`branch_name-${i}`);
-                    form.delete(`logo-${i}`);
-                }
+                let logos = compressedPictures.map((picture, i) => ({ file: picture, name: logo[i].pictureId }))
+                structure = [
+                    ['logos[]', { from: logos, type: 'free-array', options: { customName: true } }],
+                    ['logos_position[]', { from: logo.map(l => JSON.stringify(l.position)), type: 'free-array' }],
+                    ['branch_names[]', { from: 'branch_name-*', type: 'array', length }],
+                    ['logo-*', { type: 'clear', length }],
+                ]
             }
-            for (let i = 1; i <= length; i++) {
-                form.append('addresses[]', form.get(`address-${i}`));
-                form.delete(`address-${i}`);
-            }
+            structure.push(['addresses[]', { from: 'address-*', type: 'array', length }]);
         }
+        let str = new Map(structure);
+        formInstanse.structure(str);
         try {
             let res = await branch.store(form);
         } catch (err) {
@@ -312,7 +309,7 @@ function CreateBranch({ getInputValue, logo }) {
                             : ''
                     }
 
-                    {invalid('logos', errors, 'listOfErrors').map((e,i) => <PermenantMessage key={i} type="danger" content={e} />)}
+                    {invalid('logos', errors, 'listOfErrors').map((e, i) => <PermenantMessage key={i} type="danger" content={e} />)}
                     <button className="btn btn-outline-primary btn-block">Submit</button>
                 </form>
             </div>

@@ -5,7 +5,7 @@ export default function invalid(name, errors, specialType) {
                 // => ex: work_hours -> check for work_hours.from or work_hours.to
                 if (errors) {
                     if (errors.hasOwnProperty(`${name}.from`) || errors.hasOwnProperty(`${name}.to`)) {
-                        return { from: errors[`${name}.from`] ?? '', to: errors?.[`${name}.to`] ?? '' };
+                        return { from: errors[`${name}.from`] ?? '', to: errors[`${name}.to`] ?? '' };
                     }
                     return { from: '', to: '' };
                 }
@@ -21,7 +21,6 @@ export default function invalid(name, errors, specialType) {
         }
     }
     if (errors) {
-        // console.log(name,errors);
         if (errors.hasOwnProperty(name)) {
             return errors[name];
         }

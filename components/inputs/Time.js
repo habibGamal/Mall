@@ -14,7 +14,7 @@ function Time({ label, name, formKey, handleOnChange, invMsg, inputValue, id }) 
                 </div>
             </div>
             <div className="form-group col-4">
-                <select name={name} id={`${id}-per`} value={inputValue(formKey, `${id}-per`, 'am')} onChange={handleOnChange} className="form-control" id="return">
+                <select name={name} id={`${id}-per`} value={inputValue(formKey, `${id}-per`, 'am')} onChange={handleOnChange} className="form-control">
                     <option value="am">AM</option>
                     <option value="pm">PM</option>
                 </select>

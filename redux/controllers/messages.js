@@ -21,7 +21,11 @@ class State {
         this.state = state;
     }
     set(type, content) {
-        return [...this.state, { index: new Date().getTime(), type, content }]
+        const prevMessage = this.state[this.state.length - 1];
+        if(type !== prevMessage?.type && content !== prevMessage?.content){
+            return [...this.state, { index: new Date().getTime(), type, content }]
+        }
+        return this.state;
     }
     clear(index) {
         let newState = this.state.filter((m) => m.index !== index);

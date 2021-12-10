@@ -26,7 +26,7 @@ function Email({addClass,id,label,name,formKey,icon,invalidMsg,inputValue}) {
     }
     return (
         <div className={`form-group ${addClass}`}>
-            {label === null ? '' : <label htmlFor={id}>{label}</label>}
+            {label ? '' : <label htmlFor={id}>{label}</label>}
             <input
                 name={name}
                 value={inputValue(formKey, name, '')}
@@ -35,7 +35,7 @@ function Email({addClass,id,label,name,formKey,icon,invalidMsg,inputValue}) {
                 className={active(invMsg.length !== 0, { activeClass: 'is-invalid', defaultClass: 'form-control' })}
             />
             {isdefined(icon, { trueReturn: icon })}
-            <div id={`${id}feedback`} className="invalid-feedback">
+            <div id={`${id}Feedback`} className="invalid-feedback">
                 {invMsg}
             </div>
         </div>

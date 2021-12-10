@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
-import imageCompression from 'browser-image-compression'
+import React, { useState } from 'react'
 import CheckBox from '../../components/inputs/CheckBox';
 import Email from '../../components/inputs/Email';
 import Number from '../../components/inputs/Number';
@@ -7,18 +6,12 @@ import Password from '../../components/inputs/Password';
 import Select from '../../components/inputs/Select';
 import Text from '../../components/inputs/Text'
 import invalid from '../../helpers/invalid'
-import { Forms, Main } from '../../redux/dispatcher'
 import store from '../../api/store'
 import Period from '../../components/inputs/Period';
 import { connect } from 'react-redux';
-import File from '../../components/inputs/File';
-import BranchForm from '../../components/general/BranchForm';
-import loader from '../../gps/loader';
-import pictureInit from '../../helpers/pictureInit';
-import Preview from '../../components/inputs/Preview';
-import { compressPictures } from '../../helpers/compressPictures';
 import InputGroup from '../../components/inputs/InputGroup';
-function CreateStore({ getInputValue, logo }) {
+import Form from '../../packeges/Form';
+export default function CreateStore() {
     const formKey = 'store_form';
     const [errors, setErrors] = useState(null);
     const week = [
@@ -33,15 +26,14 @@ function CreateStore({ getInputValue, logo }) {
     ]
     async function storeCreate(e) {
         e.preventDefault();
-        let form = new FormData(e.target);
-        // => handle holidays
-        form.getAll('holidays').forEach(day => form.append('holidays[]', day));
-        // => work hours structure
-        form.append('work_hours[from]', form.getAll('work_hours')[0]);
-        form.append('work_hours[from-per]', form.getAll('work_hours')[1]);
-        form.append('work_hours[to]', form.getAll('work_hours')[2]);
-        form.append('work_hours[to-per]', form.getAll('work_hours')[3]);
-        form.delete('work_hours');
+        let formInstanse = new Form(e.target);
+        let { form } = formInstanse;
+        let structure = [
+            ['work_hours[from,from-per,to,to-per]', { from: 'work_hours', type: 'a-array' }],
+            ['holidays[]', {from:'holidays', type: 'to-array'}],
+        ]
+        let str = new Map(structure);
+        formInstanse.structure(str);
         try {
             let res = await store.store(form);
         } catch (err) {
@@ -171,7 +163,7 @@ function CreateStore({ getInputValue, logo }) {
                                 label="Work hours"
                                 name="work_hours"
                                 formKey={formKey}
-                                invalidMsg={invalid('work_hours', errors,'period')}
+                                invalidMsg={invalid('work_hours', errors, 'period')}
                             />
                         </div>
                         <div className="form-row">
@@ -203,17 +195,3 @@ function CreateStore({ getInputValue, logo }) {
 
     )
 }
-
-const mapStateToProps = (state) => ({
-    getInputValue: (name) => {
-        if (state.forms['store_form']) {
-            if (state.forms['store_form'][name]) {
-                return state.forms['store_form'][name];
-            }
-        }
-        return null;
-    },
-    logo: state.main.pictures,
-})
-
-export default connect(mapStateToProps)(CreateStore)

@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Text from '../../components/inputs/Text'
-import Input from '../../components/inputs/Input'
 import Preview from '../../components/inputs/Preview'
-import imageCompression from 'browser-image-compression'
 import product from '../../api/product'
 import { connect } from 'react-redux'
 import invalid from '../../helpers/invalid'
@@ -15,6 +13,7 @@ import Select from '../../components/inputs/Select'
 import File from '../../components/inputs/File'
 import pictureInit from '../../helpers/pictureInit'
 import { compressPictures } from '../../helpers/compressPictures'
+import Form from '../../packeges/Form'
 function CreateProduct({ pictures }) {
     const productFormKey = 'product_form';
     const [errors, setErrors] = useState(null);
@@ -26,15 +25,15 @@ function CreateProduct({ pictures }) {
         };
     }, []);
     function splitSpecifications(spec) {
-        /**
-         * it takes ===>
-         * made in:taywan
-         * color:black
-         * return ===>
-         * [
-         *  {'made in':'taywan'},
-         *  {'color':'black'}
-         * ]
+        /*
+         it takes ===>
+            made in:taywan
+            color:black
+         return ===>
+            [
+                {'made in':'taywan'},
+                {'color':'black'}
+            ]
          */
         // => replace any \n \r (brack line) from the text
         return spec.replace(/(\r\n|\n|\r)/gm, "")
@@ -47,26 +46,21 @@ function CreateProduct({ pictures }) {
     }
     async function productStore(e) {
         e.preventDefault();
-        let form = new FormData(e.target);
-        // => handle pictures
+        let formInstanse = new Form(e.target);
+        let { form } = formInstanse;
         let compressedPictures = await Promise.all(compressPictures(pictures));
-        compressedPictures.forEach((p, i) => {
-            form.append('pictures[]', p, p.name);
-            form.append('pictures_position[]', JSON.stringify(pictures[i].position));
-        })
-        // => handle specificaitons
-        form.set('specifications', JSON.stringify(splitSpecifications(form.get('specifications'))));
-        // => handle warranty
-        form.get('warranty_time') ? form.set('warranty', form.get('warranty_time') + ' ' + form.get('warranty_date')) : undefined;
-        form.delete('warranty_time');
-        form.delete('warranty_date');
+        let structure = [
+            ['colors_option', { from: 'colors_option', type: 'chips' }],
+            ['sizes_option', { from: 'sizes_option', type: 'chips' }],
+            ['specifications', { from: splitSpecifications(form.get('specifications')), type: 'free-json' }],
+            ['warranty_time', { from: 'warranty_time[+]warranty_date', type: 'collect', options: { separator: ' ' } }],
+            ['pictures[]', { from: compressedPictures, type: 'free-array', options: { filename: true } }],
+            ['pictures_position[]', { from: pictures.map(p => JSON.stringify(p.position)), type: 'free-array' }]
+        ]
+        let str = new Map(structure);
+        formInstanse.structure(str);
         // => delete Picture input
         form.delete('picture');
-        // => handle chips
-        const color_chips = JSON.stringify([...document.querySelectorAll('[data-name="colors_option"]')].map(chip => chip.dataset.value));
-        const size_chips = JSON.stringify([...document.querySelectorAll('[data-name="sizes_option"]')].map(chip => chip.dataset.value));
-        form.set('colors_option', color_chips);
-        form.set('sizes_option', size_chips);
         // => send product to backend
         product.store(form)
             // => debug successful states
@@ -94,16 +88,16 @@ function CreateProduct({ pictures }) {
                             type="select"
                             addClass=""
                             options={[
-                                {value:0,as:'قميص رجالي'},
-                                {value:1,as:'تيشيرت رجالي'},
+                                { value: 0, as: 'قميص رجالي' },
+                                { value: 1, as: 'تيشيرت رجالي' },
                             ]}
                         />
                     </form>
                 </div>
                 <form id={productFormKey} onSubmit={productStore} className="form" encType="multipart/form-data">
-                    <h3>Required</h3>
                     <div className="groups">
-                        <div className="row align-items-center">
+                        <h3>Required</h3>
+                        <div className="row align-items-center mx-1">
                             <File
                                 label="Product Picture"
                                 addClass=""
@@ -114,7 +108,7 @@ function CreateProduct({ pictures }) {
                                 invalidMsg={invalid('pictures', errors)}
                                 formKey={productFormKey}
                             />
-                            {pictures.map((picture, i) => <Preview imgSrc={picture.base} index={i} to="product" key={i}/>)}
+                            {pictures.map((picture, i) => <Preview imgSrc={picture.base} index={i} to="product" key={i} />)}
                         </div>
                         <Text
                             label="Product Name"
@@ -125,7 +119,7 @@ function CreateProduct({ pictures }) {
                             invalidMsg={invalid('name', errors)}
                             formKey={productFormKey}
                         />
-                        <Number 
+                        <Number
                             label="Product Price"
                             addClass=""
                             icon={<i className="fas fa-dollar-sign" />}
@@ -136,7 +130,7 @@ function CreateProduct({ pictures }) {
                             formKey={productFormKey}
                         />
                         <div className="form-row align-items-center">
-                            <CheckBox 
+                            <CheckBox
                                 label="Has an offer"
                                 type="check"
                                 addClass="col-md-3"
@@ -158,7 +152,7 @@ function CreateProduct({ pictures }) {
                             </div>
                         </div>
                         <div className="form-row align-items-center">
-                            <Select 
+                            <Select
                                 label="Stock"
                                 options={[
                                     { value: 1, as: 'In stock' },
@@ -193,8 +187,8 @@ function CreateProduct({ pictures }) {
                             formKey={productFormKey}
                         />
                     </div>
-                    <h3>Optional</h3>
                     <div className="groups">
+                        <h3>Optional</h3>
                         <div className="form-row">
                             <Chips
                                 label="Available Colors"

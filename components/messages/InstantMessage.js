@@ -5,22 +5,29 @@ import { Messages } from '../../redux/dispatcher';
 
 export default function Message({index,type,content}) {
     const [showT,setShowT] = useState(true)
+    const [removed,setRemoved] = useState(false);
+    let t2;
     useEffect(()=>{
+        const time = 5000;
         let t = setTimeout(()=>{
             setShowT(false);
-        },1500);
-        let t2 = setTimeout(()=>{
+        },time);
+        t2 = setTimeout(()=>{
             Messages.clear(index);
-        },1650);
+        },time + 150);
         return ()=> {
             clearTimeout(t);
             clearTimeout(t2);
         }
     },[])
+    function remove(){
+        Messages.clear(index);
+        clearTimeout(t2);
+    }
     return (
         <div className={active(showT,{activeClass:'show',defaultClass:`alert alert-${type} alert-dismissible fade`})} role="alert">
             {content}
-            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+            <button onClick={remove} type="button" className="close">
                 <span aria-hidden="true">×</span>
             </button>
         </div>
