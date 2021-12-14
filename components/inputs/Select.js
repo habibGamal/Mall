@@ -2,22 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { Forms } from '../../redux/dispatcher';
 
-function Select({ addClass, id, label, name, formKey, invalidMsg, inputValue, options , defaultOption }) {
-    // formKey == 'MiniCart'? console.log(defaultOption):'';
-    if (addClass === undefined) {
-        addClass = 'col-md-6';
-    }
-    if (invalidMsg === undefined) {
-        invalidMsg = [''];
-    }
+function Select({ addClass = 'col-md-6', id, label, name, formKey, invalidMsg = [''], inputValue, options, defaultOption }) {
     const [invMsg, setInvMsg] = useState(invalidMsg[0]);
     useEffect(() => {
         // => initialize invMsg state from invalidMsg prop
         setInvMsg(invalidMsg[0]);
     }, [invalidMsg]);
-    useEffect(()=>{
+    useEffect(() => {
         Forms.setInputValue(formKey, name, options[defaultOption ?? 0].value);
-    },[]);
+    }, []);
     function handleOnChange(e) {
         Forms.setInputValue(formKey, name, e.target.value);
         // => if there is an error remove it when user writing

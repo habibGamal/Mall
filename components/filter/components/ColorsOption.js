@@ -1,27 +1,24 @@
 import React from 'react'
-import Input from '../../inputs/Input'
+import CheckBox from '../../inputs/CheckBox'
 
 export default function ColorsOption() {
     return (
         <div className="option">
             <h5>Colors</h5>
             <div className="colors">
-                <Input
+                <CheckBox
                     label="Red"
                     id="red"
-                    type="check"
                     addClass=""
                 />
-                <Input
+                <CheckBox
                     label="Blue"
                     id="blue"
-                    type="check"
                     addClass=""
                 />
-                <Input
+                <CheckBox
                     label="Orange"
                     id="orange"
-                    type="check"
                     addClass=""
                 />
             </div>

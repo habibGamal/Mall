@@ -4,24 +4,13 @@ import active from '../../helpers/active';
 import isdefined from '../../helpers/isdefined';
 import { Forms } from '../../redux/dispatcher';
 
-function Number({addClass,id,label,name,formKey,icon,invalidMsg,inputValue,min,max,step,defaultValue}) {
-    if (addClass === undefined) {
-        addClass = 'col-md-6';
-    }
-    if (invalidMsg === undefined) {
-        invalidMsg = [''];
-    }
+function Number({ addClass = 'col-md-6', id, label, name, formKey, icon, invalidMsg = [''], inputValue, min, max, step, defaultValue = '' }) {
     const [invMsg, setInvMsg] = useState(invalidMsg[0]);
     useEffect(() => {
         // => initialize invMsg state from invalidMsg prop
         setInvMsg(invalidMsg[0]);
     }, [invalidMsg]);
 
-    useEffect(()=>{
-        if(defaultValue !== undefined){
-            Forms.setInputValue(formKey, name, defaultValue);
-        }
-    },[]);
     function handleOnChange(e) {
         Forms.setInputValue(formKey, name, e.target.value);
         // => if there is an error remove it when user writing

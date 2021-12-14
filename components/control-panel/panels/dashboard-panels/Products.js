@@ -3,7 +3,7 @@ import product from '../../../../api/product'
 import active from '../../../../helpers/active'
 import Product from '../../../products/Product'
 import p from '../../../../api/product'
-import handlePath from '../../../../helpers/picturePath'
+import Picture from '../../../../models/Picture'
 export default function Products() {
     const [selectable, setSelectable] = useState(false);
     const [selectAll, setSelectAll] = useState(false);
@@ -89,21 +89,20 @@ export default function Products() {
             </div>
             <div className="products">
                 <div className="row">
-                    {products.map(p => {
-                        let { path, position } = JSON.parse(p.pictures)[0];
-                        path = handlePath(path);
+                    {products.map(product => {
+                        let { path, position } = Picture.getPicture(product);
                         return (
                             <Product
                                 selectable={selectable}
                                 selected={selectAll}
-                                key={p.id}
-                                id={p.id}
-                                name={p.name}
-                                price={p.price}
-                                offerPrice={p.offer_price}
+                                key={product.id}
+                                id={product.id}
+                                name={product.name}
+                                price={product.price}
+                                offerPrice={product.offer_price}
                                 currency="LE"
                                 src={path}
-                                href={`/product/${p.id}`}
+                                href={`/product/${product.id}`}
                                 position={position}
                             />
                         )

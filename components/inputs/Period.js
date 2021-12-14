@@ -4,11 +4,7 @@ import active from '../../helpers/active';
 import { Forms } from '../../redux/dispatcher';
 import Time from './Time';
 
-function Period({ label, addClass, name, invalidMsg, formKey }) {
-    if (addClass === undefined) {
-        addClass = 'col-md-6';
-    }
-
+function Period({ label, addClass = 'col-md-6', name, invalidMsg, formKey }) {
     const [invMsg, setInvMsg] = useState(invalidMsg);
     useEffect(() => {
         // => initialize invMsg state from invalidMsg prop and renew it

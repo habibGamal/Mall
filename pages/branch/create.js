@@ -7,13 +7,13 @@ import Preview from '../../components/inputs/Preview';
 import Select from '../../components/inputs/Select';
 import Text from '../../components/inputs/Text';
 import invalid from '../../helpers/invalid';
-import pictureInit from '../../helpers/pictureInit';
 import { Forms, Main } from '../../redux/dispatcher';
 import { compressPictures } from '../../helpers/compressPictures';
 import imageCompression from 'browser-image-compression'
 import branch from '../../api/branch';
 import PermenantMessage from '../../components/messages/PermenantMessage';
 import Form from '../../packeges/Form';
+import Picture from '../../models/Picture';
 
 function CreateBranch({ getInputValue, logo }) {
     const formKey = 'branch_form';
@@ -110,7 +110,7 @@ function CreateBranch({ getInputValue, logo }) {
     function logoInit(e) {
         // => save just one picture
         Main.emptyPictures();
-        pictureInit(e);
+        Picture.init(e);
     }
 
     async function branchCreate(e) {
@@ -120,10 +120,10 @@ function CreateBranch({ getInputValue, logo }) {
         let structure = [];
         const addSingleLogo = async () => {
             if (logo[0]) {
-                let compressedLogo = await imageCompression(logo[0].picture, { maxSizeMB: .05 });
+                let compressedLogo = await imageCompression(logo[0].file, { maxSizeMB: .05 });
                 return [
                     ['logo', { from: compressedLogo, type: 'free' }],
-                    ['logo_position', { from: logo[0].position, type: 'free-json' }],
+                    ['logo_position', { from: logo[0].positionToJson(), type: 'free'  }],
                 ]
             }
             return [];
@@ -146,10 +146,10 @@ function CreateBranch({ getInputValue, logo }) {
             } else {
                 // => different name , logo
                 let compressedPictures = await Promise.all(compressPictures(logo));
-                let logos = compressedPictures.map((picture, i) => ({ file: picture, name: logo[i].pictureId }))
+                let logos = compressedPictures.map((picture, i) => ({ file: picture, name: logo[i].id }))
                 structure = [
                     ['logos[]', { from: logos, type: 'free-array', options: { customName: true } }],
-                    ['logos_position[]', { from: logo.map(l => JSON.stringify(l.position)), type: 'free-array' }],
+                    ['logos_position[]', { from: logo.map(l => l.positionToJson()), type: 'free-array' }],
                     ['branch_names[]', { from: 'branch_name-*', type: 'array', length }],
                     ['logo-*', { type: 'clear', length }],
                 ]
@@ -251,7 +251,7 @@ function CreateBranch({ getInputValue, logo }) {
                                     />
                                     <div className="col-sm-6">
                                         <div className="row justify-content-center">
-                                            {logo.length > 0 ? <Preview imgSrc={logo[0].base} index={0} to="logo" /> : ''}
+                                            {logo.length > 0 ? <Preview picture={logo[0]} to="logo" /> : ''}
                                         </div>
                                     </div>
                                 </div>
@@ -295,7 +295,7 @@ function CreateBranch({ getInputValue, logo }) {
                                             />
                                             <div className="col-md-6">
                                                 <div className="row justify-content-center">
-                                                    {logo.length > 0 ? <Preview imgSrc={logo[0].base} index={0} to="logo" /> : ''}
+                                                    {logo.length > 0 ? <Preview picture={logo[0]} to="logo" /> : ''}
                                                 </div>
                                             </div>
                                         </div>

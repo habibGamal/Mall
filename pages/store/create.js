@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import CheckBox from '../../components/inputs/CheckBox';
 import Email from '../../components/inputs/Email';
-import Number from '../../components/inputs/Number';
 import Password from '../../components/inputs/Password';
 import Select from '../../components/inputs/Select';
 import Text from '../../components/inputs/Text'
 import invalid from '../../helpers/invalid'
 import store from '../../api/store'
 import Period from '../../components/inputs/Period';
-import { connect } from 'react-redux';
 import InputGroup from '../../components/inputs/InputGroup';
 import Form from '../../packeges/Form';
 export default function CreateStore() {

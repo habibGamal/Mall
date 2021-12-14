@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import invalid from '../../helpers/invalid'
-import pictureInit from '../../helpers/pictureInit'
+import Picture from '../../models/Picture'
 import { Main } from '../../redux/dispatcher'
 import File from '../inputs/File'
 import Preview from '../inputs/Preview'
@@ -10,11 +10,12 @@ import Text from '../inputs/Text'
 function BranchForm({ index, full, formKey, errors ,logo }) {
     function branchLogoInit(e){
         Main.removePictureById(index);
-        pictureInit(e,index);
+        Picture.init(e,index);
     }
     function getBranchLogo(){
-        return logo.filter(l => l.pictureId == index)[0];
+        return logo.filter(l => l.id == index)[0];
     }
+    console.log(logo);
     if (!full) {
         return (
             <div className="groups branch">
@@ -80,7 +81,7 @@ function BranchForm({ index, full, formKey, errors ,logo }) {
                         />
                         <div className="col-md-6">
                             <div className="row justify-content-center">
-                                {getBranchLogo() ? <Preview imgSrc={getBranchLogo().base} index={index} byId={true} to="logo" /> : ''}
+                                {getBranchLogo() ? <Preview picture={getBranchLogo()} to="logo" /> : ''}
                             </div>
                         </div>
                     </div>

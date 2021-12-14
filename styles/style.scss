@@ -1,5 +1,9 @@
 @use "./lib/fontawesome.scss";
 // @import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+@font-face {
+    font-family: 'Roboto';
+    src: URL('./fonts/Roboto-Bold.ttf') format('truetype');
+  }
 // Variables
 $z-index-escape-effect: 3;
 $z-index-form: 3;
@@ -42,6 +46,13 @@ html {
     }
     > strong {
         color: $text-layer-2;
+    }
+}
+
+.message-link {
+    cursor: pointer;
+    &:hover{
+        text-decoration: underline;
     }
 }
 
@@ -1191,18 +1202,28 @@ nav {
     }
 }
 
-.loading {
+.loading-container {
     position:absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    width: 150px;
-    height: 150px;
-    background-color: transparent;
-    border: 3px solid var(--primary);
-    border-bottom: 3px solid transparent;
-    border-radius: 100%;
-    animation: loading 800ms linear infinite forwards;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    .loading {
+        width: 150px;
+        height: 150px;
+        background-color: transparent;
+        border: 3px solid var(--primary);
+        border-bottom: 3px solid transparent;
+        border-radius: 100%;
+        animation: loading 800ms linear infinite forwards;
+    }
+
 }
 
 

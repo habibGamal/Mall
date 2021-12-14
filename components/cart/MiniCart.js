@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import active from '../../helpers/active'
 import CartItem from './MiniCartItem'
-import Link from 'next/link'
-import cart from '../../api/cart';
 import { connect } from 'react-redux';
-import { Main } from '../../redux/dispatcher';
 import handlePath from '../../helpers/picturePath';
+import { useRouter } from 'next/router';
 
 function MiniCart({ expand, close, authenticated, cart }) {
+    const router = useRouter();
     const formKey = 'MiniCart';
     const [cartItems, setCartItems] = useState([]);
     useEffect(async () => {
@@ -19,6 +18,10 @@ function MiniCart({ expand, close, authenticated, cart }) {
             setCartItems(items);
         }
     }, [cart]);
+    function toCart(){
+        router.push('/cart');
+        close();
+    }
     return (
         <div id="cart" className={active(expand)}>
             <div className="head">
@@ -37,12 +40,10 @@ function MiniCart({ expand, close, authenticated, cart }) {
                         : cartItems
                 }
             </div>
-            <Link href="/cart">
-                <a className="btn btn-outline-primary btn-block">
+                <button onClick={toCart} className="btn btn-outline-primary btn-block">
                     Go to Cart
                     &#x2192;
-                </a>
-            </Link>
+                </button>
         </div>
     )
 }

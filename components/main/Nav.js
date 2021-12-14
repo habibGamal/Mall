@@ -10,7 +10,7 @@ import auth from '../../api/auth';
 import { connect } from 'react-redux';
 import { $Async } from '../../redux/asyncActions';
 import { Popup } from '../../redux/dispatcher';
-function Nav({ setPopupForm}) {
+function Nav({ setPopupForm }) {
     const router = useRouter();
     const search = useRef();
     const activeLink = useRef();
@@ -68,18 +68,18 @@ function Nav({ setPopupForm}) {
         $Async.Reauth();
         router.push('/');
     }
-    useEffect(()=>{
-        window.onscroll = ()=>{
-            if(window.scrollY > 0){
+    useEffect(() => {
+        window.onscroll = () => {
+            if (window.scrollY > 0) {
                 document.getElementsByTagName('nav')[0].classList.add('stick');
-            }else{
+            } else {
                 document.getElementsByTagName('nav')[0].classList.remove('stick');
             }
         }
-        return ()=>{
-            window.onscroll = ()=>{}
+        return () => {
+            window.onscroll = () => { }
         };
-    },[]);
+    }, []);
     return (
         <>
             <nav className="d-flex justify-content-between">
@@ -173,16 +173,16 @@ function Nav({ setPopupForm}) {
                         <i className="fas fa-shopping-cart"></i>
                         <span className="count">3</span>
                     </div>
-                    <Unauthenticated>
-                        <div className="circle user" onClick={loginPopup}>
-                            <i className="fas fa-user"></i>
-                        </div>
-                    </Unauthenticated>
-                    <Authenticated>
+                    <div className="circle user" onClick={loginPopup}>
+                        <i className="fas fa-user"></i>
+                    </div>
+                    {/* <Unauthenticated>
+                    </Unauthenticated> */}
+                    {/* <Authenticated>
                         <div className="circle">
                             <i className="fas fa-comments"></i>
                         </div>
-                    </Authenticated>
+                    </Authenticated> */}
                 </div>
             </nav>
             <ul className="nav-categories d-none">
@@ -217,7 +217,7 @@ function Nav({ setPopupForm}) {
 
 const mapDispatchToProps = dispatch => (
     {
-        setPopupForm: (value) =>  Popup.setPopup('auth-form', value),
+        setPopupForm: (value) => Popup.setPopup('auth-form', value),
     }
 )
 export default connect(null, mapDispatchToProps)(Nav);

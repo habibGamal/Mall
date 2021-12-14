@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import isdefined from '../../helpers/isdefined';
 // import { setInputValue } from '../../redux/actions/form'
 import { Forms } from '../../redux/dispatcher';
-function Chips({ addClass, id, name, label, icon, formKey, inputValue, }) {
+function Chips({ addClass = 'col-md-6', id, name, label, icon, formKey, inputValue, initChips }) {
     const [chips, setChips] = useState([]);
-    if (addClass === undefined) {
-        addClass = 'col-md-6';
-    }
+    const initValue = initChips(formKey, name + '_chips');
+    useEffect(() => {
+        if (initValue) {
+            setChips(initValue);
+        }
+    }, [initValue]);
     function handler(e) {
         Forms.setInputValue(formKey, name, e.target.value);
     }
@@ -15,15 +18,17 @@ function Chips({ addClass, id, name, label, icon, formKey, inputValue, }) {
         setChips(old => old.filter(chip => chip.index !== index));
     }
     function emitter(e) {
-        if (e.key == 'Enter') {
+        if (e.key == 'Enter' && e.target.value != '') {
             e.preventDefault();
-            setChips(old => [
-                ...old,
-                {
-                    index: old[old.length] ? old[old.length].index++ : old.length,
-                    name: e.target.value,
-                }
-            ]);
+            setChips(old => {
+                return [
+                    ...old,
+                    {
+                        index: old[old.length - 1] ? old[old.length - 1].index + 1 : old.length,
+                        name: e.target.value,
+                    }
+                ]
+            });
             Forms.setInputValue(formKey, name, '');
         }
     }
@@ -61,6 +66,7 @@ const mapStateToProps = (state) => ({
         }
         return defaultValue;
     },
+    initChips: (key, name) => state.forms[key]?.[name],
 })
 
 export default connect(mapStateToProps)(Chips);

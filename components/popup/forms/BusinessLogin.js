@@ -35,6 +35,7 @@ export default function BusinessLogin({form ,setTap}) {
     }
     function createStore(e) {
         e.preventDefault();
+        router.push('/store/create');
     }
     return (
         <>

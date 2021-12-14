@@ -5,12 +5,11 @@ import active from '../../helpers/active';
 import { useRouter } from 'next/dist/client/router';
 import Admin from '../../directives/Admin';
 export default function Product({ selectable, id, selected, name, price, offerPrice, currency, src, href, position }) {
-    let p = position ? JSON.parse(JSON.stringify(position)) : { "leftP": 50, "topP": 0 }
     const [select, setSelect] = useState(false);
     const [menuT, setMenuT] = useState(false);
     const router = useRouter();
     useEffect(() => setSelect(selected), [selected]);
-    const img = useMemo(() => <Image src={src} layout="fill" objectPosition={`${p.leftP}% ${-1 * p.topP}%`} className="img" alt="T-shirt" />, []);
+    const img = useMemo(() => <Image src={src} layout="fill" objectPosition={`${position.leftP}% ${-1 * position.topP}%`} className="img" alt="T-shirt" />, []);
     function selectHandle() {
         setSelect(!select);
     }
@@ -36,7 +35,7 @@ export default function Product({ selectable, id, selected, name, price, offerPr
                             <i className="fas fa-bars"></i>
                         </div>
                         <div className={active(menuT, { defaultClass: 'menu' })}>
-                            <Link href="/product/edit">
+                            <Link href={`/product/edit/${id}`}>
                                 <a>
                                     <i className="fas fa-edit"></i> Edit
                                 </a>
@@ -71,7 +70,7 @@ export default function Product({ selectable, id, selected, name, price, offerPr
                         <i className="fas fa-bars"></i>
                     </div>
                     <div className={active(menuT, { defaultClass: 'menu' })}>
-                        <Link href="/product/edit">
+                        <Link href={`/product/edit/${id}`}>
                             <a>
                                 <i className="fas fa-edit"></i> Edit
                             </a>

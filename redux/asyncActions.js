@@ -50,6 +50,7 @@ class AsyncActions {
                 if(status === 403){
                     Messages.set('warning','Item has already added to cart');
                 }
+                throw error;
             }
         }
     }

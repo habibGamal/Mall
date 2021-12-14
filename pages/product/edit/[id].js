@@ -1,21 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import Text from '../../components/inputs/Text'
-import Preview from '../../components/inputs/Preview'
-import product from '../../api/product'
-import { connect } from 'react-redux'
-import invalid from '../../helpers/invalid'
-import SelectCategories from '../../components/general/selectCategories/SelectCategories'
-import Chips from '../../components/inputs/Chips'
-import { Forms, Main } from '../../redux/dispatcher'
-import Number from '../../components/inputs/Number'
-import CheckBox from '../../components/inputs/CheckBox'
-import Select from '../../components/inputs/Select'
-import File from '../../components/inputs/File'
-import Form from '../../packeges/Form'
-import Picture from '../../models/Picture'
-import Product from '../../models/Product'
-function CreateProduct({ pictures }) {
-    const productFormKey = 'product_form';
+import React, { useEffect, useRef, useState } from 'react'
+import Text from '../../../components/inputs/Text'
+import Preview from '../../../components/inputs/Preview'
+import invalid from '../../../helpers/invalid'
+import productApi from '../../../api/product';
+import SelectCategories from '../../../components/general/selectCategories/SelectCategories'
+import Chips from '../../../components/inputs/Chips'
+import { Forms, Main } from '../../../redux/dispatcher'
+import Number from '../../../components/inputs/Number'
+import CheckBox from '../../../components/inputs/CheckBox'
+import Select from '../../../components/inputs/Select'
+import File from '../../../components/inputs/File'
+import { compressPictures } from '../../../helpers/compressPictures'
+import Form from '../../../packeges/Form'
+import Picture from '../../../models/Picture'
+import { connect } from 'react-redux';
+import { api } from '../../../api/instance';
+import Product from '../../../models/Product';
+
+export const getServerSideProps = async (ctx) => {
+    try {
+        const res = await productApi.show(ctx.params.id);
+        return {
+            props: {
+                product: res.data
+            }
+        }
+    } catch (err) {
+        const status = err?.response?.status;
+        if (status === 404) {
+            return {
+                notFound: true,
+            }
+        }
+        return {
+            notFound: true,
+        }
+    }
+}
+function EditProduct({ product, pictures }) {
+    const formRef = useRef(null);
+    const productModel = new Product(product,formRef);
+    const productFormKey = productModel.editKey;
     const [errors, setErrors] = useState(null);
     useEffect(() => {
         Forms.attachForm(productFormKey);
@@ -24,11 +49,15 @@ function CreateProduct({ pictures }) {
             Main.emptyPictures();
         };
     }, []);
+    // => initialize the values
+    useEffect(async () => {
+        await productModel.initValues();
+    }, []);
     async function productStore(e) {
         e.preventDefault();
         let formInstanse = new Form(e.target);
         let { form } = formInstanse;
-        let structure = await Product.createProductStructure(pictures,form);
+        let structure = await Product.createProductStructure(pictures);
         let structureMap = new Map(structure);
         formInstanse.structure(structureMap);
         // => delete Picture input
@@ -50,7 +79,7 @@ function CreateProduct({ pictures }) {
             <div className="container">
                 <div className="head">
                     <div className="title">
-                        <h2>Create new product</h2>
+                        <h2>Edit the product</h2>
                     </div>
                     <form className="prototype">
                         <Select
@@ -64,7 +93,7 @@ function CreateProduct({ pictures }) {
                         />
                     </form>
                 </div>
-                <form id={productFormKey} onSubmit={productStore} className="form" encType="multipart/form-data">
+                <form ref={formRef} id={productFormKey} onSubmit={productStore} className="form" encType="multipart/form-data">
                     <div className="groups">
                         <h3>Required</h3>
                         <div className="row align-items-center mx-1">
@@ -78,7 +107,7 @@ function CreateProduct({ pictures }) {
                                 invalidMsg={invalid('pictures', errors)}
                                 formKey={productFormKey}
                             />
-                            {pictures.map((picture) => <Preview picture={picture} imgSrc={picture.base} index={picture.id} to="product" key={picture.id} />)}
+                            {pictures.map(picture => <Preview picture={picture} to="product" key={picture.id} />)}
                         </div>
                         <Text
                             label="Product Name"
@@ -146,6 +175,7 @@ function CreateProduct({ pictures }) {
                         </div>
                         <Select
                             label="Branch"
+                            name="branch"
                             type="select"
                             addClass=""
                             options={[
@@ -223,8 +253,10 @@ function CreateProduct({ pictures }) {
         </section>
     )
 }
-const mapPropsFromState = state => ({
-    pictures: state.main.pictures,
-    picturesPosition: state.main.picturesPosition,
-})
-export default connect(mapPropsFromState)(CreateProduct);
+const mapStateToProps = state => {
+    return {
+        formInputsNames: state.forms,
+        pictures: state.main.pictures
+    }
+}
+export default connect(mapStateToProps)(EditProduct);

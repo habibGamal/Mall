@@ -35,6 +35,10 @@ class State {
         const form = this.state[formKey];
         return {...this.state,[formKey]:{...form,[inputName]:inputValue}};
     }
+    setChipsValue(formKey,chipsName,chipsValue){
+        const form = this.state[formKey];
+        return {...this.state,[formKey]:{...form,[chipsName]:chipsValue}};
+    }
 }
 
 export default reducer;

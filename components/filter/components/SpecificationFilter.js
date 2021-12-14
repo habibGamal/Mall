@@ -1,5 +1,4 @@
 import React from 'react'
-import Input from '../../inputs/Input'
 import Specification from './Specification'
 
 export default function SpecificationFilter() {

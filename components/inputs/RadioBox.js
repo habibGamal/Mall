@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Forms } from '../../redux/dispatcher';
-function CheckBox({ label, addClass, name, formKey, id, value, dataset, inputValue, defaultValue = false }) {
+function RadioBox({ label, addClass, name, formKey, id, value, dataset, inputValue, defaultValue = false }) {
     // => initialize the input with default value
     useEffect(() => {
         Forms.setInputValue(formKey, id, defaultValue);
     }, [])
+    function onChange(e){
+        Forms.setInputValue(formKey, name, e.target.value);
+    }
     return (
         <div className={`form-check ${addClass}`}>
-            <input className="form-check-input" name={name} value={value} data-set={dataset} checked={inputValue(formKey, id, defaultValue)} onChange={(e) => Forms.setInputValue(formKey, id, e.target.checked)} hidden type="checkbox" id={id} />
+            <input className="form-check-input" name={name} value={value} data-set={dataset} checked={inputValue(formKey, name) == value} onChange={onChange} hidden type="radio" id={id} />
             <label className="form-check-label" htmlFor={id}>
                 <span className="box">
                     <i className="fas fa-check" />
@@ -39,4 +42,4 @@ const mapStateToProps = (state) => ({
     }
 })
 
-export default connect(mapStateToProps)(CheckBox);
+export default connect(mapStateToProps)(RadioBox);

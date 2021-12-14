@@ -36,6 +36,9 @@ function Home() {
   function registerAdmin() {
     auth.adminRegister({ 'name': 'Habib', 'email': 'admin@gmail.com', 'password': 'tp060504' })
   }
+  function test() {
+    auth.test({path:'/public/products/uRJnhxw92UKJuq8s3JojqYbaumX5OAtdhqrKFY8j.jpg'}).then(res => console.log(res));
+  }
   return (
     <>
       <Head>
@@ -63,6 +66,7 @@ function Home() {
       <button onClick={testAuth} className="btn btn-primary">I am authenticated</button>
       <button onClick={getCookie} className="btn btn-primary">get cookie</button>
       <button onClick={clearTokens} className="btn btn-primary">clear all tokens</button>
+      <button onClick={test} className="btn btn-primary">test</button>
     </>
   )
 }

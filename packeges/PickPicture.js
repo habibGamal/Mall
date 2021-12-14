@@ -2,15 +2,16 @@ import preview from "../helpers/preview";
 import { Main } from "../redux/dispatcher";
 
 export default class PickPicture {
-    constructor(setting = { toggleImg, imgBoundry, imgDrag, img, setRange, setToggle, index, byId }) {
-        this.toggleImg = setting.toggleImg;
-        this.imgBoundry = setting.imgBoundry;
-        this.imgDrag = setting.imgDrag;
-        this.img = setting.img;
-        this.setRange = setting.setRange;
-        this.setToggle = setting.setToggle;
-        this.index = setting.index;
-        this.byId = setting.byId;
+    constructor({ toggleImg, imgBoundry, imgDrag, img, setRange, setToggle, index, editMode, position }) {
+        this.toggleImg = toggleImg;
+        this.imgBoundry = imgBoundry;
+        this.imgDrag = imgDrag;
+        this.img = img;
+        this.setRange = setRange;
+        this.setToggle = setToggle;
+        this.index = index;
+        this.editMode = editMode;
+        this.position = position;
     }
     async handle(e) {
         this.setRange(e.target.value);
@@ -22,7 +23,20 @@ export default class PickPicture {
     }
     ImgLoaded() {
         let boundries = [this.imgBoundry.current.clientWidth, this.imgBoundry.current.clientHeight];
-        preview(this.imgDrag.current, this.img.current, boundries)
+        preview(this.imgDrag.current, this.img.current, boundries);
+        if (this.editMode) {
+            this.adjustToggleImg(this.position)
+        }
+    }
+    adjustToggleImg(position = null) {
+        const { heightP, leftP, topP } = position || {};
+        if (position) {
+            const style = this.toggleImg.current.style;
+            style.height = `${heightP}%`;
+            style.objectPosition = `${isNaN(leftP) ? 0 : leftP}%`;
+            style.top = `${isNaN(topP) ? 0 : topP}%`;
+            style.objectFit = 'cover';
+        }
     }
     // => when done button is clicked
     done(e) {
@@ -34,24 +48,14 @@ export default class PickPicture {
         const topP = (parseInt(imgDrag.style.top) / imgBoundry.clientHeight) * 100;
         // => optimize the toggle image to the same percentage that we get
         const style = this.toggleImg.current.style;
-        style.height = heightP + '%';
-        style.objectPosition = `${leftP}%`;
-        style.top = topP + '%';
+        this.adjustToggleImg({ heightP, leftP, topP });
         // => store the percentages in the global store
-        if (this.byId) {
-            Main.setPicturePositionById(this.index, { heightP, leftP, topP });
-        } else {
-            Main.setPicturePosition(this.index, { heightP, leftP, topP });
-        }
+        Main.setPicturePosition(this.index, { heightP, leftP, topP });
         // => toggle off
         this.setToggle(false);
     }
     remove() {
         // => remove picutre from the global store
-        if (this.byId) {
-            Main.removePictureById(this.index);
-        } else {
-            Main.removePicture(this.index);
-        }
+        Main.removePicture(this.index);
     }
 }

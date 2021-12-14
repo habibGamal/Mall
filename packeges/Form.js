@@ -14,7 +14,6 @@ export default class Form {
                 keys = keys.split(',');
                 keys.forEach((key, i) => {
                     form.append(`${name}[${key}]`, form.getAll(from)[i]);
-                    console.log(form.get(`${name}[${key}]`));
                 });
                 form.delete(from);
             }
@@ -37,6 +36,7 @@ export default class Form {
                     return buffer;
                 });
                 form.append(key, values.join(separator));
+                console.log(key,values.join(separator));
             }
             if (type === 'free') {
                 // => from can be any valid json value

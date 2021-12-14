@@ -4,13 +4,7 @@ import active from '../../helpers/active';
 import isdefined from '../../helpers/isdefined';
 import { Forms } from '../../redux/dispatcher';
 
-function Password({addClass,id,label,name,formKey,icon,invalidMsg,inputValue}) {
-    if (addClass === undefined) {
-        addClass = 'col-md-6';
-    }
-    if (invalidMsg === undefined) {
-        invalidMsg = [''];
-    }
+function Password({ addClass = 'col-md-6', id, label, name, formKey, icon, invalidMsg = [''], inputValue , defaultValue = ''}) {
     const [invMsg, setInvMsg] = useState(invalidMsg[0]);
     useEffect(() => {
         // => initialize invMsg state from invalidMsg prop
@@ -29,7 +23,7 @@ function Password({addClass,id,label,name,formKey,icon,invalidMsg,inputValue}) {
             {label === null ? '' : <label htmlFor={id}>{label}</label>}
             <input
                 name={name}
-                value={inputValue(formKey, name, '')}
+                value={inputValue(formKey, name, defaultValue)}
                 onChange={handleOnChange}
                 type="password"
                 className={active(invMsg.length !== 0, { activeClass: 'is-invalid', defaultClass: 'form-control' })}

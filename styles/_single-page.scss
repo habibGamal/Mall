@@ -1,5 +1,4 @@
 .single-page-form {
-
     .head h2,
     .product-form h3 {
         color: $second-color;
@@ -16,13 +15,11 @@
         position: relative;
 
         &.product {
-
             width: 100px;
             aspect-ratio: 4/7;
         }
 
         &.logo {
-
             width: 100px;
             aspect-ratio: 1/1;
             border-radius: 100%;
@@ -73,13 +70,13 @@
 
             &.product {
                 max-width: 300px;
-                width: calc((4*(100vh - 161px))/7);
+                width: calc((4 * (100vh - 161px)) / 7);
                 aspect-ratio: 4/7;
             }
 
             &.logo {
                 max-width: 300px;
-                width: calc((1*(100vh - 161px))/1);
+                width: calc((1 * (100vh - 161px)) / 1);
                 aspect-ratio: 1/1;
             }
 
@@ -106,7 +103,7 @@
         padding-bottom: 0;
         text-align: center;
 
-        >h2 {
+        > h2 {
             position: relative;
         }
     }
@@ -119,20 +116,20 @@
                 background-color: var(--secondary);
                 color: #fff;
                 font-size: large;
-                padding: .2rem .3rem;
+                padding: 0.2rem 0.3rem;
                 display: inline-block;
                 border-radius: 5px;
 
                 margin : {
-                    right: .5rem;
-                    bottom: .5rem;
+                    right: 0.5rem;
+                    bottom: 0.5rem;
                 }
 
                 .close {
                     cursor: pointer;
-                    margin-left: .2rem;
+                    margin-left: 0.2rem;
                     color: #fff;
-                    line-height: .9;
+                    line-height: 0.9;
                 }
             }
         }
@@ -140,11 +137,11 @@
         .form-group {
             position: relative;
 
-            >i {
+            > i {
                 display: none;
             }
 
-            >input:not(.is-valid):not(.is-invalid)+i {
+            > input:not(.is-valid):not(.is-invalid) + i {
                 display: block;
                 position: absolute;
                 color: $second-color;
@@ -153,16 +150,16 @@
                 transition: opacity 200ms ease-in-out;
             }
 
-            >input:focus+i {
+            > input:focus + i {
                 opacity: 0;
             }
 
-            >input[type="number"] {
-                &+i {
+            > input[type="number"] {
+                & + i {
                     transition: none !important;
                 }
 
-                &:hover+i {
+                &:hover + i {
                     opacity: 0;
                 }
             }
@@ -175,20 +172,44 @@
                 @extend .isolate;
                 padding: 1.5rem;
 
-                .category>.children {
-                    margin-left: 1rem;
+                .category {
+                    position: relative;
+                    &::after {
+                        content: '';
+                        display: block;
+                        position: absolute;
+                        width: 1px;
+                        height: calc(100% - 50px);
+                        top: 45px;
+                        left: 5px;
+                        background-color: $line-color;
+                    }
+                    > .category-row {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        transition: padding-left 300ms ease-in-out;
+                        &.active {
+                            background-color: $second-color;
+                            color: #fff;
+                            padding-left: .5rem;
+                        }
+                    }
+                    > .children {
+                        margin-left: 1.5rem;
+                    }
                 }
             }
         }
 
-        >h3 {
+        > h3 {
             font-weight: 400;
         }
 
-        >.groups {
-            margin: .5rem 0;
+        > .groups {
+            margin: 0.5rem 0;
 
-            >h3 {
+            > h3 {
                 font-weight: 600;
                 font-size: 1.125rem;
                 line-height: 1.75rem;
@@ -208,7 +229,7 @@
 
                 h3 {
                     margin-bottom: 1rem;
-                    text-align: center
+                    text-align: center;
                 }
             }
 
@@ -228,7 +249,7 @@
                 margin: 1rem;
                 cursor: pointer;
                 transition: background-color 300ms ease-in-out;
-                >i {
+                > i {
                     font-size: 3rem;
                     transition: color 300ms ease-in-out;
                 }
@@ -241,7 +262,7 @@
             }
         }
 
-        >.btns {
+        > .btns {
             width: fit-content;
             margin: 1rem auto;
         }

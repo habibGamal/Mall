@@ -1,21 +1,19 @@
 import React from 'react'
-import Input from '../../inputs/Input'
+import CheckBox from '../../inputs/CheckBox'
 
 export default function ShopFilter() {
     return (
         <div className="shop filter-option">
             <h4>Choose The Shop</h4>
             <div className="content">
-                <Input 
+                <CheckBox
                     label="Brave"
                     id="brave"
-                    type="check"
                     addClass=""
                 />
-                <Input 
+                <CheckBox 
                     label="Town team"
                     id="town_team"
-                    type="check"
                     addClass=""
                 />
             </div>

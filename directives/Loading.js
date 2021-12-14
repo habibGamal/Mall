@@ -6,7 +6,10 @@ export default function Loading({ children, state }) {
         <>
             {state
                 ? children
-                : <div className="loading">
+                :
+                <div className="loading-container">
+                    <div className="loading">
+                    </div>
                 </div>
             }
         </>

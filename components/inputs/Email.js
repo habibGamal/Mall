@@ -4,13 +4,7 @@ import active from '../../helpers/active';
 import isdefined from '../../helpers/isdefined';
 import { Forms } from '../../redux/dispatcher';
 
-function Email({addClass,id,label,name,formKey,icon,invalidMsg,inputValue}) {
-    if (addClass === undefined) {
-        addClass = 'col-md-6';
-    }
-    if (invalidMsg === undefined) {
-        invalidMsg = [''];
-    }
+function Email({ addClass = 'col-md-6', id, label, name, formKey, icon, invalidMsg = [''], inputValue, defaultValue = '' }) {
     const [invMsg, setInvMsg] = useState(invalidMsg[0]);
     useEffect(() => {
         // => initialize invMsg state from invalidMsg prop
@@ -26,10 +20,10 @@ function Email({addClass,id,label,name,formKey,icon,invalidMsg,inputValue}) {
     }
     return (
         <div className={`form-group ${addClass}`}>
-            {label ? '' : <label htmlFor={id}>{label}</label>}
+            {label ? <label htmlFor={id}>{label}</label> : ''}
             <input
                 name={name}
-                value={inputValue(formKey, name, '')}
+                value={inputValue(formKey, name, defaultValue)}
                 onChange={handleOnChange}
                 type="email"
                 className={active(invMsg.length !== 0, { activeClass: 'is-invalid', defaultClass: 'form-control' })}

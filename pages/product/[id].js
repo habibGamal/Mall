@@ -4,10 +4,14 @@ import Image from 'next/image'
 import active from '../../helpers/active'
 import ProductControlPanel from '../../components/control-panel/ProductControlPanel'
 import p from '../../api/product';
-import handlePath from '../../helpers/picturePath';
 import NotEmpty from '../../directives/NotEmpty'
 import cart from '../../api/cart'
 import { $Async } from '../../redux/asyncActions'
+import Picture from '../../models/Picture'
+import { Messages, Popup } from '../../redux/dispatcher'
+import { PopupLogin } from '../../redux/do'
+import { MESSAGES } from '../../messages/messages'
+import Product from '../../models/Product'
 export const getServerSideProps = async (ctx) => {
     try {
         const res = await p.show(ctx.params.id);
@@ -28,35 +32,15 @@ export const getServerSideProps = async (ctx) => {
         }
     }
 }
-function Product({ product }) {
+export default function ShowProduct({ product }) {
+    console.log(product);
     const show = useRef();
     const [sizeOption, setSizeOption] = useState(0);
     const [colorOption, setColorOption] = useState(0);
     const [pictureShow, setPictureShow] = useState(0);
     const [like, setLike] = useState(false);
-    let pictures = JSON.parse(product.pictures);
-    function showScroll(e) {
-        const showW = show.current.clientWidth;
-        const n = show.current.scrollLeft / (showW + 16);
-        const to = (i) => show.current.scrollTo({
-            left: (showW + 16) * i,
-            behavior: 'smooth'
-        })
-        const x = e.clientX >= show.current.offsetLeft && e.clientX < (show.current.offsetLeft + showW * .5);
-        const next = (i) => (i - 1 <= n && n < i) ? to(i) : undefined;
-        const back = (i) => (i < n && n <= i + 1) ? to(i) : undefined;
-        if (x) {
-            // back
-            for (let i = 0; i <= show.current.children.length - 2; i++) {
-                back(i);
-            }
-        } else {
-            // next
-            for (let i = 1; i <= show.current.children.length - 1; i++) {
-                next(i);
-            }
-        }
-    }
+    const pictures = Picture.getPictures(product);
+    const productModel = new Product();
     function activeSize(index) {
         return active(sizeOption === index, { defaultClass: 'option' })
     }
@@ -102,8 +86,15 @@ function Product({ product }) {
         const { body } = product.options.filter(option => option.name === optionName)[0];
         return body ? JSON.parse(body) : [];
     }
-    function addToCart(){
-        $Async.AddCartItem({product_id:product.id});
+    async function addToCart() {
+        try {
+            const res = await $Async.AddCartItem({ product_id: product.id });
+        } catch (error) {
+            const { status = null, data = null } = error?.response;
+            if (status === 401) {
+                Messages.set('warning', MESSAGES.loginFirst);
+            }
+        }
     }
     return (
         <section className="single-product">
@@ -122,9 +113,7 @@ function Product({ product }) {
                     <div className="content">
                         <div className="pictures">
                             <div className="mini">
-                                {pictures.map((p, i) => {
-                                    const position = p.position;
-                                    const path = handlePath(p.path);
+                                {pictures.map(({ path, position }, i) => {
                                     return (
                                         <div key={i} className={activePicture(i, { defaultClass: 'picture' })} onClick={() => setPictureShow(i)}>
                                             <Image objectPosition={`${position.leftP}% ${position.topP}%`} layout="fill" src={path} alt="" />
@@ -132,10 +121,8 @@ function Product({ product }) {
                                     )
                                 })}
                             </div>
-                            <div ref={show} onClick={showScroll} className="show">
-                                {pictures.map((p, i) => {
-                                    const position = p.position;
-                                    const path = handlePath(p.path);
+                            <div ref={show} onClick={(e)=>productModel.showScroll(e,show)} className="show">
+                                {pictures.map(({ path, position }, i) => {
                                     return (
                                         <div key={i} className={activePicture(i)}>
                                             <div className="image-wrapper"
@@ -149,7 +136,6 @@ function Product({ product }) {
                                                     alt=""
                                                     objectPosition={`${position.leftP}% ${position.topP}%`}
                                                     layout="fill"
-
                                                 />
                                             </div>
                                         </div>
@@ -216,4 +202,3 @@ function Product({ product }) {
         </section>
     )
 }
-export default Product;

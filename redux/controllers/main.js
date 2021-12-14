@@ -23,34 +23,33 @@ class State {
     constructor(state) {
         this.state = state;
     }
-    setPicture(picture, pictureId = null) {
-        let pictures = [...this.state.pictures, { picture: picture.picture, base: picture.base, position: null, pictureId }];
-        pictures.sort((a, b) => a.pictureId - b.pictureId);
+    setPicture(picture) {
+        let pictures = [...this.state.pictures, picture];
+        pictures.sort((a, b) => a.id - b.id);
         return { ...this.state, pictures};
     }
-    removePicture(index) {
-        let pictures = this.state.pictures.filter((_, i) => i !== index);
+    setPictures(pictures) {
+        let newPictures = [...this.state.pictures, ...pictures];
+        newPictures.sort((a, b) => a.id - b.id);
+        return { ...this.state, pictures:newPictures};
+    }
+    removePicture(id) {
+        let pictures = this.state.pictures.filter(picture => picture.id !== id);
         return { ...this.state, pictures: pictures };
     }
-    removePictureById(id) {
-        let pictures = this.state.pictures.filter(picture => picture.pictureId !== id);
-        return { ...this.state, pictures: pictures };
-    }
-    setPicturePosition(index, percentage) {
-        let pictures = this.state.pictures;
-        pictures[index].position = percentage;
-        return { ...this.state, pictures: pictures };
-    }
-    setPicturePositionById(id, percentage) {
+    setPicturePosition(id, percentage) {
         let pictures = this.state.pictures;
         let i;
         pictures.forEach((picture, ii) => {
-            if (picture.pictureId === id) {
+            // => id can be Math.random() or 1,2,3,...
+            if (picture.id === id) {
+                // => we get the index of the picture
                 i = ii;
             }
         });
+        // => assign picture's position to the percentages
         pictures[i].position = percentage;
-        return { ...this.state, pictures: pictures };
+        return { ...this.state, pictures: pictures };    
     }
     emptyPictures() {
         // => clear pictures array

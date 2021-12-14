@@ -16,5 +16,9 @@ export default {
     deleteList: async function(ids){
         let res = await api.post('/product/deleteList',ids);
         return res;
+    },
+    getRowPicture : async function (paths){
+        const res = await api.post('/getRowPicture',{paths});
+        return res;
     }
 }
