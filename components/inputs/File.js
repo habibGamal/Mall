@@ -22,12 +22,12 @@ export default function File({ addClass = 'col-md-6', id, label, name, multiple,
     }
     return (
         <div className={`form-group ${addClass}`}>
-            <label htmlFor={id}>{label}
+            <label htmlFor={id} className={active(invMsg.length !== 0, { activeClass: 'is-invalid', defaultClass: 'form-control-file' })}>{label}
                 <div className="plus">
                     <i className="fas fa-upload" />
                 </div>
             </label>
-            <input onChange={onChangeFile} onClick={onClick} name={name} type="file" multiple={multiple} hidden className={active(invalidMsg.length !== 0, { activeClass: 'is-invalid', defaultClass: 'form-control-file' })} id={id} />
+            <input onChange={onChangeFile} onClick={onClick} name={name} type="file" multiple={multiple} hidden id={id} />
             <div id={`${id}feedback`} className="invalid-feedback ml-4">
                 {invMsg}
             </div>

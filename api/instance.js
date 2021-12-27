@@ -35,10 +35,10 @@ function interceptor(error) {
             return res;
         }
         // => unauthinticated
-        if (res.status === 401) {
-            Messages.set('warning', MESSAGES.loginFirst);
-            return res;
-        }
+        // if (res.status === 401) {
+        //     Messages.set('warning', MESSAGES.loginFirst);
+        //     return res;
+        // }
         // => too many requests
         if (res.status === 429) {
             Messages.set('warning', <>You are performing<strong>too many requsets</strong>. Please wait a second or use <strong>Bulk action</strong></>)

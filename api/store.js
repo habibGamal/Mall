@@ -8,4 +8,8 @@ export default {
         }
         return res;
     },
+    show: async function(id){
+        let res = await api.get(`/store/${id}`);
+        return res;
+    },
 }

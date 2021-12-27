@@ -1,9 +1,10 @@
-@use "./lib/fontawesome.scss";
+@import '~bootstrap/scss/bootstrap.scss';
+@import "./lib/fontawesome.scss";
 // @import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 @font-face {
-    font-family: 'Roboto';
-    src: URL('./fonts/Roboto-Bold.ttf') format('truetype');
-  }
+    font-family: "Roboto";
+    src: URL("./fonts/Roboto-Bold.ttf") format("truetype");
+}
 // Variables
 $z-index-escape-effect: 3;
 $z-index-form: 3;
@@ -34,6 +35,46 @@ html {
     scroll-behavior: smooth;
 }
 
+.radio-boxs {
+    position: relative;
+    &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 1px;
+        height: calc(100% - 50px);
+        top: 45px;
+        left: 5px;
+        background-color: $line-color;
+    }
+    > .radio-box-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .form-check {
+            width: 100%;
+            margin: 0;
+            padding-left: 0;
+            .form-check-label {
+                width: 100%;
+                display: flex;
+                padding: 0.5rem 0;
+                justify-content: space-between;
+                transition: padding-left 300ms ease-in-out;
+                &:hover {
+                    background-color: $text-layer-3;
+                    padding-left: 0.5rem;
+                }
+                &.active {
+                    background-color: $second-color;
+                    color: #fff;
+                    padding-left: 0.5rem;
+                }
+            }
+        }
+    }
+}
+
 .empty-cart {
     display: flex;
     align-items: center;
@@ -51,7 +92,7 @@ html {
 
 .message-link {
     cursor: pointer;
-    &:hover{
+    &:hover {
         text-decoration: underline;
     }
 }
@@ -105,7 +146,7 @@ span.count {
     margin: 0.5rem 0;
     cursor: pointer;
 
-    >input:checked+label .box {
+    > input:checked + label .box {
         background-color: #007bff;
     }
 
@@ -199,12 +240,12 @@ body {
         background-color: #e8e8e8;
     }
 
-    >.navigation>ul,
-    >ul.filters {
+    > .navigation > ul,
+    > ul.filters {
         padding: 0;
         margin: 0;
 
-        >li {
+        > li {
             cursor: pointer;
             list-style: none;
             display: inline-block;
@@ -216,12 +257,12 @@ body {
     }
 
     .navigation {
-        >.sm-only {
+        > .sm-only {
             display: none;
         }
 
-        >ul {
-            >li {
+        > ul {
+            > li {
                 margin: 0 1rem;
                 position: relative;
                 font-size: 1.1rem;
@@ -243,14 +284,14 @@ body {
                     }
                 }
 
-                >i {
+                > i {
                     margin-right: 0.5rem;
                 }
             }
         }
     }
 
-    >.filter {
+    > .filter {
         @extend .isolate;
         display: none;
         position: fixed;
@@ -278,10 +319,10 @@ body {
         .filter-option {
             width: fit-content;
 
-            >.content {
+            > .content {
                 margin: 1rem;
 
-                >.category {
+                > .category {
                     .category-name {
                         user-select: none;
                         font-size: 1.2rem;
@@ -297,7 +338,7 @@ body {
                 }
             }
 
-            &.price-range>.content {
+            &.price-range > .content {
                 display: flex;
                 align-items: center;
                 gap: 0.5rem;
@@ -324,16 +365,16 @@ body {
         }
     }
 
-    >ul.filters {
+    > ul.filters {
         text-align: center;
         position: relative;
 
-        >li {
+        > li {
             margin: 0 0.5rem;
             color: #838da5;
 
             &#search {
-                >form {
+                > form {
                     display: none;
                     width: 100%;
                     position: absolute;
@@ -425,7 +466,7 @@ body {
             padding: 5px;
             border-radius: 10px;
 
-            >.option {
+            > .option {
                 padding: 0.2rem 1rem;
                 cursor: pointer;
                 transition: background-color 0.2s ease-in-out;
@@ -441,7 +482,7 @@ body {
         .login-or-register {
             text-align: center;
 
-            >span {
+            > span {
                 display: block;
                 margin-top: 1rem;
             }
@@ -563,15 +604,15 @@ nav {
             }
         }
 
-        >ul {
+        > ul {
             margin-top: 5rem;
             padding-left: 0;
 
-            >li {
+            > li {
                 list-style-type: none;
                 width: 90%;
 
-                >a {
+                > a {
                     color: #000;
                     padding: 1rem;
                     padding-left: 2rem;
@@ -582,24 +623,24 @@ nav {
 
                     &:hover {
                         text-decoration: none;
-                        color: #512D6D;
+                        color: #512d6d;
                         padding-left: 2.5rem;
                     }
 
                     &.active {
-                        color: #512D6D;
+                        color: #512d6d;
                         background-color: #eee;
                         font-weight: bold;
                     }
 
-                    >i {
+                    > i {
                         margin-right: 0.5rem;
                     }
                 }
             }
         }
 
-        >.options {
+        > .options {
             .logout {
                 margin: 1rem 2rem;
                 display: flex;
@@ -697,7 +738,7 @@ nav {
                     padding: 1rem;
                     padding-bottom: 0;
 
-                    >span {
+                    > span {
                         display: block;
                         margin: 0.5rem 0;
                     }
@@ -709,17 +750,16 @@ nav {
     .logo {
         margin: 0 2rem;
 
-        >a,
-        >a:hover {
+        > a,
+        > a:hover {
             color: var(--color);
             text-decoration: none;
         }
     }
 
     .logo.nav-bar:not(body.dark nav .logo.nav-bar) {
-
-        >a,
-        >a:hover {
+        > a,
+        > a:hover {
             color: #000;
         }
     }
@@ -729,10 +769,10 @@ nav {
     }
 
     .search {
-        padding: .75rem;
+        padding: 0.75rem;
         position: relative;
 
-        >input {
+        > input {
             width: 13rem;
             border: none;
             border-radius: 100px;
@@ -745,7 +785,7 @@ nav {
             }
         }
 
-        >i {
+        > i {
             position: absolute;
             top: 50%;
             right: 15%;
@@ -753,13 +793,13 @@ nav {
             transition: opacity 0.2s ease-in-out;
         }
 
-        >input:focus+i {
+        > input:focus + i {
             opacity: 0;
         }
     }
 
     .user-cart {
-        >.circle {
+        > .circle {
             background-color: #fff;
             width: 50px;
             height: 50px;
@@ -777,7 +817,7 @@ nav {
                 display: none;
             }
 
-            >i {
+            > i {
                 color: var(--color);
                 position: absolute;
                 top: 50%;
@@ -818,7 +858,7 @@ nav {
     white-space: nowrap;
     overflow-x: hidden;
 
-    >li {
+    > li {
         display: inline-block;
         border: 1px solid transparent;
         transition: border-color 200ms ease-in-out;
@@ -859,7 +899,7 @@ nav {
         top: 50%;
         transform: translateY(-50%);
 
-        >i {
+        > i {
             margin: 0 1rem;
             font-size: 2rem;
         }
@@ -881,9 +921,9 @@ nav {
         transition: left 800ms ease-in-out;
         background-color: #000;
 
-        >img {
+        > img {
             width: 100%;
-        height: clamp(150px, 50vh, 500px);
+            height: clamp(150px, 50vh, 500px);
             object-fit: cover;
         }
     }
@@ -909,7 +949,7 @@ nav {
         overflow: hidden;
         transition: transform 300ms ease-in-out;
 
-        >img {
+        > img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -920,7 +960,7 @@ nav {
         text-align: center;
         margin: 1rem 0;
 
-        >h3 {
+        > h3 {
             color: #000;
             font-size: 1.5rem;
         }
@@ -931,7 +971,7 @@ nav {
     }
 
     &:hover .logo {
-        transform: scale(.9);
+        transform: scale(0.9);
     }
 }
 
@@ -969,11 +1009,11 @@ nav {
                 background-color: #4b4b4b85;
             }
 
-            &:hover>.photo>img {
+            &:hover > .photo > img {
                 transform: scale(1.2);
             }
 
-            &:hover>.lable {
+            &:hover > .lable {
                 bottom: 50%;
                 left: 50%;
                 z-index: 1;
@@ -981,11 +1021,11 @@ nav {
                 background-color: transparent;
             }
 
-            >.photo {
+            > .photo {
                 height: 100%;
                 overflow: hidden;
 
-                >img {
+                > img {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
@@ -993,7 +1033,7 @@ nav {
                 }
             }
 
-            >.lable {
+            > .lable {
                 position: absolute;
                 bottom: 10px;
                 left: 10px;
@@ -1002,7 +1042,7 @@ nav {
                 padding: 0.5rem 1rem;
                 transition: bottom 400ms ease-in-out, left 400ms ease-in-out, transform 400ms ease-in-out;
 
-                >h4 {
+                > h4 {
                     margin: 0;
                 }
             }
@@ -1077,7 +1117,7 @@ nav {
             }
         }
 
-        >.product-details {
+        > .product-details {
             width: 100%;
             bottom: 0;
             position: absolute;
@@ -1090,7 +1130,7 @@ nav {
             cursor: auto;
             height: 120px;
 
-            >.menu-bars {
+            > .menu-bars {
                 display: block;
                 position: absolute;
                 top: 10px;
@@ -1104,7 +1144,7 @@ nav {
                 }
             }
 
-            >.menu {
+            > .menu {
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
@@ -1124,20 +1164,20 @@ nav {
                     transform: translateY(-105%);
                 }
 
-                >a,
-                >button {
+                > a,
+                > button {
                     white-space: nowrap;
                     padding: 0.3rem;
                     user-select: none;
                 }
 
-                >a,
-                >a:hover {
+                > a,
+                > a:hover {
                     color: var(--success);
                     text-decoration: none;
                 }
 
-                >button {
+                > button {
                     &:focus {
                         box-shadow: none;
                     }
@@ -1152,7 +1192,7 @@ nav {
                 }
             }
 
-            >.name {
+            > .name {
                 display: block;
                 height: 2rem;
                 white-space: nowrap;
@@ -1160,7 +1200,7 @@ nav {
                 text-overflow: ellipsis;
             }
 
-            >.separator {
+            > .separator {
                 display: block;
                 width: 95%;
                 height: 1px;
@@ -1168,20 +1208,20 @@ nav {
                 margin: 0 auto;
             }
 
-            >.price {
+            > .price {
                 display: block;
                 padding: 0.2rem 0.5rem;
                 font-size: 1.14rem;
 
-                >.old {
+                > .old {
                     display: block;
                     font-size: 0.95rem;
 
-                    >del {
+                    > del {
                         opacity: 0.7;
                     }
 
-                    >.badge {
+                    > .badge {
                         margin: 0 0.3rem;
                     }
                 }
@@ -1203,14 +1243,14 @@ nav {
 }
 
 .loading-container {
-    position:absolute;
+    position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     overflow: hidden;
     width: 100vw;
     height: 100vh;
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     background-color: white;
@@ -1223,9 +1263,7 @@ nav {
         border-radius: 100%;
         animation: loading 800ms linear infinite forwards;
     }
-
 }
-
 
 /*
     Name : Row-Show Kit
@@ -1241,7 +1279,7 @@ nav {
     overflow-x: auto;
 }
 
-.row-show>div {
+.row-show > div {
     flex-shrink: 0;
 }
 
@@ -1284,8 +1322,8 @@ nav {
     transform: translateY(-50%);
 }
 
-.row-show-container .left-arrow>i,
-.row-show-container .right-arrow>i {
+.row-show-container .left-arrow > i,
+.row-show-container .right-arrow > i {
     font-size: 2rem;
     background-color: #fff;
     border-radius: 100%;

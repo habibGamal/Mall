@@ -20,5 +20,10 @@ export default {
     getRowPicture : async function (paths){
         const res = await api.post('/getRowPicture',{paths});
         return res;
-    }
+    },
+    edit : async function(id,formData){
+        formData.append('_method', 'PUT');
+        let res = await api.post(`/product/${id}`,formData);
+        return res;
+    },
 }

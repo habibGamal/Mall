@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import active from '../../../helpers/active';
 import RadioBox from '../../inputs/RadioBox';
+import RadioBoxRow from '../../inputs/RadioBoxRow';
 import SubCategory from './SubCategory';
 // import CheckBox from '../../inputs/CheckBox';
 
@@ -12,18 +13,16 @@ function Category({ id, name, formKey, subCategories, getInputValue }) {
         setSelected(value == id);
     }, [value])
     return (
-        <div className="category">
-            <div className={active(selected,{defaultClass:'category-row'})}>
-                <span>{name}</span>
-                <RadioBox
-                    label={null}
-                    name='category'
-                    id={id}
-                    addClass=""
-                    formKey={formKey}
-                    value={id}
-                />
-            </div>
+        <div className="category radio-boxs">
+            <RadioBoxRow
+                label={name}
+                name='category'
+                selected={selected}
+                id={id}
+                addClass=""
+                formKey={formKey}
+                value={id}
+            />
             <SubCategory formKey={formKey} subCategories={subCategories} />
         </div>
     )

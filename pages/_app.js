@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Nav from '../components/main/Nav';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/scss/bootstrap.scss';
 if (typeof window !== "undefined") {
   require("jquery");
   require("popper.js");
@@ -18,27 +19,29 @@ import AuthForm from '../components/popup/AuthForm';
 import Loading from '../directives/Loading';
 
 function MyApp({ Component, pageProps }) {
-  const [loaded ,setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     setLoaded(true);
   }, [])
   return (
-    <Loading state={loaded}>
-      <Provider store={store}>
-        <Authenticating>
-          <DefineRouter>
-            <Messages />
-            <header>
-              <Nav />
-              <Popup keyPopup="auth-form">
-                <AuthForm keyPopup="auth-form" />
-              </Popup>
-            </header>
-            <Component {...pageProps} />
-          </DefineRouter>
-        </Authenticating>
-      </Provider>
-    </Loading>
+    <React.StrictMode>
+      <Loading state={loaded}>
+        <Provider store={store}>
+          <Authenticating>
+            <DefineRouter>
+              <Messages />
+              <header>
+                <Nav />
+                <Popup keyPopup="auth-form">
+                  <AuthForm keyPopup="auth-form" />
+                </Popup>
+              </header>
+              <Component {...pageProps} />
+            </DefineRouter>
+          </Authenticating>
+        </Provider>
+      </Loading>
+    </React.StrictMode>
   )
 }
 

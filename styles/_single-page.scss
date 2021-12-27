@@ -171,33 +171,11 @@
             .show-categories {
                 @extend .isolate;
                 padding: 1.5rem;
-
-                .category {
-                    position: relative;
-                    &::after {
-                        content: '';
-                        display: block;
-                        position: absolute;
-                        width: 1px;
-                        height: calc(100% - 50px);
-                        top: 45px;
-                        left: 5px;
-                        background-color: $line-color;
-                    }
-                    > .category-row {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        transition: padding-left 300ms ease-in-out;
-                        &.active {
-                            background-color: $second-color;
-                            color: #fff;
-                            padding-left: .5rem;
-                        }
-                    }
-                    > .children {
-                        margin-left: 1.5rem;
-                    }
+                &.is-invalid {
+                    border: 1px solid var(--danger);
+                }
+                .category > .children {
+                    margin-left: 1.5rem;
                 }
             }
         }
@@ -239,24 +217,32 @@
                 padding: 1rem;
             }
 
-            .form-group .plus {
-                @extend .isolate;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 200px;
-                height: 200px;
-                margin: 1rem;
-                cursor: pointer;
-                transition: background-color 300ms ease-in-out;
-                > i {
-                    font-size: 3rem;
-                    transition: color 300ms ease-in-out;
+            .form-group {
+                label.is-invalid{
+                    .plus {
+                        border: 1px solid var(--danger);
+                    }
                 }
-                &:hover {
-                    background-color: var(--primary);
+
+                .plus {
+                    @extend .isolate;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 200px;
+                    height: 200px;
+                    margin: 1rem;
+                    cursor: pointer;
+                    transition: background-color 300ms ease-in-out;
                     > i {
-                        color: #fff;
+                        font-size: 3rem;
+                        transition: color 300ms ease-in-out;
+                    }
+                    &:hover {
+                        background-color: var(--primary);
+                        > i {
+                            color: #fff;
+                        }
                     }
                 }
             }

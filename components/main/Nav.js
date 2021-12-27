@@ -4,7 +4,6 @@ import active from '../../helpers/active';
 import { useRouter } from 'next/dist/client/router';
 import NavCategory from './NavCategory';
 import MiniCart from '../cart/MiniCart';
-import Unauthenticated from '../../directives/Unauthenticated';
 import Authenticated from '../../directives/Authenticated';
 import auth from '../../api/auth';
 import { connect } from 'react-redux';
@@ -64,6 +63,7 @@ function Nav({ setPopupForm }) {
     }
     // api section
     async function logout() {
+        escapeEffect();
         await auth.logout().then(res => console.log(res));
         $Async.Reauth();
         router.push('/');
