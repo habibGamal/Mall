@@ -40,6 +40,7 @@ export default function ShowBranch({ rawBranch }: ShowBranchProps) {
                         src="../images/logo_1.jpg"
                         name={rawBranch.name}
                         inside={true}
+                        href={null}
                     />
                     <div className="control-panel">
                         <Filtering
