@@ -1,17 +1,24 @@
 import { GetServerSideProps } from 'next'
-import store from '../../api/store';
+import branch from '../../api/branch';
 import SingleStore from '../../components/stores/Store'
 import Filtering from '../../components/filter/Filtering'
 import Products from '../../components/products/Products'
+import BackendBranch from '../../BackendTypes/BackendBranch';
+import Branch from '../../models/Branch';
+import BackendProduct from '../../BackendTypes/BackendProduct';
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     try {
-        const res = await store.show(ctx.params.id);
+        const res = await branch.show(ctx.params.id);
+        
         return {
             props: {
-                rawBranch: res.data
+                rawBranch: res.data.branch,
+                rawProducts: res.data.products
             }
         }
     } catch (err) {
+        console.log(err);
+        
         const status = err?.response?.status;
         if (status === 404) {
             return {
@@ -24,9 +31,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
 }
 interface ShowBranchProps {
-    rawBranch: any
+    rawBranch: BackendBranch,
+    rawProducts: Array<BackendProduct>
 }
-export default function ShowBranch({ rawBranch }: ShowBranchProps) {
+export default function ShowBranch({ rawBranch ,rawProducts}: ShowBranchProps) {
+    const branch = new Branch(rawBranch);
     console.log(rawBranch);
     
     return (
@@ -37,7 +46,7 @@ export default function ShowBranch({ rawBranch }: ShowBranchProps) {
             <div className="container info-control-container">
                 <div className="info-control">
                     <SingleStore
-                        src="../images/logo_1.jpg"
+                        src={branch.logo.path}
                         name={rawBranch.name}
                         inside={true}
                         href={null}
@@ -51,15 +60,7 @@ export default function ShowBranch({ rawBranch }: ShowBranchProps) {
             </div>
             <Products
                 title="Latest Products"
-            />
-            <Products
-                title="Top Sales"
-            />
-            <Products
-                title="Men"
-            />
-            <Products
-                title="Women Fashion"
+                rawProducts={rawProducts}
             />
         </section>
     )

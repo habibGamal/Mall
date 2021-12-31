@@ -6,7 +6,7 @@ import ProductModel from '../../models/Product';
 import RowScroll from '../general/RowScroll'
 import Product from './Product'
 
-export default function Products({ title }) {
+export default function Products({ title, rawProducts }: { title: string, rawProducts: Array<BackendProduct> }) {
     const [products, setProducts] = useState([] as Array<ProductModel>);
     useEffect(() => {
         const getProducts = async () => {
@@ -16,121 +16,45 @@ export default function Products({ title }) {
                 setProducts(products);
             }
         }
-        getProducts();
+        if (!rawProducts) {
+            getProducts();
+            return;
+        }
+        const products: Array<ProductModel> = rawProducts.map(product => new ProductModel(product));
+        setProducts(products);
     }, []);
     return (
         <section className="products">
             <div className="container">
-                {isdefined(title, { trueReturn: <h2>{title}</h2> })}
-                <RowScroll>
-                    {products.map(product => {
-                        const { picture } = product;
-                        return (
-                            <Product
-                                key={product.id}
-                                id={product.id}
-                                name={product.name}
-                                price={product.price}
-                                offerPrice={product.offer_price}
-                                currency="LE"
-                                src={picture.path}
-                                position={picture.position}
-                            />
-                        )
-                    })}
-                    <Product
-                        name="Front Pocket T-Shirt in White 
-                            Onyx White/Enamel Blue"
-                        id={998}
-                        price={250}
-                        offerPrice={200}
-                        currency="LE"
-                        src="/images/cat_1.jpg"
-                        position={{ leftP: 50, topP: 0, heightP: 100 }}
-                    />
-                    <Product
-                        name="Front Pocket T-Shirt in White 
-                            Onyx White/Enamel Blue"
-                        id={998}
-                        price={250}
-                        offerPrice={200}
-                        currency="LE"
-                        src="/images/cat_2.jpg"
-                        position={{ leftP: 50, topP: 0, heightP: 100 }}
-                    />
-                    <Product
-                        name="Blouse"
-                        id={998}
-                        price={250}
-                        offerPrice={200}
-                        currency="LE"
-                        src="/images/cat_3.jpg"
-                        position={{ leftP: 50, topP: 0, heightP: 100 }}
-                    />
-                    <Product
-                        name="Blouse"
-                        id={998}
-                        price={250}
-                        offerPrice={200}
-                        currency="LE"
-                        src="/images/cat_4.jpg"
-                        position={{ leftP: 50, topP: 0, heightP: 100 }}
-                    />
-                    <Product
-                        name="Blouse"
-                        id={998}
-                        price={250}
-                        offerPrice={200}
-                        currency="LE"
-                        src="/images/cat_5.jpg"
-                        position={{ leftP: 50, topP: 0, heightP: 100 }}
-                    />
-                    <Product
-                        name="Blouse"
-                        id={998}
-                        price={250}
-                        offerPrice={200}
-                        currency="LE"
-                        src="/images/cat_6.jpg"
-                        position={{ leftP: 50, topP: 0, heightP: 100 }}
-                    />
-                    <Product
-                        name="Blouse"
-                        id={998}
-                        price={250}
-                        offerPrice={200}
-                        currency="LE"
-                        src="/images/cat_1.jpg"
-                        position={{ leftP: 50, topP: 0, heightP: 100 }}
-                    />
-                    <Product
-                        name="Blouse"
-                        id={998}
-                        price={250}
-                        offerPrice={200}
-                        currency="LE"
-                        src="/images/cat_3.jpg"
-                        position={{ leftP: 50, topP: 0, heightP: 100 }}
-                    />
-                    <Product
-                        name="Blouse"
-                        id={998}
-                        price={250}
-                        offerPrice={200}
-                        currency="LE"
-                        src="/images/cat_6.jpg"
-                        position={{ leftP: 50, topP: 0, heightP: 100 }}
-                    />
-                    <Product
-                        name="Blouse"
-                        id={998}
-                        price={250}
-                        offerPrice={200}
-                        currency="LE"
-                        src="/images/cat_2.jpg"
-                        position={{ leftP: 50, topP: 0, heightP: 100 }}
-                    />
-                </RowScroll>
+                {
+                    products.length === 0
+                        ? <div className='empty-products'>
+                            <i className="fas fa-box-open"></i>
+                            <strong>There isn't products yet</strong>
+                        </div>
+                        :
+                        <>
+                            {isdefined(title, { trueReturn: <h2>{title}</h2> })}
+                            <RowScroll>
+                                {products.map(product => {
+                                    const { picture } = product;
+                                    return (
+                                        <Product
+                                            key={product.id}
+                                            id={product.id}
+                                            name={product.name}
+                                            price={product.price}
+                                            offerPrice={product.offer_price}
+                                            currency="LE"
+                                            src={picture.path}
+                                            position={picture.position}
+                                        />
+                                    )
+                                })}
+                            </RowScroll>
+                        </>
+                }
+
             </div>
         </section>
     )

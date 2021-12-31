@@ -75,7 +75,7 @@ html {
     }
 }
 
-.empty-cart {
+.empty-cart , .empty-products {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -87,6 +87,15 @@ html {
     }
     > strong {
         color: $text-layer-2;
+    }
+}
+.empty-products {
+    line-height: 2.5;
+    > i {
+        font-size: 5rem;
+    }
+    > strong {
+        font-size: 1.5rem;
     }
 }
 

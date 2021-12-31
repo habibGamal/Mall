@@ -30,7 +30,7 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
         const createRequestForm = await productFormRequest.create(rawForm, pictures);
         // => send product to backend
         try {
-            let res = await product.store(createRequestForm);
+            const res = await product.store(createRequestForm);
         } catch (err) {
             if (err.response) {
                 let { data, status } = err.response;
@@ -145,12 +145,11 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
                         </div>
                         <Select
                             label="Branch"
-                            name="branch"
-                            id="branch"
+                            name="branch_id"
+                            id="branch_id"
                             addClass=""
                             options={[
-                                { value: 0, as: 'all branches' },
-                                { value: 1, as: 'in branch 1' },
+                                { value: 6, as: 'in branch 1' },
                                 { value: 2, as: 'in branch 2' },
                                 { value: 3, as: 'in branch 3' },
                             ]}

@@ -18,7 +18,13 @@ class FormField {
     public special_value: any;
     public separator: string;
     public file_has_custom_name: boolean;
+    public clear: string;
 
+    clearList(list:string){
+        const formField = new FormField();
+        formField.clear = list;
+        return formField;
+    }
     fromArray(array: Array<any>): FormField {
         const formField = new FormField();
         formField.from_array = array;
@@ -84,6 +90,13 @@ export default abstract class Form extends FormField {
     get(formField: FormField) {
         const { form } = this;
         const { name: from, shape } = formField;
+        if(formField.clear){
+            const clearList = formField.clear;
+            for (let i = 1; i <= formField.length; i++) {
+                form.delete(clearList.replace('*', i.toString()));
+            }
+            return form;
+        }
         switch (formField.transform_to) {
             case TransformTo.AssosiativeArray:
                 const [name, keys] = shape.match(/([^\[\]])+/g);

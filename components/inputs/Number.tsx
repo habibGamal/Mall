@@ -9,7 +9,7 @@ interface NumberProps {
     label?: string,
     name: string,
     formKey: string,
-    icon: JSX.Element,
+    icon?: JSX.Element,
     invalidMsg: Array<string>,
     inputValue: Function,
     min?: number,
@@ -25,7 +25,18 @@ function Number({ addClass = 'col-md-6', id, label, name, formKey, icon, invalid
     }, [invalidMsg]);
 
     function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
-        Forms.setInputValue(formKey, name, e.target.value);
+        const value = parseInt(e.target.value);
+        Forms.setInputValue(formKey, name, value);
+        if (max !== null) {
+            if (value > max) {
+                Forms.setInputValue(formKey, name, max);
+            }
+        }
+        if (min !== null) {
+            if (value < min) {
+                Forms.setInputValue(formKey, name, min);
+            }
+        }
         // => if there is an error remove it when user writing
         if (invMsg.length > 0) {
             setInvMsg('');

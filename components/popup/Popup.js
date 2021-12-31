@@ -31,11 +31,7 @@ function Popup({ keyPopup, children, show }) {
     },[show(keyPopup)])
     function escapeEffect() {
         Pop.setPopup(keyPopup, false);
-        if(router.query.hasOwnProperty('popup')){
-            let queries = router.query;
-            delete queries.popup;
-            router.push({ query: {...queries} }, null,{scroll:false})
-        }
+        router.back();
     }
     return (
         <>

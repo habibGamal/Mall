@@ -15,7 +15,6 @@ function BranchForm({ index, full, formKey, errors ,logo }) {
     function getBranchLogo(){
         return logo.filter(l => l.id == index)[0];
     }
-    console.log(logo);
     if (!full) {
         return (
             <div className="groups branch">

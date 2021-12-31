@@ -9,6 +9,7 @@ import store from '../../api/store'
 import Period from '../../components/inputs/Period';
 import InputGroup from '../../components/inputs/InputGroup';
 import Form from '../../packeges/Form';
+import StoreFormRequest from '../../FormRequests/StoreFormRequset';
 export default function CreateStore() {
     const formKey = 'store_form';
     const [errors, setErrors] = useState(null);
@@ -22,18 +23,13 @@ export default function CreateStore() {
         'Thursday',
         'Work every day'
     ]
-    async function storeCreate(e) {
+    async function storeCreate(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        let formInstanse = new Form(e.target);
-        let { form } = formInstanse;
-        let structure = [
-            ['work_hours[from,from-per,to,to-per]', { from: 'work_hours', type: 'a-array' }],
-            ['holidays[]', {from:'holidays', type: 'to-array'}],
-        ]
-        let str = new Map(structure);
-        formInstanse.structure(str);
+        const rawForm: FormData = new FormData(e.currentTarget);
+        const storeFormRequest = new StoreFormRequest();
+        const createRequestForm = storeFormRequest.create(rawForm);
         try {
-            let res = await store.store(form);
+            const res = await store.store(createRequestForm);
         } catch (err) {
             if (err.response) {
                 let { data, status } = err.response;
@@ -145,7 +141,6 @@ export default function CreateStore() {
                                                 <CheckBox
                                                     key={i}
                                                     label={day}
-                                                    type="check"
                                                     addClass=""
                                                     id={day.toLocaleLowerCase().split(' ').join('_')}
                                                     name="holidays"
