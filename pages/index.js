@@ -6,14 +6,16 @@ import Stores from '../components/stores/Stores'
 import auth from '../api/auth'
 import { connect } from 'react-redux'
 import { $Async } from '../redux/asyncActions'
+import { self } from '../api/instance'
 function Home() {
   // for fast test login and logout functionality
+
   async function login() {
     await auth.login({ 'email': 'habibmisi3@gmail.com', 'password': 'gh090807' });
     $Async.Reauth();
   }
   async function adminLogin() {
-    await auth.adminLogin({ 'email': 'admin@gmail.com', 'password': 'tp060504' });
+    await auth.adminLogin({ 'email': 'habibmisi3@gmail.com', 'password': 'gh090807' });
     $Async.Reauth();
   }
   async function logout() {
@@ -28,7 +30,7 @@ function Home() {
     auth.isAuthenticated().then(res => console.log(res));
   }
   function getCookie() {
-    auth.getCookie().then(res => console.log(res));
+    auth.getKey().then(res => console.log(res));
   }
   function clearTokens() {
     auth.clearAllTokens().then(res => console.log(res));
@@ -36,8 +38,9 @@ function Home() {
   function registerAdmin() {
     auth.adminRegister({ 'name': 'Habib', 'email': 'admin@gmail.com', 'password': 'tp060504' })
   }
-  function test() {
-    auth.test({path:'/public/products/uRJnhxw92UKJuq8s3JojqYbaumX5OAtdhqrKFY8j.jpg'}).then(res => console.log(res));
+  async function test() {
+    const r = await self.post('/get_user_info');
+    console.log(r);
   }
   return (
     <>

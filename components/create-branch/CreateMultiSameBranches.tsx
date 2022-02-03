@@ -1,12 +1,8 @@
-import { useState } from "react";
 import { connect } from "react-redux"
 import File from "../inputs/File";
 import Number from "../inputs/Number";
-import Select from "../inputs/Select";
 import Text from "../inputs/Text";
 import invalid from "../../helpers/invalid";
-import PermenantMessage from '../messages/PermenantMessage';
-import branch from "../../api/branch";
 import Preview from "../inputs/Preview";
 import { Main } from "../../redux/dispatcher";
 import Picture from "../../models/Picture";

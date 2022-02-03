@@ -9,7 +9,7 @@ import BackendProduct from '../../BackendTypes/BackendProduct';
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     try {
         const res = await branch.show(ctx.params.id);
-        
+
         return {
             props: {
                 rawBranch: res.data.branch,
@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         }
     } catch (err) {
         console.log(err);
-        
+
         const status = err?.response?.status;
         if (status === 404) {
             return {
@@ -34,10 +34,10 @@ interface ShowBranchProps {
     rawBranch: BackendBranch,
     rawProducts: Array<BackendProduct>
 }
-export default function ShowBranch({ rawBranch ,rawProducts}: ShowBranchProps) {
+export default function ShowBranch({ rawBranch, rawProducts }: ShowBranchProps) {
     const branch = new Branch(rawBranch);
     console.log(rawBranch);
-    
+
     return (
         <section className="single-store">
             <div className="background-store">
@@ -58,10 +58,18 @@ export default function ShowBranch({ rawBranch ,rawProducts}: ShowBranchProps) {
                     </div>
                 </div>
             </div>
-            <Products
-                title="Latest Products"
-                rawProducts={rawProducts}
-            />
+            {
+                rawProducts.length === 0
+                    ? <div className='empty-products'>
+                        <i className="fas fa-box-open"></i>
+                        <strong>There isn't products yet</strong>
+                    </div>
+                    : <Products
+                        title="Latest Products"
+                        rawProducts={rawProducts}
+                    />
+            }
+
         </section>
     )
 }

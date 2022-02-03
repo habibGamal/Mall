@@ -6,7 +6,11 @@ export default {
         return res;
     },
     index: async function(data){
-        let res = await api.get('/category',data);
+        let res = await api.get('/category');
+        return res;
+    },
+    show: async function(id){
+        let res = await api.get(`/category/${id}`);
         return res;
     },
     deleteCategory: async function(id){

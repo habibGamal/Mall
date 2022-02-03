@@ -1,12 +1,9 @@
-import { useState } from "react";
 import { connect } from "react-redux"
 import Number from "../inputs/Number";
 import invalid from "../../helpers/invalid";
-import { Main } from "../../redux/dispatcher";
-import Picture from "../../models/Picture";
 import BranchForm from "../general/BranchForm";
 import BranchFormRequest from "../../FormRequests/BranchFormRequest";
-function CreateMultiDifferentBranches({ logo, getInputValue, errors }) {
+function CreateMultiDifferentBranches({ getInputValue, errors }) {
     function renderForms(length: number) {
         let buffer: Array<Object> = [];
         for (let i = 1; i <= length; i++) {
@@ -51,7 +48,6 @@ const mapStateToProps = (state) => ({
         }
         return null;
     },
-    logo: state.main.pictures,
 })
 
 export default connect(mapStateToProps)(CreateMultiDifferentBranches);

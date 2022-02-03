@@ -11,7 +11,7 @@ export default {
     login: async function (data) {
         const res = await api.post('/login', data);
         if (res.status === 200) {
-            await self.post('/setKey', { key: res.data });
+            await self.post('/save_user_key', { key: res.data });
             api.defaults.headers.common['Authorization'] = `Bearer ${res.data}`;
         }
         if (res.status === 302) {
@@ -22,7 +22,7 @@ export default {
     adminLogin: async function (data) {
         const res = await api.post('/admin-login', data);
         if (res.status === 200) {
-            await self.post('/setKey', { key: res.data });
+            await self.post('/save_user_key', { key: res.data });
             api.defaults.headers.common['Authorization'] = `Bearer ${res.data}`;
         }
         return res;
@@ -39,19 +39,24 @@ export default {
     // check authenication
     isAuthenticated: async function () {
         if (api.defaults.headers.common['Authorization'] === undefined) {
-            const key = await this.getCookie();
+            const key = await this.getKey();
             key ? api.defaults.headers.common['Authorization'] = `Bearer ${key}` : '';
         }
         const res = await api.get('/state');
+        if(res.status === 200){
+            self.post('/save_user_info',res.data)
+        }
         return res;
     },
+    getAuthInfo :async function() {
+      const res = await self.post('/get_user_info');
+      return res;
+    },
     // get the cookie
-    getCookie: async function () {
-        const res = await self.get('/getKey');
+    getKey: async function () {
+        const res = await self.get('/get_user_key');
         if (res.status === 200) {
-            if (res.data.key !== undefined) {
-                return res.data.key;
-            }
+            return res.data?.key;
         }
         return false;
     },
@@ -59,8 +64,9 @@ export default {
         const res = await api.post('/clear-tokens');
         return res;
     },
-    test: async function (path){
-        const res = await api.post('/test',{path});
+    test: async function (path) {
+        const res = await api.post('/test', { path });
         return res;
-    }
+    },
+
 }

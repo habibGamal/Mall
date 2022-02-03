@@ -3,30 +3,15 @@ import product from '../../api/product';
 import BackendProduct from '../../BackendTypes/BackendProduct';
 import isdefined from '../../helpers/isdefined'
 import ProductModel from '../../models/Product';
+import { MiniProduct } from '../../types/MiniProduct';
 import RowScroll from '../general/RowScroll'
-import Product from './Product'
+import Product from '../products/Product'
 
-export default function Products({ title, rawProducts }: { title: string, rawProducts: Array<BackendProduct> }) {
-    const [products, setProducts] = useState([] as Array<ProductModel>);
-    useEffect(() => {
-        const getProducts = async () => {
-            let res = await product.index();
-            if (res.status === 200) {
-                const products: Array<ProductModel> = (res.data as Array<BackendProduct>).map(product => new ProductModel(product));
-                setProducts(products);
-            }
-        }
-        if (!rawProducts) {
-            getProducts();
-            return;
-        }
-        const products: Array<ProductModel> = rawProducts.map(product => new ProductModel(product));
-        setProducts(products);
-    }, []);
+export default function Products({ products }: { products: Array<MiniProduct> }) {
+
     return (
         <section className="products">
             <div className="container">
-                {isdefined(title, { trueReturn: <h2>{title}</h2> })}
                 <RowScroll>
                     {products.map(product => {
                         const { picture } = product;

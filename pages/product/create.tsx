@@ -13,6 +13,14 @@ import Select from '../../components/inputs/Select'
 import File from '../../components/inputs/File'
 import Picture from '../../models/Picture'
 import ProductFormRequest from '../../FormRequests/ProductFormRequest'
+import Middleware from '../../packeges/middleware'
+import withSessionSsr from '../../lib/withSessionSsr'
+export const getServerSideProps = withSessionSsr(
+    async ({req}) => {
+        const middleware = new Middleware(req.session.auth);
+        return middleware.execute(middleware.only('admin'));
+    }
+)
 function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
     const productFormKey = ProductFormRequest.createKey;
     const [errors, setErrors] = useState(null);

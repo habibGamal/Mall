@@ -1,19 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux';
-import BranchForm from '../../components/general/BranchForm';
-import File from '../../components/inputs/File';
-import Number from '../../components/inputs/Number';
-import Preview from '../../components/inputs/Preview';
 import Select from '../../components/inputs/Select';
-import Text from '../../components/inputs/Text';
 import invalid from '../../helpers/invalid';
 import { Forms, Main } from '../../redux/dispatcher';
-import { compressPictures } from '../../helpers/compressPictures';
-import imageCompression from 'browser-image-compression'
 import branch from '../../api/branch';
 import PermenantMessage from '../../components/messages/PermenantMessage';
-import Form from '../../packeges/Form';
-import Picture from '../../models/Picture';
 import CreateSingleBranch from '../../components/create-branch/CreateSingleBranch';
 import CreateMultiSameBranches from '../../components/create-branch/CreateMultiSameBranches';
 import BranchFormRequest from '../../FormRequests/BranchFormRequest';

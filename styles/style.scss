@@ -75,7 +75,7 @@ html {
     }
 }
 
-.empty-cart , .empty-products {
+.empty-cart , .empty-products ,.empty {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -89,7 +89,7 @@ html {
         color: $text-layer-2;
     }
 }
-.empty-products {
+.empty-products,.empty {
     line-height: 2.5;
     > i {
         font-size: 5rem;
@@ -98,7 +98,6 @@ html {
         font-size: 1.5rem;
     }
 }
-
 .message-link {
     cursor: pointer;
     &:hover {
@@ -1118,10 +1117,10 @@ nav {
                 object-fit: cover;
                 object-position: 50% 100%;
                 border-radius: var(--border-radius);
-                transition: transform 300ms ease-in-out;
+                transition: transform 250ms ease-in-out;
 
                 &:hover {
-                    transform: scale(1.2);
+                    transform: scale(1.5);
                 }
             }
         }
