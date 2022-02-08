@@ -58,7 +58,7 @@ function Orders({getInputValue}) {
                     orders.length === 0
                     ? <Empty msg="You haven't recived any orders yet" />
                     :orders.map(
-                        order => <Order order={order} />
+                        order => <Order key={order.id} order={order} />
                     )
                 }
             </Loading>
@@ -86,7 +86,7 @@ function Order({ order }) {
             <ul>
                 {
                     order.products.map(
-                        product => <Product product={product} />
+                        product => <Product key={order.id*product.id} product={product} />
                     )
                 }
             </ul>
