@@ -8,7 +8,7 @@ import Popup from '../../../../popup/Popup'
 import EditCategory from '../../../../popup/EditCategory'
 import listCategories from '../../../../../helpers/listCategories';
 import { ApiData, Forms, Messages } from '../../../../../redux/dispatcher';
-import { $Async } from '../../../../../redux/asyncActions';
+import { $Async } from '../../../../../redux/async_actions';
 import Text from '../../../../inputs/Text';
 import Select from '../../../../inputs/Select';
 

@@ -15,6 +15,7 @@ import Picture from '../../models/Picture'
 import ProductFormRequest from '../../FormRequests/ProductFormRequest'
 import Middleware from '../../packeges/middleware'
 import withSessionSsr from '../../lib/withSessionSsr'
+import branch from '../../api/branch'
 export const getServerSideProps = withSessionSsr(
     async ({req}) => {
         const middleware = new Middleware(req.session.auth);
@@ -24,12 +25,23 @@ export const getServerSideProps = withSessionSsr(
 function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
     const productFormKey = ProductFormRequest.createKey;
     const [errors, setErrors] = useState(null);
+    const [branches, setBranches] = useState([] as Array<{id:number,name:string}>);
     useEffect(() => {
         Forms.attachForm(productFormKey);
         return () => {
             Forms.unattachForm(productFormKey);
             Main.emptyPictures();
         };
+    }, []);
+    
+    useEffect(() => {
+        const getProducts = async () => {
+            const getIds = await branch.getBranchesIds();
+            if (getIds.status === 200) {
+                setBranches(getIds.data);
+            }
+        }
+        getProducts();
     }, []);
     async function productStore(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -156,11 +168,9 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
                             name="branch_id"
                             id="branch_id"
                             addClass=""
-                            options={[
-                                { value: 6, as: 'in branch 1' },
-                                { value: 2, as: 'in branch 2' },
-                                { value: 3, as: 'in branch 3' },
-                            ]}
+                            options={
+                                branches.map(branch => ({ value: branch.id, as: branch.name }))
+                            }
                             formKey={productFormKey}
                         />
                     </div>

@@ -16,7 +16,6 @@ export default function CartItem({src,name,price,shopName,quantity}) {
                     <span>Price : <strong>{price}</strong> LE</span>
                     <Select
                         label={null}
-                        type="select"
                         addClass=""
                         options={[
                             { value: 1, as: '1' },

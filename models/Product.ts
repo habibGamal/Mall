@@ -9,6 +9,7 @@ import ProductOption from "../types/ProductOption";
 import Chip from "../types/Chip";
 import BackendProduct from "../BackendTypes/BackendProduct";
 import BackendProductOption from "../BackendTypes/BackendProductOption";
+import BackendBranch from "../BackendTypes/BackendBranch";
 
 export default class Product {
     id: number;
@@ -28,6 +29,8 @@ export default class Product {
     stock?: number;
     description?: string;
     warranty?: string;
+    pivot?: any;
+    branches?: Array<BackendBranch>
     // encapsulated
     private pictures: string;
     constructor(product: BackendProduct) {
@@ -47,6 +50,8 @@ export default class Product {
         this.stock = product.stock;
         this.description = product.description;
         this.warranty = product.warranty;
+        this.pivot = product.pivot;
+        this.branches = product.branches;
     }
     // edit constructor
     static editable(product: BackendProduct, form: HTMLFormElement) {

@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import main from './controllers/main';
+import translate from './controllers/translate';
 import router from './controllers/router';
 import messages from './controllers/messages';
 import popup from './controllers/popup';
@@ -8,6 +9,7 @@ import apiData from './controllers/apiData';
 import customerEnv from './controllers/customerEnv';
 const rootReducer = combineReducers({
     main,
+    translate,
     router,
     apiData,
     customerEnv,

@@ -5,7 +5,7 @@ import Branch from '../../models/Branch';
 import RowScroll from '../general/RowScroll'
 import Store from './Store'
 
-export default function stores() {
+export default function Stores() {
     const [branches, setBranches] = useState([] as Array<Branch>);
     useEffect(() => {
         const getStores = async () => {

@@ -13,4 +13,16 @@ export default {
         let res = await api.get(`/branch`);
         return res;
     },
+    indexForOwner: async function(){
+        let res = await api.get('/branch-for-admin');
+        return res;
+    },
+    branchProducts: async function(id){
+        let res = await api.get(`branch-products/${id}`)
+        return res;
+    },
+    getBranchesIds: async function(){
+        let res = await api.get('get-branches-ids')
+        return res;
+    }
 }

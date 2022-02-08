@@ -1,0 +1,325 @@
+html[dir="rtl"] {
+    $left: "right";
+    $right: "left";
+    // nav
+    nav #nav-bar.active {
+        #{$left}: var(--move-active-slide);
+    }
+    nav #nav-bar {
+        #{$left}: var(--move-inactive-slide);
+    }
+    /*
+    Name : Rules
+    */
+    .radio-boxs {
+        &::after {
+            #{$left}: 5px;
+        }
+        > .radio-box-row {
+            .form-check {
+                margin: 0;
+                padding-#{$left}: 0;
+                .form-check-label {
+                    padding: 0.5rem 0;
+                    transition: padding-#{$left} 300ms ease-in-out;
+                    &:hover {
+                        padding-#{$left}: 0.5rem;
+                    }
+                    &.active {
+                        padding-#{$left}: 0.5rem;
+                    }
+                }
+            }
+        }
+    }
+
+    span.count {
+        #{$right}: -10px;
+        #{$left}: unset;
+    }
+
+    .form-check {
+        label {
+            .box {
+                margin-#{$right}: 0.5rem;
+                border-radius: 5px;
+                .fa-check {
+                    #{$left}: 4px;
+                    #{$right}: unset;
+                }
+            }
+        }
+    }
+
+    .control-panel {
+        &::after {
+            #{$left}: 0;
+        }
+
+        .navigation {
+            > ul {
+                > li {
+                    &.active {
+                        &::after {
+                            #{$left}: 0;
+                        }
+                    }
+
+                    > i {
+                        margin-#{$right}: 0.5rem;
+                    }
+                }
+            }
+        }
+
+        > .filter {
+            .filter-option {
+                > .content {
+                    > .category {
+                        .category-name {
+                            i {
+                                margin-#{$right}: 0.5rem;
+                            }
+                        }
+
+                        .subcategories {
+                            margin-#{$left}: 0.5rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        > ul.filters {
+            > li {
+                &#search {
+                    > form {
+                        #{$right}: 0;
+                    }
+                }
+                i {
+                    margin-#{$right}: 0.3rem;
+                }
+            }
+        }
+    }
+
+    /*
+        Name : Navbar
+    */
+    nav {
+        #nav-bar,
+        #cart {
+            transition: #{$left} 400ms ease-in-out, #{$right} 400ms ease-in-out;
+        }
+
+        #nav-bar {
+            text-align: right;
+            #{$left}: var(--move-inactive-slide);
+
+            &.active {
+                #{$left}: var(--move-active-slide);
+            }
+
+            :not(.stick #cart) {
+                #{$left}: -300px;
+                #{$right}: unset;
+                &.active {
+                    #{$left}: 0;
+                }
+            }
+
+            > ul {
+                padding-#{$left}: 0;
+
+                > li {
+                    > a {
+                        padding-#{$left}: 2rem;
+                    }
+                    > a {
+                        border-radius: 10px 0 0 10px ;
+
+                        &:hover {
+                            padding-#{$left}: 2.5rem;
+                        }
+                        > i {
+                            margin-#{$right}: 0.5rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        #cart {
+            #{$right}: var(--move-inactive-slide);
+            #{$left}: unset;
+
+            &.active {
+                #{$right}: var(--move-active-slide);
+                #{$left}: unset;
+            }
+
+            .content {
+                overflow-y: auto;
+                height: calc(100% - 3rem - 92px);
+
+                .cart-item {
+                    margin: {
+                        #{$right}: 0.5rem;
+                        #{$left}: unset;
+                    }
+
+                    .close {
+                        #{$right}: 10px;
+                        #{$left}: unset;
+                    }
+                }
+            }
+        }
+
+        .search {
+            > i {
+                #{$right}: 15%;
+                #{$left}: unset;
+            }
+        }
+    }
+
+    @keyframes bar {
+        from {
+            width: 0;
+        }
+
+        to {
+            width: 1.5rem;
+        }
+    }
+
+    @keyframes lastBar {
+        from {
+            width: 0;
+        }
+
+        to {
+            width: 0.75rem;
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    /*
+        Name : Slider
+    */
+    .slider {
+        position: relative;
+        width: 100vw;
+        overflow: hidden;
+
+        .#{$right}-arrow,
+        .#{$left}-arrow {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            z-index: 1;
+            cursor: pointer;
+            width: 66px;
+            height: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+
+            > i {
+                margin: 0 1rem;
+                font-size: 2rem;
+            }
+        }
+
+        .#{$right}-arrow {
+            #{$right}: 0;
+        }
+
+        .#{$left}-arrow {
+            #{$left}: 0;
+        }
+
+        .photo {
+            position: absolute;
+            width: 100%;
+            max-height: 50vh;
+            min-height: 150px;
+            transition: #{$left} 800ms ease-in-out;
+            background-color: #000;
+
+            > img {
+                width: 100%;
+                height: clamp(150px, 50vh, 500px);
+                object-fit: cover;
+            }
+        }
+    }
+
+    /*
+        Name : Stores
+    */
+
+    .store {
+        margin-#{$right}: 2rem;
+    }
+
+    /*
+        Name : Categories
+    */
+    .categories {
+        .grid {
+            .category {
+                > .lable {
+                    #{$left}: 10px;
+
+                    #{$right}: unset;
+                }
+            }
+        }
+    }
+
+    /*
+        Name : Products
+    */
+    .products {
+        .product {
+            .selectable-box {
+                #{$left}: 10px;
+                #{$right}: unset;
+                .fa-check {
+                    #{$left}: 4px;
+                    #{$right}: unset;
+                }
+            }
+            > .product-details {
+                > .menu-bars {
+                    #{$right}: 20px;
+                    #{$left}: unset;
+                }
+                > .menu {
+                    #{$right}: 15px;
+                    #{$left}: unset;
+                }
+            }
+        }
+    }
+
+    /*
+    Name : Row-Show Kit
+    */
+
+    .row-show-container .#{$left}-arrow {
+        #{$left}: 5px;
+        #{$right}: unset;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .row-show-container .#{$right}-arrow {
+        #{$right}: 5px;
+        #{$left}: unset;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}

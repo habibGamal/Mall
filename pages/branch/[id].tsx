@@ -6,6 +6,7 @@ import Products from '../../components/products/Products'
 import BackendBranch from '../../BackendTypes/BackendBranch';
 import Branch from '../../models/Branch';
 import BackendProduct from '../../BackendTypes/BackendProduct';
+import Empty from '../../components/general/Empty';
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     try {
         const res = await branch.show(ctx.params.id);
@@ -60,10 +61,7 @@ export default function ShowBranch({ rawBranch, rawProducts }: ShowBranchProps) 
             </div>
             {
                 rawProducts.length === 0
-                    ? <div className='empty-products'>
-                        <i className="fas fa-box-open"></i>
-                        <strong>There isn't products yet</strong>
-                    </div>
+                    ? <Empty msg="There isn't products yet" />
                     : <Products
                         title="Latest Products"
                         rawProducts={rawProducts}

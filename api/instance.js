@@ -35,18 +35,18 @@ function interceptor(error) {
             return res;
         }
         // => unauthinticated
-        // if (res.status === 401) {
-        //     Messages.set('warning', MESSAGES.loginFirst);
-        //     return res;
-        // }
+        if (res.status === 401) {
+            Messages.set('danger', message);
+            return res;
+        }
         // => too many requests
         if (res.status === 429) {
             Messages.set('warning', <>You are performing<strong>too many requsets</strong>. Please wait a second or use <strong>Bulk action</strong></>)
             return res;
         }
         // => if there is backend message and it isn't handled above ^
-        if(message){
-            Messages.set('danger',message);
+        if(res.data.error_message){
+            Messages.set(res.data.type,res.data.error_message);
             return Promise.reject(error);
         }
     }

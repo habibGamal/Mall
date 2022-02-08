@@ -6,7 +6,7 @@ import active from '../../helpers/active'
 import ProductControlPanel from '../../components/control-panel/ProductControlPanel'
 import p from '../../api/product';
 import NotEmpty from '../../directives/NotEmpty'
-import { $Async } from '../../redux/asyncActions'
+import { $Async } from '../../redux/async_actions'
 import Picture from '../../models/Picture'
 import { Messages, Popup } from '../../redux/dispatcher'
 import { MESSAGES } from '../../messages/messages'

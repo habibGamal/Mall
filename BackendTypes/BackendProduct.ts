@@ -1,4 +1,5 @@
 import CategoryType from "../types/CategoryType";
+import BackendBranch from "./BackendBranch";
 import BackendProductOption from "./BackendProductOption";
 
 
@@ -19,6 +20,8 @@ type BackendProduct = {
     stock?: number,
     description?: string,
     warranty?: string,
+    pivot?: any,
+    branches?: Array<BackendBranch>
 }
 
 export default BackendProduct;

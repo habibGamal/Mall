@@ -4,20 +4,54 @@ import active from '../../../../helpers/active'
 import Product from '../../../products/Product'
 import ProductModel from '../../../../models/Product'
 import BackendProduct from '../../../../BackendTypes/BackendProduct'
-export default function Products() {
+import Empty from '../../../general/Empty'
+import Loading from '../../../../directives/Loading'
+import Select from '../../../inputs/Select'
+import { Forms } from '../../../../redux/dispatcher'
+import branch from '../../../../api/branch'
+import { connect } from 'react-redux'
+
+const formKey = 'dashboard_products'
+
+function Products({ getInputValue }) {
     const [selectable, setSelectable] = useState(false);
     const [selectAll, setSelectAll] = useState(false);
     const [products, setProducts] = useState([] as Array<ProductModel>);
+    const [branches, setBranches] = useState([] as Array<{ id: number, name: string }>);
+    const [loadingProducts, setLoading] = useState(false);
     useEffect(() => {
+        Forms.attachForm(formKey);
+        return () => {
+            Forms.unattachForm(formKey);
+        };
+    }, []);
+    useEffect(() => {
+        const branchId = getInputValue('branch_id');
         const getProducts = async () => {
-            let res = await product.index();
+            const res = await branch.branchProducts(branchId);
             if (res.status === 200) {
                 const products: Array<ProductModel> = (res.data as Array<BackendProduct>).map(product => new ProductModel(product));
                 setProducts(products);
             }
         }
+        if(branchId){
+            getProducts();
+        }
+    }, [getInputValue('branch_id')]);
+    useEffect(() => {
+        const getProducts = async () => {
+            const res = await branch.branchProducts(0);
+            const getIds = await branch.getBranchesIds();
+            if (res.status === 200) {
+                const products: Array<ProductModel> = (res.data as Array<BackendProduct>).map(product => new ProductModel(product));
+                setProducts(products);
+                setBranches(getIds.data);
+                setLoading(true);
+            }
+        }
         getProducts();
     }, []);
+
     function handleSelect(e: React.ChangeEvent<HTMLInputElement>) {
         if (!selectAll) {
             setSelectable(e.target.checked);
@@ -76,13 +110,16 @@ export default function Products() {
                         </label>
                     </div>
                     <div className="form-group">
-                        <select className="form-control" id="exampleFormControlSelect1">
-                            <option>فرع الجمهورية</option>
-                            <option>فرع النميس</option>
-                            <option>فرع الازهر</option>
-                            <option>2 فرع الجمهورية</option>
-                            <option>فرع الجمهورية</option>
-                        </select>
+                        <Select
+                            label={null}
+                            name="branch_id"
+                            id="branch_id"
+                            addClass=""
+                            options={
+                                branches.map(branch => ({ value: branch.id, as: branch.name }))
+                            }
+                            formKey={formKey}
+                        />
                     </div>
                     <div className={active(selectable, { defaultClass: 'buttons' })}>
                         <button onClick={deleteProducts} className="btn btn-danger">Delete</button>
@@ -93,25 +130,44 @@ export default function Products() {
             </div>
             <div className="products">
                 <div className="row">
-                    {products.map(product => {
-                        let { path, position } = product.picture;
-                        return (
-                            <Product
-                                selectable={selectable}
-                                selected={selectAll}
-                                key={product.id}
-                                id={product.id}
-                                name={product.name}
-                                price={product.price}
-                                offerPrice={product.offer_price}
-                                currency="LE"
-                                src={path}
-                                position={position}
-                            />
-                        )
-                    })}
+                    <Loading state={loadingProducts} mini={true}>
+                        {
+                            products.length === 0
+                                ? <Empty msg="You haven't create any products yet" />
+                                : products.map(product => {
+                                    const { path, position } = product.picture;
+                                    return (
+                                        <Product
+                                            selectable={selectable}
+                                            selected={selectAll}
+                                            key={product.id}
+                                            id={product.id}
+                                            name={product.name}
+                                            price={product.price}
+                                            offerPrice={product.offer_price}
+                                            currency="LE"
+                                            src={path}
+                                            position={position}
+                                        />
+                                    )
+                                })
+                        }
+                    </Loading>
                 </div>
             </div>
         </>
     )
 }
+
+const mapStateToProps = (state) => ({
+    getInputValue: (name: string) => {
+        if (state.forms[formKey]) {
+            if (state.forms[formKey][name]) {
+                return state.forms[formKey][name];
+            }
+        }
+        return null;
+    },
+})
+
+export default connect(mapStateToProps)(Products)

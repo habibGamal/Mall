@@ -7,9 +7,15 @@ import MiniCart from '../cart/MiniCart';
 import Authenticated from '../../directives/Authenticated';
 import auth from '../../api/auth';
 import { connect } from 'react-redux';
-import { $Async } from '../../redux/asyncActions';
-import { Popup } from '../../redux/dispatcher';
+import { $Async } from '../../redux/async_actions';
+import { Language, Popup } from '../../redux/dispatcher';
+import t, { translate } from '../../helpers/translate';
 function Nav({ setPopupForm }) {
+
+    function switchLanguge(lang) {
+        Language.setLanguage(lang);
+    }
+
     const router = useRouter();
     const search = useRef();
     const activeLink = useRef();
@@ -70,9 +76,14 @@ function Nav({ setPopupForm }) {
     }
     useEffect(() => {
         window.onscroll = () => {
-            if (window.scrollY > 0) {
-                document.getElementsByTagName('nav')[0].classList.add('stick');
-            } else {
+            if (document.body.scrollHeight >= (window.innerHeight + 100)) {
+                if (window.scrollY > 0) {
+                    document.getElementsByTagName('nav')[0].classList.add('stick');
+                } else {
+                    document.getElementsByTagName('nav')[0].classList.remove('stick');
+                }
+            }
+            if (window.scrollY == 0) {
                 document.getElementsByTagName('nav')[0].classList.remove('stick');
             }
         }
@@ -106,7 +117,7 @@ function Nav({ setPopupForm }) {
                             </li>
                             <li>
                                 <Link href="/product/create">
-                                    <a onClick={navLink}>Create Product</a>
+                                    <a onClick={navLink}>{t('Create Product', 'انشاء منتج')}</a>
                                 </Link>
                             </li>
                             <li>
@@ -138,6 +149,18 @@ function Nav({ setPopupForm }) {
                                 <Link href="/branch/create">
                                     <a onClick={navLink}>Create Branch</a>
                                 </Link>
+                            </li>
+                            <li>
+                                <Link href="/order/user_orders">
+                                    <a onClick={navLink}>My Orders</a>
+                                </Link>
+                            </li>
+                            <li className="select-language">
+                                <span>Current language : <span className="current-language">English</span></span>
+                                <div className="switch">
+                                    <span onClick={() => switchLanguge('ar')}>Arabic</span>
+                                    <span onClick={() => switchLanguge('en')} className="current-language">English</span>
+                                </div>
                             </li>
                         </ul>
                         <div className="options">
@@ -220,4 +243,5 @@ const mapDispatchToProps = dispatch => (
         setPopupForm: (value) => Popup.setPopup('auth-form', value),
     }
 )
-export default connect(null, mapDispatchToProps)(Nav);
+export default connect(translate, mapDispatchToProps)(Nav);
+// export default connect(null, mapDispatchToProps)(Nav);

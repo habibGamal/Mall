@@ -1,7 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
-
+import order from '../api/order'
 export default function Checkout() {
+    async function placeOrder(){
+        const res = await order.make();
+        console.log(res.data);
+    }
     return (
         <section className="checkout">
             <div className="container">
@@ -20,9 +24,7 @@ export default function Checkout() {
                             حي السادات شارع النصر عمارة 12 الدور5</li>
                         <li>+ Add another address</li>
                     </ul>
-                    <Link href="/checkout">
-                        <a className="btn btn-primary btn-block">Place Order</a>
-                    </Link>
+                    <button onClick={placeOrder} className="btn btn-primary btn-block">Place Order</button>
                     <Link href="/cart">
                         <a className="btn btn-outline-primary btn-block">Go Back</a>
                     </Link>

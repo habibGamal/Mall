@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Select from '../inputs/Select'
 import cart from '../../api/cart';
 import { connect } from 'react-redux';
-import { $Async } from '../../redux/asyncActions';
+import { $Async } from '../../redux/async_actions';
 
 function CartItem({ src, id, formKey, name, price, quantity, getInputValue }) {
     useEffect(async () => {

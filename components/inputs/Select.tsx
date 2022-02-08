@@ -20,7 +20,7 @@ function Select({ addClass = 'col-md-6', id, label, name, formKey, invalidMsg = 
         setInvMsg(invalidMsg[0]);
     }, [invalidMsg]);
     useEffect(() => {
-        Forms.setInputValue(formKey, name, options[defaultOption ?? 0].value);
+        Forms.setInputValue(formKey, name, options[defaultOption ?? 0]?.value);
     }, []);
     function handleOnChange(e: React.ChangeEvent<HTMLSelectElement>) {
         Forms.setInputValue(formKey, name, e.target.value);
@@ -35,7 +35,7 @@ function Select({ addClass = 'col-md-6', id, label, name, formKey, invalidMsg = 
             <select
                 name={name}
                 className="form-control" id={id}
-                value={inputValue(formKey, name, options[defaultOption].value)}
+                value={inputValue(formKey, name, options[defaultOption]?.value)}
                 onChange={handleOnChange}
             >
                 {options.map((option, i) => <option key={i} value={option.value}>{option.as}</option>)}

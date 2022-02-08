@@ -4,7 +4,7 @@ import category from '../../api/category';
 import active from '../../helpers/active';
 import invalid from '../../helpers/invalid';
 import listCategories from '../../helpers/listCategories';
-import { $Async } from '../../redux/asyncActions';
+import { $Async } from '../../redux/async_actions';
 import { Messages, Forms, Popup } from '../../redux/dispatcher';
 import Select from '../inputs/Select';
 import Text from '../inputs/Text';

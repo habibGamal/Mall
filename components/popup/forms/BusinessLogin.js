@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import auth from '../../../api/auth';
 import invalid from '../../../helpers/invalid';
-import { $Async } from '../../../redux/asyncActions';
+import { $Async } from '../../../redux/async_actions';
 import { Forms } from '../../../redux/dispatcher';
 import Email from '../../inputs/Email'
 import Password from '../../inputs/Password'

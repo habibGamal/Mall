@@ -1,6 +1,14 @@
-// Very small 
+// Very small
+@media screen and(max-width:390px) {
+    .orders-page > .orders > .order > .order-item {
+        flex-direction: column;
+        > .picture {
+            width: 100%;
+        }
+    }
+}
 @media screen and(max-width:442px) {
-    .single-product .product>.content .details .block>.context>button.btn-success {
+    .single-product .product > .content .details .block > .context > button.btn-success {
         display: block;
         width: 100%;
     }
@@ -26,8 +34,7 @@
 
     // Navbar
     nav {
-
-        padding: .5rem 1rem;
+        padding: 0.5rem 1rem;
 
         #cart {
             max-width: 320px;
@@ -46,7 +53,7 @@
                 z-index: 3;
             }
 
-            >input {
+            > input {
                 &:focus {
                     width: 16rem;
                 }
@@ -59,7 +66,7 @@
         }
 
         .user-cart {
-            >.circle {
+            > .circle {
                 width: 40px;
                 height: 40px;
 
@@ -71,7 +78,7 @@
                     }
                 }
 
-                >.svg-inline--fa {
+                > .svg-inline--fa {
                     font-size: 1rem;
                 }
             }
@@ -85,7 +92,7 @@
             height: 100px;
         }
 
-        .name>h3 {
+        .name > h3 {
             font-size: 1.25rem;
         }
     }
@@ -119,18 +126,18 @@
     }
 
     // Category page
-    .single-category .mini-show-store>.store> {
+    .single-category .mini-show-store > .store > {
         .logo {
             width: 65px;
             height: 65px;
         }
 
-        .name>h3 {
+        .name > h3 {
             font-size: 1.5rem;
         }
     }
 
-    // Store page 
+    // Store page
     .single-store .background-store {
         height: 150px;
     }
@@ -151,7 +158,7 @@
     }
 
     .dashboard .dashboard-content {
-        >.orders {
+        > .orders {
             margin: 2rem 1rem;
 
             .order {
@@ -166,7 +173,7 @@
             }
         }
 
-        >.categories {
+        > .categories {
             .action {
                 position: relative;
 
@@ -196,7 +203,7 @@
                     background-color: #fff;
                     border-radius: 10px;
                     box-shadow: $shadow;
-                    padding: .5rem;
+                    padding: 0.5rem;
                     z-index: 1;
                     transition: opacity 200ms ease-in-out;
 
@@ -211,8 +218,7 @@
 }
 
 // Large
-@media screen and (min-width:576px) and (max-width:992px) {
-
+@media screen and (min-width: 576px) and (max-width: 992px) {
     // Categories
     .categories {
         .grid {
@@ -236,9 +242,26 @@
     }
 }
 
-// Speicial 
+// Speicial
 
-@media screen and (max-width:767px) {
+@media screen and (max-width: 767px) {
+    // Order page
+    .orders-page {
+        .orders {
+            .order {
+                .order-item {
+                    // flex-direction: column;
+                    .picture {
+                        width: 310px;
+                    }
+                }
+            }
+        }
+    }
+
+    .orders-page > .orders > .order > .cart-item > .picture {
+        width: 310px;
+    }
 
     // Cart
     .cart-page {
@@ -259,7 +282,7 @@
                         display: grid;
                         grid-template-columns: auto auto;
 
-                        >button {
+                        > button {
                             grid-column: 1 / span 2;
                         }
                     }
@@ -269,7 +292,7 @@
     }
 
     // Single Product
-    .single-product .product>.content {
+    .single-product .product > .content {
         .pictures {
             max-width: 300px;
             margin: 0 auto;
@@ -284,7 +307,7 @@
                 display: flex;
                 overflow-x: scroll;
 
-                >div {
+                > div {
                     display: block;
                     flex-shrink: 0;
                     flex-basis: 100%;
@@ -303,36 +326,36 @@
     }
 
     // Dashboard
-    .dashboard .dashboard-content>.controllers {
-        >.select div {
-            margin: .5rem 0;
+    .dashboard .dashboard-content > .controllers {
+        > .select div {
+            margin: 0.5rem 0;
         }
 
-        >.btn-add {
-            padding: .75rem 1rem;
+        > .btn-add {
+            padding: 0.75rem 1rem;
         }
     }
 
     // Control Panel
-    .control-panel>.filter .grid {
+    .control-panel > .filter .grid {
         grid-template-columns: auto;
         grid-template-rows: auto auto;
         justify-content: center;
     }
 
-    // Store page 
+    // Store page
     .single-store .container .info-control {
         flex-direction: column;
         align-items: center;
 
-        >.store {
+        > .store {
             margin: 0;
         }
 
-        >.control-panel {
+        > .control-panel {
             padding: 0;
 
-            >ul.filters {
+            > ul.filters {
                 margin: 0;
                 margin-top: 1rem;
             }
@@ -340,24 +363,21 @@
     }
 }
 
-
-
-@media screen and (max-width:1200px) {
-
+@media screen and (max-width: 1200px) {
     // Cart
     .cart-page {
-        >.container {
+        > .container {
             grid-template-columns: auto;
             grid-template-rows: auto auto;
         }
     }
 
     // Product page
-    .single-product .product>.content .pictures .show .active {
+    .single-product .product > .content .pictures .show .active {
         margin: 0 2rem;
     }
 
-    // Dashboard 
+    // Dashboard
     .dashboard {
         .dashboard-content {
             // Control panel
@@ -372,17 +392,14 @@
             > .controllers {
                 margin: 0 3rem;
             }
-            
         }
     }
-
 }
 
-@media screen and (max-width:991px) {
-
+@media screen and (max-width: 991px) {
     // Single Product
     .single-product {
-        .product>.content {
+        .product > .content {
             grid-template-columns: auto;
 
             .pictures {
@@ -392,12 +409,11 @@
         }
 
         .extra {
-
             .description,
             .specifications,
             .comments,
             .shop-details {
-                margin: 2rem .5rem;
+                margin: 2rem 0.5rem;
                 padding: 1rem;
             }
         }
@@ -407,29 +423,29 @@
     .control-panel {
         padding: 1.5rem;
 
-        >.navigation {
+        > .navigation {
             display: flex;
             position: relative;
             justify-content: center;
 
-            >.sm-only {
+            > .sm-only {
                 display: block;
                 color: $main-color;
                 cursor: pointer;
                 user-select: none;
 
-                >i {
+                > i {
                     margin-left: 0.5rem;
                 }
             }
 
-            >ul {
+            > ul {
                 display: grid;
                 grid-template-columns: auto;
                 pointer-events: none;
                 opacity: 0;
                 position: absolute;
-                transition: opacity 200ms ease-in-out , top 200ms ease-in-out;
+                transition: opacity 200ms ease-in-out, top 200ms ease-in-out;
                 top: 40px;
                 left: 50%;
                 transform: translateX(-50%);
@@ -443,7 +459,7 @@
                     opacity: 1;
                 }
 
-                >li {
+                > li {
                     display: block;
                     white-space: nowrap;
                     padding: 1rem 2rem;
@@ -464,7 +480,7 @@
 
     // Slider
     .slider {
-        .photo>img {
+        .photo > img {
             height: 100%;
             min-height: 150px;
         }
@@ -473,25 +489,25 @@
     // Dashboard
     .dashboard {
         .dashboard-content {
-            >.control-panel {
+            > .control-panel {
                 row-gap: 3rem;
                 &::after {
                     top: 72px;
                 }
             }
-            >.controllers {
+            > .controllers {
                 display: flex;
                 flex-direction: column;
                 margin: 0rem 3rem;
 
-                >.select {
+                > .select {
                     .form-group {
                         margin-bottom: 0;
                     }
                 }
 
                 .btn-add {
-                    margin-top: 1rem
+                    margin-top: 1rem;
                 }
             }
         }

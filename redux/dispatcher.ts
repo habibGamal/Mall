@@ -1,4 +1,5 @@
 import { State as MainState}  from "./controllers/main";
+import { State as LanguageState}  from "./controllers/translate";
 import store from "./store";
 
 
@@ -20,6 +21,8 @@ export let Messages = new Proxy({ to: 'Messages' }, dispatcher);
 export let ApiData = new Proxy({ to: 'ApiData' }, dispatcher);
 
 export let Main : MainState = new Proxy({ to: 'Main' }, dispatcher);
+
+export let Language : LanguageState = new Proxy({ to: 'translate' }, dispatcher);
 
 export let Popup = new Proxy({ to: 'Popup' }, dispatcher);
 

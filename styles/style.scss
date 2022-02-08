@@ -1,4 +1,4 @@
-@import '~bootstrap/scss/bootstrap.scss';
+@import "~bootstrap/scss/bootstrap.scss";
 @import "./lib/fontawesome.scss";
 // @import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 @font-face {
@@ -31,8 +31,15 @@ $border: 1px solid #dee2e6 !important;
 /*
 Name : Rules
 */
+:root{
+    --dir : rtl;
+}
 html {
     scroll-behavior: smooth;
+    body {
+        text-align: start;
+    }
+    
 }
 
 .radio-boxs {
@@ -75,11 +82,13 @@ html {
     }
 }
 
-.empty-cart , .empty-products ,.empty {
+.empty-cart,
+.empty {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin: 0 auto;
     padding: 2rem;
     > i {
         font-size: 3rem;
@@ -89,7 +98,7 @@ html {
         color: $text-layer-2;
     }
 }
-.empty-products,.empty {
+.empty {
     line-height: 2.5;
     > i {
         font-size: 5rem;
@@ -619,11 +628,34 @@ nav {
             > li {
                 list-style-type: none;
                 width: 90%;
-
-                > a {
+                &.select-language , > a {
                     color: #000;
                     padding: 1rem;
                     padding-left: 2rem;
+                }
+                &.select-language {
+                    @extend .isolate-3;
+                    margin: 1rem 0;
+                    > span > .current-language {
+                        font-weight: bold;
+                    }
+                    .switch {
+                        background-color: $text-layer-4;
+                        margin-top: .5rem;
+                        text-align: center;
+                        display: grid;
+                        grid-template-columns: auto auto;
+                        > span {
+                            padding: .5rem;
+                            cursor: pointer;
+                            &.current-language {
+                                background-color: $main-color;
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+                > a {
                     width: 100%;
                     display: block;
                     border-radius: 0 10px 10px 0;
@@ -1262,6 +1294,16 @@ nav {
     align-items: center;
     justify-content: center;
     background-color: white;
+}
+.mini-loading-container {
+    margin:1rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+}
+.mini-loading-container,
+.loading-container {
     .loading {
         width: 150px;
         height: 150px;
@@ -1351,5 +1393,7 @@ Imported files
 @import "category-page.scss";
 @import "store-page.scss";
 @import "cart.scss";
+@import "order.scss";
 @import "mobile.scss";
+@import "rtl.scss";
 @import "darkmode.scss";

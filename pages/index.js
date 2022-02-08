@@ -5,7 +5,7 @@ import Slider from '../components/slider/Slider'
 import Stores from '../components/stores/Stores'
 import auth from '../api/auth'
 import { connect } from 'react-redux'
-import { $Async } from '../redux/asyncActions'
+import { $Async } from '../redux/async_actions'
 import { self } from '../api/instance'
 function Home() {
   // for fast test login and logout functionality

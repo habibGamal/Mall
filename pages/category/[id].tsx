@@ -54,16 +54,14 @@ export default function Category({ category }) {
             />
             <div className="container">
                 {
-                    categoryModel.branches.map(
+                    categoryModel.branches.length == 0 ?
+                    <Empty msg="This category doesn't have any products yet"/>
+                    :categoryModel.branches.map(
                         branch => <MiniShowStore
+                            key={branch.id}
                             branch={branch}
                         />
                     )
-                }
-                {
-                    categoryModel.branches.length == 0 ?
-                    <Empty msg="This category doesn't have any products yet"/>
-                    :false
                 }
             </div>
         </section>
