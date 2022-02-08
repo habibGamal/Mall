@@ -9,7 +9,7 @@ interface EmailType {
     label: string,
     name: string,
     formKey: string,
-    icon?: string,
+    icon?: JSX.Element,
     invalidMsg: Array<String>,
     inputValue: Function,
     defaultValue?: string
