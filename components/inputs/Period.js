@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import active from '../../helpers/active';
+import t from '../../helpers/translate';
 import { Forms } from '../../redux/dispatcher';
 import Time from './Time';
 
@@ -28,7 +29,7 @@ function Period({ label, addClass = 'col-md-6', name, invalidMsg, formKey }) {
         <div className={`form-group ${addClass}`}>
             <label>{label}</label>
             <Time
-                label="From"
+                label={t('From','من')}
                 name={name}
                 id={`${name}-from`}
                 formKey={formKey}
@@ -36,7 +37,7 @@ function Period({ label, addClass = 'col-md-6', name, invalidMsg, formKey }) {
                 handleOnChange={handleOnChange}
             />
             <Time
-                label="To"
+                label={t('To','الى')}
                 name={name}
                 id={`${name}-to`}
                 formKey={formKey}

@@ -6,6 +6,7 @@ import Preview from "../inputs/Preview";
 import { Main } from "../../redux/dispatcher";
 import Picture from "../../models/Picture";
 import BranchFormRequest from "../../FormRequests/BranchFormRequest";
+import t from "../../helpers/translate";
 function CreateSingleBranch({ logo, errors }) {
     function logoInit(e: React.ChangeEvent<HTMLInputElement>) {
         // => save just one picture
@@ -17,7 +18,7 @@ function CreateSingleBranch({ logo, errors }) {
             <h3>Store info</h3>
             <div className="form-row">
                 <Text
-                    label="Shop Name"
+                    label={t('Shop Name','اسم المتجر')}
                     name="store_name"
                     id="store_name"
                     icon={<i className="fas fa-store"></i>}
@@ -25,7 +26,7 @@ function CreateSingleBranch({ logo, errors }) {
                     formKey={BranchFormRequest.createKey}
                 />
                 <Text
-                    label="Address"
+                    label={t('Address','العنوان')}
                     name="address"
                     id="address"
                     icon={<i className="fas fa-map-marker-alt"></i>}
@@ -37,7 +38,7 @@ function CreateSingleBranch({ logo, errors }) {
                 <div className="col-md-6">
                     <div className="row align-items-center">
                         <File
-                            label="Store Logo"
+                            label={t('Store Logo','صورة المحل او Logo')}
                             onChange={logoInit}
                             name="logo"
                             multiple={false}

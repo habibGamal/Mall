@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import auth from '../../../api/auth';
 import invalid from '../../../helpers/invalid';
+import t from '../../../helpers/translate';
 import { $Async } from '../../../redux/async_actions';
 import { Forms } from '../../../redux/dispatcher';
 import Email from '../../inputs/Email'
@@ -40,7 +41,7 @@ export default function Login({form ,setTap}) {
     return (
         <>
             <Email
-                label="Email address"
+                label={t('Email address','البريد الالكتروني')}
                 addClass=""
                 id="email"
                 name="email"
@@ -48,7 +49,7 @@ export default function Login({form ,setTap}) {
                 invalidMsg={invalid('email', errors)}
             />
             <Password
-                label="Password"
+                label={t('Password','الرفم السري')}
                 addClass=""
                 id="password"
                 name="password"
@@ -56,8 +57,8 @@ export default function Login({form ,setTap}) {
                 invalidMsg={invalid('password', errors)}
             />
             <div className="login-or-register">
-                <button onClick={login} type="submit" className="btn btn-black btn-lg btn-block">Login</button>
-                <span>Don{`'`}t have an account?<br /><button onClick={signupLayout} className="btn btn-link">Sign up</button></span>
+                <button onClick={login} type="submit" className="btn btn-black btn-lg btn-block">{t('Login','دخول')}</button>
+                <span>{t('Don\'t have an account?','ليس لديك حساب ؟')}<br /><button onClick={signupLayout} className="btn btn-link">{t('Sign up','انشاء حساب جديد')}</button></span>
             </div>
         </>
     )

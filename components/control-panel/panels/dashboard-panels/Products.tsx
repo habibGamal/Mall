@@ -10,6 +10,7 @@ import Select from '../../../inputs/Select'
 import { Forms } from '../../../../redux/dispatcher'
 import branch from '../../../../api/branch'
 import { connect } from 'react-redux'
+import t from '../../../../helpers/translate'
 
 const formKey = 'dashboard_products'
 
@@ -94,7 +95,7 @@ function Products({ getInputValue }) {
                                 <i className="fas fa-check" />
                             </span>
                             <span>
-                                Select
+                                {t('Select','تحديد')}
                             </span>
                         </label>
                     </div>
@@ -105,7 +106,7 @@ function Products({ getInputValue }) {
                                 <i className="fas fa-check" />
                             </span>
                             <span>
-                                Select all
+                                {t('Select all','تحديد الكل')}
                             </span>
                         </label>
                     </div>
@@ -122,11 +123,11 @@ function Products({ getInputValue }) {
                         />
                     </div>
                     <div className={active(selectable, { defaultClass: 'buttons' })}>
-                        <button onClick={deleteProducts} className="btn btn-danger">Delete</button>
-                        <button className="btn btn-dark">Draft</button>
+                        <button onClick={deleteProducts} className="btn btn-danger">{t('Delete','مسح')}</button>
+                        <button className="btn btn-dark">{t('Draft','تخزين')}</button>
                     </div>
                 </div>
-                <button className="btn btn-add"><i className="fas fa-plus-circle" /> Add Product</button>
+                <button className="btn btn-add"><i className="fas fa-plus-circle" /> {t('Add Product','اضافة منتج')}</button>
             </div>
             <div className="products">
                 <div className="row">

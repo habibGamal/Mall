@@ -8,6 +8,7 @@ import { Main } from "../../redux/dispatcher";
 import Picture from "../../models/Picture";
 import BranchForm from "../general/BranchForm";
 import BranchFormRequest from "../../FormRequests/BranchFormRequest";
+import t from "../../helpers/translate";
 function CreateMultiSameBranches({ logo, getInputValue,errors }) {
     function logoInit(e: React.ChangeEvent<HTMLInputElement>) {
         // => save just one picture
@@ -32,7 +33,7 @@ function CreateMultiSameBranches({ logo, getInputValue,errors }) {
     return (
         <>
             <Number
-                label="Number of branches"
+                label={t('Number of branches','عدد الافرع')}
                 name="branches_number"
                 id="branches_number"
                 invalidMsg={invalid('branches_number', errors)}
@@ -49,7 +50,7 @@ function CreateMultiSameBranches({ logo, getInputValue,errors }) {
                     <div className="col-md-6">
                         <div className="row align-items-center">
                             <File
-                                label="Store Logo"
+                                label={t('Store Logo','صورة المحل او Logo')}
                                 onChange={logoInit}
                                 name="logo"
                                 multiple={false}
@@ -64,7 +65,7 @@ function CreateMultiSameBranches({ logo, getInputValue,errors }) {
                         </div>
                     </div>
                     <Text
-                        label="Shop Name"
+                    label={t('Shop Name','اسم المتجر')}
                         name="store_name"
                         id="store_name"
                         icon={<i className="fas fa-store"></i>}

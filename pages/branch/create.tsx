@@ -9,6 +9,7 @@ import CreateSingleBranch from '../../components/create-branch/CreateSingleBranc
 import CreateMultiSameBranches from '../../components/create-branch/CreateMultiSameBranches';
 import BranchFormRequest from '../../FormRequests/BranchFormRequest';
 import CreateMultiDifferentBranches from '../../components/create-branch/CreateMultiDifferentBranches';
+import t from '../../helpers/translate';
 interface CreateBranchSettings {
     multiBranchs: boolean; // 1 single , 0 multible
     sameBrand: boolean; // 1 same , 0 different
@@ -119,17 +120,17 @@ function CreateBranch({ getInputValue, logo }) {
                 </div>
                 <form className="form" onSubmit={branchCreate}>
                     <div className="groups">
-                        <h3>Shop Details</h3>
+                        <h3>{t('Shop Details','تفاصيل المتجر')}</h3>
                         <Select
-                            label="Branches"
+                            label={t('Branches','الافرع')}
                             name="branches"
                             id="branches"
                             addClass=""
                             invalidMsg={invalid('branches', errors)}
                             formKey={BranchFormRequest.createKey}
                             options={[
-                                { value: 0, as: 'Just one branch' },
-                                { value: 1, as: 'Multiple branches' },
+                                { value: 0, as: t('Just one branch','فرع واحد فقط') },
+                                { value: 1, as: t('Multiple branches','اكثر من فرع') },
                             ]}
                         />
                     </div>
@@ -144,8 +145,8 @@ function CreateBranch({ getInputValue, logo }) {
                                 invalidMsg={invalid('same_branches', errors)}
                                 formKey={BranchFormRequest.createKey}
                                 options={[
-                                    { value: 1, as: 'All branches have the same name' },
-                                    { value: 0, as: 'Branches have different names' },
+                                    { value: 1, as: t('All branches have the same name','كل الافرع لها نفس الاسم') },
+                                    { value: 0, as: t('Each Branch has different name','كل فرع له اسم مختلف') },
                                 ]}
                             />
 

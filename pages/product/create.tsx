@@ -16,6 +16,7 @@ import ProductFormRequest from '../../FormRequests/ProductFormRequest'
 import Middleware from '../../packeges/middleware'
 import withSessionSsr from '../../lib/withSessionSsr'
 import branch from '../../api/branch'
+import t from '../../helpers/translate'
 export const getServerSideProps = withSessionSsr(
     async ({req}) => {
         const middleware = new Middleware(req.session.auth);
@@ -69,7 +70,7 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
                     </div>
                     <form className="prototype">
                         <Select
-                            label="Prototype"
+                            label={t('Prototype','نموزج')}
                             name="prototype"
                             id="random"
                             addClass=""
@@ -83,10 +84,10 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
                 </div>
                 <form id={productFormKey} onSubmit={productStore} className="form" encType="multipart/form-data">
                     <div className="groups">
-                        <h3>Required</h3>
+                        <h3>{t('Required','معلومات مطلوبة')}</h3>
                         <div className="row align-items-center mx-1">
                             <File
-                                label="Product Picture"
+                                label={t('Product Picture','صورة المنتج')}
                                 addClass=""
                                 onChange={Picture.init}
                                 name="picture"
@@ -97,7 +98,7 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
                             {pictures.map((picture) => <Preview picture={picture} to="product" key={picture.id} />)}
                         </div>
                         <Text
-                            label="Product Name"
+                            label={t('Product Name','اسم المنتج')}
                             addClass=""
                             icon={<i className="fas fa-box" />}
                             name="name"
@@ -106,7 +107,7 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
                             formKey={productFormKey}
                         />
                         <Number
-                            label="Product Price"
+                            label={t('Product Price','سعر المنتج')}
                             addClass=""
                             icon={<i className="fas fa-dollar-sign" />}
                             name="price"
@@ -119,13 +120,13 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
                             <CheckBox
                                 name="has_offer"
                                 value="has_offer"
-                                label="Has an offer"
+                                label={t('Has an offer','هل يوجد عرض على المنتج ؟')}
                                 addClass="col-md-3"
                                 id="offer_price_check"
                                 formKey={productFormKey}
                             />
                             <Number
-                                label="Product price after sale"
+                                label={t('Product price after sale','سعر المنتج بعد العرض')}
                                 icon={<i className="fas fa-dollar-sign" />}
                                 name="offer_price"
                                 id="offer_price"
@@ -134,7 +135,7 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
                             />
                         </div>
                         <div className="categories">
-                            <label>Categories</label>
+                            <label>{t('Product Category','تصنيف المنتج')}</label>
                             <SelectCategories
                                 formKey={productFormKey}
                                 invalidMsg={invalid('category', errors)}
@@ -142,21 +143,21 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
                         </div>
                         <div className="form-row align-items-center">
                             <Select
-                                label="Stock"
+                                label={t('Stock','حالة المنتج')}
                                 options={[
-                                    { value: 1, as: 'In stock' },
-                                    { value: 2, as: 'Upcoming' },
-                                    { value: 0, as: 'Out of stock' }
+                                    { value: 1, as: t('In stock','متوافر حاليا') },
+                                    { value: 2, as: t('Upcoming','سيتوافر قريبا')  },
+                                    { value: 0, as: t('Out of stock','المنتج غير متوافر حاليا') }
                                 ]}
                                 name="stock"
                                 id="stock"
                                 formKey={productFormKey}
                             />
                             <Select
-                                label="Can returned"
+                                label={t('Can returned','استرجاع المنتج')}
                                 options={[
-                                    { value: 1, as: 'This product can be returned' },
-                                    { value: 0, as: 'This product can NOT be returned' },
+                                    { value: 1, as: t('This product can be returned','يمكن استرجاعه') },
+                                    { value: 0, as: t('This product can NOT be returned','لا يمكن استرجاعه') },
                                 ]}
                                 name="returnable"
                                 id="returnable"
@@ -164,7 +165,7 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
                             />
                         </div>
                         <Select
-                            label="Branch"
+                            label={t('Branch','الفرع')}
                             name="branch_id"
                             id="branch_id"
                             addClass=""
@@ -175,17 +176,17 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
                         />
                     </div>
                     <div className="groups">
-                        <h3>Optional</h3>
+                        <h3>{t('Optional','اختياري')}</h3>
                         <div className="form-row">
                             <Chips
-                                label="Available Colors"
+                                label={t('Available Colors','الالوان المتاحة')}
                                 icon={<i className="fas fa-palette" />}
                                 name="colors_option"
                                 id="colors_option"
                                 formKey={productFormKey}
                             />
                             <Chips
-                                label="Available Sizes"
+                                label={t('Available Sizes','المقاسات المتاحة')}
                                 icon={<i className="fas fa-box" />}
                                 name="sizes_option"
                                 id="sizes_option"
@@ -193,15 +194,15 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Description</label>
+                            <label>{t('Description','الوصف')}</label>
                             <textarea className="form-control" name="description" rows={3} defaultValue={""} />
                         </div>
                         <div className="form-group">
-                            <label>Specifications</label>
+                            <label>{t('Specifications','مواصفات المنتج او امكانياته')}</label>
                             <textarea className="form-control" name="specifications" rows={3} defaultValue={""} />
                         </div>
                         <Text
-                            label="Brand"
+                            label={t('Brand','الماركة')}
                             addClass=""
                             icon={<i className="fas fa-box" />}
                             name="brand"
@@ -211,7 +212,7 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
                         />
                         <div className="form-row align-items-end">
                             <Text
-                                label="Warranty"
+                                label={t('Warranty','الضمان')}
                                 icon={<i className="fas fa-box" />}
                                 name="warranty_time"
                                 id="warranty_time"
@@ -243,5 +244,6 @@ function CreateProduct({ pictures }: { pictures: Array<Picture> }) {
 const mapPropsFromState = state => ({
     pictures: state.main.pictures,
     picturesPosition: state.main.picturesPosition,
+    lang: state.translate.language
 })
 export default connect(mapPropsFromState)(CreateProduct);

@@ -137,7 +137,7 @@ html[dir="rtl"] {
                         padding-#{$left}: 2rem;
                     }
                     > a {
-                        border-radius: 10px 0 0 10px ;
+                        border-radius: 10px 0 0 10px;
 
                         &:hover {
                             padding-#{$left}: 2.5rem;
@@ -204,7 +204,6 @@ html[dir="rtl"] {
             width: 0.75rem;
         }
     }
-    ///////////////////////////////////////////////////////////////////////////////////////////
 
     /*
         Name : Slider
@@ -321,5 +320,35 @@ html[dir="rtl"] {
         #{$left}: unset;
         top: 50%;
         transform: translateY(-50%);
+    }
+
+    // Forms
+    .single-page-form .form .categories .show-categories .category > .children {
+        margin-left: unset;
+        margin-right: 1.5rem;
+    }
+    .single-page-form .form .form-group > input:not(.is-valid):not(.is-invalid) + i {
+        right: unset;
+        left: 20px;
+    }
+    .input-group:not(.has-validation) > .form-control:not(:last-child),
+    .input-group > .input-group-append > .btn {
+        border-radius: 0.25rem;
+    }
+    .input-group:not(.has-validation) > .form-control:not(:last-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .input-group > .input-group-append > .btn {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    // Dashboard
+    .dashboard .dashboard-content > .dashboard-table tr:nth-child(odd) > td:first-child {
+        border-radius: 0 10px 10px 0;
+    }
+    .dashboard .dashboard-content > .dashboard-table tr:nth-child(odd) > td:last-child {
+        border-radius: 10px 0 0 10px;
     }
 }

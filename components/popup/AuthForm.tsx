@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { connect } from 'react-redux';
 import active from '../../helpers/active';
+import t from '../../helpers/translate';
 import BusinessLogin from './forms/BusinessLogin';
 import Login from './forms/Login';
 import Signup from './forms/Signup';
@@ -9,9 +10,9 @@ function AuthForm({ show, keyPopup, defaultTap = 'login' }) {
     const [activeTap, setTap] = useState(defaultTap);
     const [businessLogin, setBusinessLogin] = useState(false);
     const taps = {
-        'login': { title: 'Login', content: <Login form={form} setTap={setTap} /> },
-        'signup': { title: 'Sign up', content: <Signup form={form} setTap={setTap} /> },
-        'business_login': { title: 'Login to your store', content: <BusinessLogin form={form} setTap={setTap} /> },
+        'login': { title: t('Login','تسجيل دخول'), content: <Login form={form} setTap={setTap} /> },
+        'signup': { title: t('Sign up','انشاء حساب'), content: <Signup form={form} setTap={setTap} /> },
+        'business_login': { title: t('Login to your store','تسجيل الدخول الى المتجر'), content: <BusinessLogin form={form} setTap={setTap} /> },
     }
     function customer() {
         setTap('login');
@@ -26,10 +27,10 @@ function AuthForm({ show, keyPopup, defaultTap = 'login' }) {
             <h3 className="text-dark text-center">{taps[activeTap].title}</h3>
             <div className="select">
                 <div onClick={customer} className={active(!businessLogin, { defaultClass: 'option' })}>
-                    <span>Customer</span>
+                    <span>{t('Customer','زبون')}</span>
                 </div>
                 <div onClick={business} className={active(businessLogin, { defaultClass: 'option' })}>
-                    <span>Business</span>
+                    <span>{t('Business','عمل')}</span>
                 </div>
             </div>
             {taps[activeTap].content}
@@ -58,6 +59,7 @@ function AuthForm({ show, keyPopup, defaultTap = 'login' }) {
 
 const mapStateToProps = state => ({
     show: (key) => state.popup[key],
+    lang: state.translate.language
 })
 
 export default connect(mapStateToProps)(AuthForm);

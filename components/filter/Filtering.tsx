@@ -12,7 +12,7 @@ import Options from './components/Options'
 import SpecificationFilter from './components/SpecificationFilter'
 
 // note: T stand for Toggle (like: searchT=>searchToggle)
-export default function Filtering({ requirements }) {
+export default function Filtering({ requirements }:{requirements?:Array<string>}) {
     const [filterT, setFilterT] = useState(false);
     if (requirements === undefined) {
         requirements = [

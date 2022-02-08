@@ -10,7 +10,9 @@ import Period from '../../components/inputs/Period';
 import InputGroup from '../../components/inputs/InputGroup';
 import Form from '../../packeges/Form';
 import StoreFormRequest from '../../FormRequests/StoreFormRequset';
-export default function CreateStore() {
+import t, { translate } from '../../helpers/translate';
+import { connect } from 'react-redux';
+function CreateStore() {
     const formKey = 'store_form';
     const [errors, setErrors] = useState(null);
     const week = [
@@ -44,15 +46,15 @@ export default function CreateStore() {
             <div className="container">
                 <div className="head">
                     <div className="title">
-                        <h2>Create your store account</h2>
+                        <h2>{t('Create your store account', 'انشئ متجرك الان')}</h2>
                     </div>
                 </div>
                 <form onSubmit={storeCreate} className="form">
                     <div className="groups">
-                        <h3>Personal Info</h3>
+                        <h3>{t('Personal Info', 'البيانات الشخصية')}</h3>
                         <div className="form-row">
                             <Text
-                                label="Shop owner name"
+                                label={t('Shop owner name', 'اسم صاحب المتجر')}
                                 icon={<i className="fas fa-store" />}
                                 name="name"
                                 id="name"
@@ -60,7 +62,7 @@ export default function CreateStore() {
                                 formKey={formKey}
                             />
                             <Text
-                                label="Phone Number"
+                                label={t('Phone Number', 'رقم الهاتف')}
                                 id="phone_number"
                                 name="phone_number"
                                 icon={<i className="fas fa-phone-alt"></i>}
@@ -70,7 +72,7 @@ export default function CreateStore() {
                         </div>
                         <div className="form-row">
                             <Email
-                                label="Email address"
+                                label={t('Email address', 'البريد الالكتروني')}
                                 id="email"
                                 name="email"
                                 icon={<i className="fas fa-user"></i>}
@@ -78,7 +80,7 @@ export default function CreateStore() {
                                 invalidMsg={invalid('email', errors)}
                             />
                             <Password
-                                label="Password"
+                                label={t('Password', 'الرقم السري')}
                                 id="password"
                                 name="password"
                                 icon={<i className="fas fa-key" />}
@@ -88,7 +90,7 @@ export default function CreateStore() {
                         </div>
                         <div className="form-row">
                             <Password
-                                label="Confirm Password"
+                                label={t('Confirm Password', 'تأكيد الرقم السري')}
                                 id="password_confirmation"
                                 name="password_confirmation"
                                 icon={<i className="fas fa-key" />}
@@ -96,7 +98,7 @@ export default function CreateStore() {
                                 invalidMsg={invalid('password_confirmation', errors)}
                             />
                             <Text
-                                label="Id Card"
+                                label={t('Id Card', 'الرقم القومي للبطاقة الشخصية')}
                                 id="card_id"
                                 name="card_id"
                                 icon={<i className="fas fa-id-card"></i>}
@@ -106,10 +108,10 @@ export default function CreateStore() {
                         </div>
                     </div>
                     <div className="groups">
-                        <h3>Requirements</h3>
+                        <h3>{t('Requirements', 'بيانات عن المتجر')}</h3>
                         <div className="form-row">
                             <Select
-                                label="Governorate"
+                                label={t('Governorate', 'المحافظة')}
                                 name="governorate"
                                 id="governorate"
                                 invalidMsg={invalid('governorate', errors)}
@@ -120,20 +122,20 @@ export default function CreateStore() {
                                 ]}
                             />
                             <Select
-                                label="Can returned"
+                                label={t('Can returned', 'استرجاع المنتج')}
+                                options={[
+                                    { value: 1, as: t('This product can be returned', 'يمكن استرجاعه') },
+                                    { value: 0, as: t('This product can NOT be returned', 'لا يمكن استرجاعه') },
+                                ]}
                                 name="can_return"
                                 id="can_return"
                                 invalidMsg={invalid('can_return', errors)}
                                 formKey={formKey}
-                                options={[
-                                    { value: 1, as: 'This product can be returned' },
-                                    { value: 0, as: 'This product can NOT be returned' },
-                                ]}
                             />
                         </div>
                         <div className="form-row">
                             <div className="form-group col-md-6">
-                                <label htmlFor="productName">Holidays</label>
+                                <label htmlFor="productName">{t('Holidays','الاجازات')}</label>
                                 <InputGroup id="holidays" addClass="form-row" invalidMsg={invalid('holidays', errors)}>
                                     <div className="form-row">
                                         {
@@ -153,7 +155,7 @@ export default function CreateStore() {
                                 </InputGroup>
                             </div>
                             <Period
-                                label="Work hours"
+                                label={t('Work hours', 'عدد ساعات العمل')}
                                 name="work_hours"
                                 formKey={formKey}
                                 invalidMsg={invalid('work_hours', errors, 'period')}
@@ -161,7 +163,7 @@ export default function CreateStore() {
                         </div>
                         <div className="form-row">
                             <Text
-                                label="Business Type"
+                                label={t('Business Type', 'نوع العمل')}
                                 icon={<i className="fas fa-shopping-bag" />}
                                 name="business_type"
                                 id="business_type"
@@ -169,14 +171,14 @@ export default function CreateStore() {
                                 formKey={formKey}
                             />
                             <Select
-                                label="Work From"
+                                label={t('Work From', 'بيئة العمل')}
                                 name="work_from"
                                 id="work_from"
                                 invalidMsg={invalid('work_from', errors)}
                                 formKey={formKey}
                                 options={[
-                                    { value: 1, as: 'Shop' },
-                                    { value: 0, as: 'Home' },
+                                    { value: 1, as: t('Shop','أعمل من متجر') },
+                                    { value: 0, as: t('Home','أعمل من المنزل') },
                                 ]}
                             />
                         </div>
@@ -188,3 +190,5 @@ export default function CreateStore() {
 
     )
 }
+
+export default connect(translate)(CreateStore);

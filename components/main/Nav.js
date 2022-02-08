@@ -13,6 +13,12 @@ import t, { translate } from '../../helpers/translate';
 function Nav({ setPopupForm }) {
 
     function switchLanguge(lang) {
+        if(lang == 'en'){
+            document.documentElement.dir = 'ltr';
+        }
+        if(lang == 'ar'){
+            document.documentElement.dir = 'rtl';
+        }
         Language.setLanguage(lang);
     }
 
@@ -112,7 +118,7 @@ function Nav({ setPopupForm }) {
                         <ul>
                             <li>
                                 <Link href="/">
-                                    <a ref={activeLink} onClick={navLink} className="active">Home</a>
+                                    <a ref={activeLink} onClick={navLink} className="active">{t('Home', 'الرئيسية')}</a>
                                 </Link>
                             </li>
                             <li>
@@ -122,41 +128,41 @@ function Nav({ setPopupForm }) {
                             </li>
                             <li>
                                 <Link href="/dashboard">
-                                    <a onClick={navLink}>Dashboard</a>
+                                    <a onClick={navLink}>{t('Dashboard','لوحة التحكم')}</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/product">
-                                    <a onClick={navLink}>Product</a>
+                                    <a onClick={navLink}>{t('Product','منتج')}</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/category">
-                                    <a onClick={navLink}>Category</a>
+                                    <a onClick={navLink}>{t('Category','صنف')}</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/store">
-                                    <a onClick={navLink}>Store</a>
+                                    <a onClick={navLink}>{t('Store','متجر')}</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/store/create">
-                                    <a onClick={navLink}>Create Store</a>
+                                    <a onClick={navLink}>{t('Create Store','انشاء متجر')}</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/branch/create">
-                                    <a onClick={navLink}>Create Branch</a>
+                                    <a onClick={navLink}>{t('Create Branch','انشاء فرع')}</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/order/user_orders">
-                                    <a onClick={navLink}>My Orders</a>
+                                    <a onClick={navLink}>{t('My Orders','طلباتي')}</a>
                                 </Link>
                             </li>
                             <li className="select-language">
-                                <span>Current language : <span className="current-language">English</span></span>
+                                <span>{t('Current language','اللغة المستخدمة')} : <span className="current-language">English</span></span>
                                 <div className="switch">
                                     <span onClick={() => switchLanguge('ar')}>Arabic</span>
                                     <span onClick={() => switchLanguge('en')} className="current-language">English</span>
@@ -166,7 +172,7 @@ function Nav({ setPopupForm }) {
                         <div className="options">
                             <Authenticated>
                                 <div className="logout" onClick={logout}>
-                                    <i className="fas fa-sign-out-alt"></i><span>Logout</span>
+                                    <i className="fas fa-sign-out-alt"></i><span>{t('Logout','تسجيل الخروج')}</span>
                                 </div>
                             </Authenticated>
                         </div>
@@ -178,7 +184,7 @@ function Nav({ setPopupForm }) {
                 </div>
                 <div className="d-flex align-items-center user-cart">
                     <form className={active(state.searchT, { defaultClass: 'search' })}>
-                        <input ref={search} id="search-input" type="text" name="search" placeholder="Search" />
+                        <input ref={search} id="search-input" type="text" name="search" placeholder={t('Search','بحث')} />
                         <i className="fas fa-search"></i>
                     </form>
                     <div

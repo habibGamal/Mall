@@ -3,6 +3,7 @@ import Number from "../inputs/Number";
 import invalid from "../../helpers/invalid";
 import BranchForm from "../general/BranchForm";
 import BranchFormRequest from "../../FormRequests/BranchFormRequest";
+import t from "../../helpers/translate";
 function CreateMultiDifferentBranches({ getInputValue, errors }) {
     function renderForms(length: number) {
         let buffer: Array<Object> = [];
@@ -22,7 +23,7 @@ function CreateMultiDifferentBranches({ getInputValue, errors }) {
     return (
         <>
             <Number
-                label="Number of branches"
+                label={t('Number of branches','عدد الافرع')}
                 name="branches_number"
                 id="branches_number"
                 invalidMsg={invalid('branches_number', errors)}

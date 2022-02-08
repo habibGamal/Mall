@@ -4,6 +4,7 @@ import branch from '../../../../api/branch';
 import Branch from '../../../../models/Branch';
 import BackendBranch from '../../../../BackendTypes/BackendBranch';
 import Loading from '../../../../directives/Loading';
+import t from '../../../../helpers/translate';
 export default function Branches() {
     const [branches, setBranches] = useState([]);
     const [loadingBranches, setLoading] = useState(false);
@@ -20,7 +21,7 @@ export default function Branches() {
     return (
         <>
             <div className="controllers mt-3">
-                <button className="btn btn-add mx-auto"><i className="fas fa-plus-circle" /> Add Branch</button>
+                <button className="btn btn-add mx-auto"><i className="fas fa-plus-circle" /> {t('Add Branch','اضافة فرع')}</button>
             </div>
             <Loading state={loadingBranches} mini={true}>
                 <table className="dashboard-table">
@@ -44,8 +45,8 @@ function SingleBranch({ branch }: { branch: Branch }) {
             </td>
             <td><Link href={`/branch/${branch.id}`}>{branch.name}</Link></td>
             <td className="buttons">
-                <button className="btn btn-outline-success">Edit</button>
-                <button className="btn btn-outline-danger">Delete</button>
+                <button className="btn btn-outline-success">{t('Edit','تعديل')}</button>
+                <button className="btn btn-outline-danger">{t('Delete','مسح')}</button>
             </td>
         </tr>
     )

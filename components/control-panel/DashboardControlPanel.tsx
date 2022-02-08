@@ -7,7 +7,9 @@ import Orders from './panels/dashboard-panels/Orders';
 import Navigation from '../general/navigation/Navigation';
 import Filtering from '../filter/Filtering';
 import { useRouter } from 'next/router';
-export default function Dashboard() {
+import t, { translate } from '../../helpers/translate';
+import { connect } from 'react-redux';
+function Dashboard() {
     // => make the taps accessable by url query
     const router = useRouter();
     const [activeTap, setActiveTap] = useState(router.query.tap);
@@ -17,7 +19,7 @@ export default function Dashboard() {
     }
     useEffect(() => {
         if (router.query.tap) {
-            if (!taps[router.query.tap]) {
+            if (!taps[router.query.tap as string]) {
                 // => in case of wrong query reset it to product
                 resetTap();
                 return;
@@ -47,32 +49,33 @@ export default function Dashboard() {
                             taps={[
                                 {
                                     name: 'product',
-                                    content: (<><i className="fas fa-cubes" /> Products</>),
+                                    content: (<><i className="fas fa-cubes" /> {t('Products','المنتجات')}</>),
                                 },
                                 {
                                     name: 'branches',
-                                    content: (<><i className="fas fa-code-branch" /> Branches</>),
+                                    content: (<><i className="fas fa-code-branch" /> {t('Branches','الافرع')}</>),
                                 },
                                 {
                                     name: 'categories',
-                                    content: (<><i className="fas fa-shopping-basket" /> Categories</>),
+                                    content: (<><i className="fas fa-shopping-basket" /> {t('Categories','التصنيفات')}</>),
                                 },
                                 {
                                     name: 'workers',
-                                    content: (<><i className="fas fa-user-tie" /> Workers</>),
+                                    content: (<><i className="fas fa-user-tie" /> {t('Workers','العاملين')}</>),
                                 },
                                 {
                                     name: 'orders',
-                                    content: (<><i className="fas fa-dolly" /> Orders</>),
+                                    content: (<><i className="fas fa-dolly" /> {t('Orders','الطلبات')}</>),
                                 },
                             ]}
                         />
                         {activeTap === 'product' ? <Filtering /> : ''}
                     </div>
-                    {taps[activeTap]}
+                    {taps[activeTap as string]}
                 </div>
             </div>
         </section>
 
     )
 }
+export default connect(translate)(Dashboard)

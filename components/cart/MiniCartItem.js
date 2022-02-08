@@ -4,6 +4,7 @@ import Select from '../inputs/Select'
 import cart from '../../api/cart';
 import { connect } from 'react-redux';
 import { $Async } from '../../redux/async_actions';
+import t from '../../helpers/translate';
 
 function CartItem({ src, id, formKey, name, price, quantity, getInputValue }) {
     useEffect(async () => {
@@ -24,9 +25,9 @@ function CartItem({ src, id, formKey, name, price, quantity, getInputValue }) {
             </div>
             <div className="details">
                 <span>{name}</span>
-                <span>Price : <strong>{price}</strong> LE</span>
+                <span>{t('Price','السعر')} : <strong>{price}</strong> {t('LE','جنية')}</span>
                 <Select
-                    label="Quantity"
+                    label={t('Quantity','الكمية')}
                     type="select"
                     name={id}
                     formKey={formKey}

@@ -6,6 +6,7 @@ import Select from '../../../inputs/Select';
 import { connect } from 'react-redux';
 import branch from '../../../../api/branch';
 import Empty from '../../../general/Empty';
+import t from '../../../../helpers/translate';
 
 const formKey = 'dashboard_orders'
 function Orders({getInputValue}) {
@@ -81,8 +82,8 @@ export default connect(mapStateToProps)(Orders)
 function Order({ order }) {
     return (
         <div className="order my-4">
-            <h4>Order #{order.id}</h4>
-            <span>Products :</span>
+            <h4>{t('Order','طلب')} #{order.id}</h4>
+            <span>{t('Products','المنتجات المطلوبة')} :</span>
             <ul>
                 {
                     order.products.map(
@@ -91,8 +92,8 @@ function Order({ order }) {
                 }
             </ul>
             <div className="buttons">
-                <button className="btn btn-danger">Reject the order</button>
-                <button className="btn btn-primary">Accept the order</button>
+                <button className="btn btn-danger">{t('Reject the order','رفض الطلب')}</button>
+                <button className="btn btn-primary">{t('Accept the order','قبول الطلب')}</button>
             </div>
         </div>
     )
@@ -110,10 +111,10 @@ function Product({ product }) {
                     Color : Red
                 </span>
                 <span className="point">
-                    Price : <strong>{product.price}</strong> LE
+                    {t('Price','سعر')} : <strong>{product.price}</strong> {t('LE','جنية')}
                 </span>
             </span>
-            <button className="btn btn-outline-danger">This product is not exists</button>
+            <button className="btn btn-outline-danger">{t('This product is not exists','هذا المنتج غير متوافر')}</button>
         </li>
     )
 }

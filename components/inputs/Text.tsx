@@ -10,7 +10,7 @@ interface TextProps {
     label?: string,
     name: string,
     formKey: string,
-    icon: JSX.Element,
+    icon?: JSX.Element,
     invalidMsg: Array<string>,
     inputValue: Function,
     placeholder?: string,

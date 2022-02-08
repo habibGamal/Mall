@@ -1,4 +1,4 @@
-export default function isThat(element,tagName,{className,id}={}){
+export default function isThat(element,tagName,{className,id}:{className?:string,id?:string}={}){
     if(id === undefined){
         id = ''
     }

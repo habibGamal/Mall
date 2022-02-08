@@ -2,18 +2,20 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Select from '../inputs/Select'
+import t, { translate } from '../../helpers/translate'
+import { connect } from 'react-redux'
 
-export default function CartItem({src,name,price,shopName,quantity}) {
+function CartItem({ src, name, price, shopName, quantity }) {
     return (
         <div className="cart-item">
             <div className="picture">
-                <Image src={src} layout="fill"  className="img" />
+                <Image src={src} layout="fill" className="img" />
             </div>
             <div className="details">
-                <span className="sold-by">Sold by <Link href="/store">{shopName}</Link></span>
+                <span className="sold-by">{t('Sold by', 'صاحب المنتج')} <Link href="/store">{shopName}</Link></span>
                 <span className="name">{name}</span>
                 <div className="interact">
-                    <span>Price : <strong>{price}</strong> LE</span>
+                    <span>{t('Price', 'السعر')} : <strong>{price}</strong> {t('LE', 'جنية')}</span>
                     <Select
                         label={null}
                         addClass=""
@@ -22,10 +24,11 @@ export default function CartItem({src,name,price,shopName,quantity}) {
                             { value: 2, as: '2' },
                         ]}
                     />
-                    <button className="btn btn-warning">Save in wish list</button>
-                    <button className="btn btn-outline-danger">Remove Item</button>
+                    <button className="btn btn-warning">{t('Save in wish list','اضافة في قائمة المفضلة')}</button>
+                    <button className="btn btn-outline-danger">{t('Remove Item','احذف المنتج')}</button>
                 </div>
             </div>
         </div>
     )
 }
+export default connect(translate)(CartItem)

@@ -4,7 +4,18 @@ import active from '../../helpers/active';
 import isdefined from '../../helpers/isdefined';
 import { Forms } from '../../redux/dispatcher';
 
-function Email({ addClass = 'col-md-6', id, label, name, formKey, icon, invalidMsg = [''], inputValue, defaultValue = '' }) {
+interface PasswordType {
+    addClass: string,
+    id: string,
+    label: string,
+    name: string,
+    formKey: string,
+    icon?: string,
+    invalidMsg: Array<String>,
+    inputValue: Function,
+    defaultValue?: string
+}
+function Password({ addClass = 'col-md-6', id, label, name, formKey, icon, invalidMsg = [''], inputValue , defaultValue = ''}:PasswordType) {
     const [invMsg, setInvMsg] = useState(invalidMsg[0]);
     useEffect(() => {
         // => initialize invMsg state from invalidMsg prop
@@ -20,16 +31,16 @@ function Email({ addClass = 'col-md-6', id, label, name, formKey, icon, invalidM
     }
     return (
         <div className={`form-group ${addClass}`}>
-            {label ? <label htmlFor={id}>{label}</label> : ''}
+            {label === null ? '' : <label htmlFor={id}>{label}</label>}
             <input
                 name={name}
                 value={inputValue(formKey, name, defaultValue)}
                 onChange={handleOnChange}
-                type="email"
+                type="password"
                 className={active(invMsg.length !== 0, { activeClass: 'is-invalid', defaultClass: 'form-control' })}
             />
             {isdefined(icon, { trueReturn: icon })}
-            <div id={`${id}Feedback`} className="invalid-feedback">
+            <div id={`${id}feedback`} className="invalid-feedback">
                 {invMsg}
             </div>
         </div>
@@ -54,4 +65,4 @@ const mapStateToProps = (state) => ({
     }
 })
 
-export default connect(mapStateToProps)(Email);
+export default connect(mapStateToProps)(Password);

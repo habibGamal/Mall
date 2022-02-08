@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import category from '../../../../../api/category';
 import invalid from '../../../../../helpers/invalid';
@@ -11,6 +11,7 @@ import { ApiData, Forms, Messages } from '../../../../../redux/dispatcher';
 import { $Async } from '../../../../../redux/async_actions';
 import Text from '../../../../inputs/Text';
 import Select from '../../../../inputs/Select';
+import t from '../../../../../helpers/translate';
 
 function Categories({ categories }) {
     const formKey = 'add_cat';
@@ -74,10 +75,10 @@ function Categories({ categories }) {
     return (
         <div className="categories">
             <div className="add-category">
-                <h4 className="form-title">Add New Category</h4>
+                <h4 className="form-title">{t('Add New Category','اضافة صنف جديد')}</h4>
                 <form className="mx-1" onSubmit={addCategory}>
                     <Text
-                        label="Category Name"
+                        label={t('Category Name','اسم الصنف')}
                         addClass=""
                         name="name"
                         id="category_name"
@@ -85,14 +86,14 @@ function Categories({ categories }) {
                         formKey={formKey}
                     />
                     <Select
-                        label="Parent Category"
+                        label={t('Parent Category','تحت الصنف')}
                         addClass=""
                         options={[{ value: 0, as: 'No parent' }, ...listCategories(categories)]}
                         name="parent_id"
                         id="category_parent"
                         formKey={formKey}
                     />
-                    <button className="btn btn-primary my-2">Add Category</button>
+                    <button className="btn btn-primary my-2">{t('Add Category','اضافة الصنف')}</button>
                 </form>
             </div>
             <Popup keyPopup="edit-category">

@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import invalid from '../../helpers/invalid'
+import t from '../../helpers/translate'
 import Picture from '../../models/Picture'
 import { Main } from '../../redux/dispatcher'
 import File from '../inputs/File'
@@ -21,7 +22,7 @@ function BranchForm({ index, full, formKey, errors ,logo }) {
                 <h3>Branch ({index})</h3>
                 <div className="form-row">
                     <Text
-                        label="Shortcut name for the branch"
+                        label={t('Shortcut name for the branch','اسم مختصر او مميز للفرع')}
                         name={`short_branch_name-${index}`}
                         id={`short_branch_name-${index}`}
                         placeholder="مثال : فرع النميس"
@@ -30,7 +31,7 @@ function BranchForm({ index, full, formKey, errors ,logo }) {
                         formKey={formKey}
                     />
                     <Text
-                        label="Address"
+                    label={t('Address','العنوان')}
                         name={`address-${index}`}
                         id={`address-${index}`}
                         icon={<i className="fas fa-map-marker-alt"></i>}
@@ -47,10 +48,10 @@ function BranchForm({ index, full, formKey, errors ,logo }) {
     }
     return (
         <div className="groups branch">
-            <h3>Branch ({index})</h3>
+            <h3>{t('Branch','الفرع')} ({index})</h3>
             <div className="form-row">
                 <Text
-                    label="Shop Name"
+                    label={t('Branch Name','اسم الفرع')}
                     name={`branch_name-${index}`}
                     id={`branch_name-${index}`}
                     icon={<i className="fas fa-store"></i>}
@@ -58,7 +59,7 @@ function BranchForm({ index, full, formKey, errors ,logo }) {
                     formKey={formKey}
                 />
                 <Text
-                    label="Address"
+                    label={t('Address','العنوان')}
                     name={`address-${index}`}
                     id={`address-${index}`}
                     icon={<i className="fas fa-map-marker-alt"></i>}
@@ -70,7 +71,7 @@ function BranchForm({ index, full, formKey, errors ,logo }) {
                 <div className="col-md-6">
                     <div className="row align-items-center">
                         <File
-                            label="Store Logo"
+                            label={t('Store Logo','صورة المتجر او Logo')}
                             onChange={branchLogoInit}
                             name={`logo-${index}`}
                             multiple={false}
