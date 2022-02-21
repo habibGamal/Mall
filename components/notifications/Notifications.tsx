@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import active from "../../helpers/active";
 import t from "../../helpers/translate";

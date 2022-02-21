@@ -11,7 +11,8 @@ module.exports = (phase, { defaultConfig }) => {
    */
   const nextConfig = {
     images: {
-      domains: [process.env.NEXT_PUBLIC_BASE_URL_DOMAIN,'drive.google.com']
+      domains: [process.env.NEXT_PUBLIC_BASE_URL_DOMAIN, 'drive.google.com'],
+      loader: 'custom',
     },
   }
   return nextConfig

@@ -5,6 +5,7 @@ import active from '../../helpers/active';
 import { useRouter } from 'next/dist/client/router';
 import Admin from '../../directives/Admin';
 import PicturePosition from '../../types/PicturePosition';
+import loader from '../../loader';
 interface ProductProps {
     id: number, 
     name: string, 
@@ -21,7 +22,7 @@ export default function Product({ selectable, id, selected, name, price, offerPr
     const [menuT, setMenuT] = useState(false);
     const router = useRouter();
     useEffect(() => setSelect(selected), [selected]);
-    const img = useMemo(() => <Image src={src} layout="fill" objectPosition={`${position.leftP}% ${-1 * position.topP}%`} className="img" alt="T-shirt" />, []);
+    const img = useMemo(() => <Image loader={loader} src={src} layout="fill" objectPosition={`${position.leftP}% ${-1 * position.topP}%`} className="img" alt="T-shirt" />, []);
     function selectHandle() {
         setSelect(!select);
     }
