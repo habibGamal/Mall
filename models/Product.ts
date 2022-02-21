@@ -38,7 +38,8 @@ export default class Product {
         this.name = product.name;
         this.offer_price = product.offer_price;
         this.price = product.price;
-        this.picture = Picture.getPicture(product.pictures);
+        if (product.pictures)
+            this.picture = Picture.getPicture(product.pictures);
         this.pictures = product.pictures;
         this.category = product.category;
         this.returnable = product.returnable;
@@ -46,7 +47,8 @@ export default class Product {
         this.updated_at = product.updated_at;
         this.brand = product.brand;
         this.options = product.options ? Product.unPackingOptions(product.options) : null;
-        this.specifications = Product.unPackingSpecifications(product.specifications);
+        if (product.specifications)
+            this.specifications = Product.unPackingSpecifications(product.specifications);
         this.stock = product.stock;
         this.description = product.description;
         this.warranty = product.warranty;
@@ -67,7 +69,7 @@ export default class Product {
     // Edit
     // => initialize values
     async initValues() {
-        if(!this.form){
+        if (!this.form) {
             throw 'This product instance isn\'t editable [form property isn\'t set]'
         }
         const { form } = this;

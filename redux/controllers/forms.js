@@ -14,7 +14,7 @@ const reducer = (state = {}, action) => {
 }
 
 // state management
-class State {
+export class State {
     constructor(state) {
         this.state = state;
     }

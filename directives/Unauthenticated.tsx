@@ -1,18 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux';
 // => for display content when user is not loged in
-function Unauthenticated({ authenticated, children }) {
+function Unauthenticated({ guest, children }) {
     return (
         <>
         {
-          authenticated ? '' : children
+          guest ?  children :''
         }
       </>
     )
 }
 
 const mapStateToProps = state => ({
-authenticated: state.main.authenticated.user,
+  guest: state.main.authenticated.guest,
 })
   
 export default connect(mapStateToProps)(Unauthenticated);

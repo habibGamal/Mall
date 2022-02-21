@@ -21,7 +21,8 @@ export default class Branch {
         this.store_id = branch.store_id;
         this.created_at = branch.created_at;
         this.updated_at = branch.updated_at;
-        this.logo = Picture.getPicture(branch.logo);
+        if (branch.logo)
+            this.logo = Picture.getPicture(branch.logo);
     }
 
 }

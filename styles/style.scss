@@ -42,6 +42,8 @@ html {
     
 }
 
+
+
 .radio-boxs {
     position: relative;
     &::after {
@@ -436,7 +438,7 @@ body {
     top: 0;
     left: 0;
     background-color: #000;
-    opacity: 0.5;
+    opacity: 0.2;
     z-index: $z-index-escape-effect;
 
     &.active {
@@ -864,6 +866,48 @@ nav {
                 left: 50%;
                 transform: translate(-50%, -50%);
                 font-size: 1.3rem;
+            }
+        }
+        > .circle > .notifications {
+            position: absolute;
+            cursor: auto;
+            @extend .isolate;
+            right: 0;
+            top: 56px;
+            padding: 1rem;
+            width: 500px;
+            max-height: 70vh;
+            display: none;
+            z-index: 5;
+            overflow-y: auto;
+            &.active {
+                display: block;
+            }
+            .notification {
+                cursor: pointer;
+                padding: 1rem;
+                align-items: center;
+                position: relative;
+                &:hover {
+                    @extend .isolate-2;
+                }
+                .image {
+                    border-radius: 100%;
+                    width: 100px;
+                    height: 100px;
+                    overflow: hidden;
+                    margin: 0 1rem;
+                }
+                .info {
+                    font-weight: bolder;
+                }
+                .time {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    padding: 1rem;
+                    color: var(--primary)
+                }
             }
         }
     }

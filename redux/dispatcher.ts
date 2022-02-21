@@ -1,4 +1,5 @@
 import { State as MainState}  from "./controllers/main";
+import { State as FormsState}  from "./controllers/forms";
 import { State as LanguageState}  from "./controllers/translate";
 import store from "./store";
 
@@ -14,7 +15,7 @@ const dispatcher = {
         }
     }
 }
-export let Forms = new Proxy({ to: 'Forms' }, dispatcher);
+export let Forms:FormsState = new Proxy({ to: 'Forms' }, dispatcher);
 
 export let Messages = new Proxy({ to: 'Messages' }, dispatcher);
 

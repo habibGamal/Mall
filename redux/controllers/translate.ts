@@ -6,7 +6,7 @@ type TranslateStateType = {
 }
 // initial state
 const initState: TranslateStateType = {
-    language: 'ar',
+    language: 'en',
 }
 // controller(it is control what function will be executed) => reducer
 const reducer = (state = initState, action) => {

@@ -4,7 +4,7 @@ import active from '../../helpers/active';
 import isdefined from '../../helpers/isdefined';
 import { Forms } from '../../redux/dispatcher';
 interface EmailType {
-    addClass: string,
+    addClass?: string,
     id: string,
     label: string,
     name: string,
@@ -14,14 +14,14 @@ interface EmailType {
     inputValue: Function,
     defaultValue?: string
 }
-function Email({ addClass = 'col-md-6', id, label, name, formKey, icon, invalidMsg = [''], inputValue, defaultValue = '' }:EmailType) {
+function Email({ addClass = 'col-md-6', id, label, name, formKey, icon, invalidMsg = [''], inputValue, defaultValue = '' }: EmailType) {
     const [invMsg, setInvMsg] = useState(invalidMsg[0]);
     useEffect(() => {
         // => initialize invMsg state from invalidMsg prop
         setInvMsg(invalidMsg[0]);
     }, [invalidMsg]);
 
-    function handleOnChange(e) {
+    function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
         Forms.setInputValue(formKey, name, e.target.value);
         // => if there is an error remove it when user writing
         if (invMsg.length > 0) {

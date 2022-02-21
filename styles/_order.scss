@@ -6,6 +6,52 @@
         h2 {
             padding: 1rem 0;
         }
+        .order-progress {
+            width: 800px;
+            .states {
+                position: relative;
+                display: flex;
+                justify-content: space-between;
+                .progress {
+                    z-index: 4;
+                    position: absolute;
+                    width: 100%;
+                    left: 0;
+                    top: 25%;
+                    .progress-bar {
+                        --factor: 0;
+                        width: calc((100% / 3) * var(--factor));
+                    }
+                }
+                .state-name {
+                    --size: 70px;
+                    width: var(--size);
+                    text-align: center;
+                    text-transform: capitalize;
+                    .state {
+                        --color: #b2bec3;
+                        &.done {
+                            --color: var(--primary);
+                        }
+                        position: relative;
+                        z-index: 5;
+                        background-color: var(--color);
+                        border-radius: 100%;
+                        border: 2px solid #fff;
+                        outline: 2px solid var(--color);
+                        width: var(--size);
+                        height: var(--size);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        > i {
+                            font-size: 2rem;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
         .order {
             @extend .isolate-2;
             margin: 1rem 0;
@@ -38,7 +84,7 @@
                     }
                     .name {
                         font-size: 1.2rem;
-                        margin: .5rem 0;
+                        margin: 0.5rem 0;
                     }
                     .interact {
                         display: flex;
@@ -62,7 +108,7 @@
                     // margin: .3rem 1rem;
                 }
             }
-            >.btn {
+            > .btn {
                 width: 100%;
             }
         }

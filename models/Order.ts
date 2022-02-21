@@ -1,10 +1,11 @@
 import { BackendOrder } from "../BackendTypes/BackendOrder";
+import OrderedItem from "./OrderedItem";
 import Product from "./Product";
 
 export default class Order {
     id: number;
-    user_id: 2;
-    products: Array<Product>;
+    user_id: number;
+    items: Array<OrderedItem>;
     status: string;
     shipping_cost: number;
     total_cost: number;
@@ -13,15 +14,16 @@ export default class Order {
     constructor(order: BackendOrder) {
         this.id = order.id;
         this.user_id = order.user_id;
-        this.products = order.products.map(product => new Product(product));
+        this.items = order.ordered_items.map(item => new OrderedItem(item));
         this.status = order.status;
         this.shipping_cost = order.shipping_cost;
         this.total_cost = order.total_cost;
-        this.created_at = this.getNormalDate(order.created_at);
+        if (order.created_at)
+            this.created_at = this.getNormalDate(order.created_at);
         this.updated_at = order.updated_at;
     }
-    getNormalDate(date:string){
-        return date.replaceAll('-','/').slice(0,10);
+    getNormalDate(date: string) {
+        return date.replaceAll('-', '/').slice(0, 10);
     }
 
 }

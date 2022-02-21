@@ -49,7 +49,7 @@ export default function Login({form ,setTap}) {
                 invalidMsg={invalid('email', errors)}
             />
             <Password
-                label={t('Password','الرفم السري')}
+                label={t('Password','الرقم السري')}
                 addClass=""
                 id="password"
                 name="password"

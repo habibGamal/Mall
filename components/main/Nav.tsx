@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef } from 'react'
+import React, { useEffect, useReducer, useRef, useState } from 'react'
 import Link from 'next/link'
 import active from '../../helpers/active';
 import { useRouter } from 'next/dist/client/router';
@@ -10,24 +10,28 @@ import { connect } from 'react-redux';
 import { $Async } from '../../redux/async_actions';
 import { Language, Popup } from '../../redux/dispatcher';
 import t, { translate } from '../../helpers/translate';
+import Unauthenticated from '../../directives/Unauthenticated';
+import Image from 'next/image';
+import Notifications from '../notifications/Notifications';
 function Nav({ setPopupForm }) {
 
-    function switchLanguge(lang) {
-        if(lang == 'en'){
+    function switchLanguge(lang: string) {
+        if (lang == 'en') {
             document.documentElement.dir = 'ltr';
         }
-        if(lang == 'ar'){
+        if (lang == 'ar') {
             document.documentElement.dir = 'rtl';
         }
         Language.setLanguage(lang);
     }
 
     const router = useRouter();
-    const search = useRef();
-    const activeLink = useRef();
+    const search = useRef<HTMLInputElement>();
+    const activeLink = useRef<HTMLAnchorElement>();
     const ACTIONS = {
         EXPAND_NAV: 'EXPAND_NAV',
         EXPAND_CART: 'EXPAND_CART',
+        EXPAND_NOTIFI: 'EXPAND_NOTIFI',
         ESCAPE: 'ESCAPE',
         SEARCH_T: 'SEARCHT',
         LOGIN_T: 'LOGINT'
@@ -35,20 +39,30 @@ function Nav({ setPopupForm }) {
     const initialState = {
         expandNav: false,
         expandCart: false,
+        expandNotifi: false,
         escape: false,
         searchT: false,
     }
-    const reducer = (state, action) => {
+    const reducer = (state: {
+        expandNav: boolean,
+        expandCart: boolean,
+        expandNotifi: boolean,
+        escape: boolean,
+        searchT: boolean,
+    }, action: { type: string }) => {
         switch (action.type) {
             case ACTIONS.EXPAND_NAV:
                 return { ...state, expandNav: !state.expandNav, escape: !state.expandNav };
             case ACTIONS.EXPAND_CART:
                 return { ...state, expandCart: !state.expandCart, escape: !state.expandCart };
+            case ACTIONS.EXPAND_NOTIFI:
+                return { ...state, expandNotifi: !state.expandNotifi, escape: !state.expandNotifi };
             case ACTIONS.ESCAPE:
                 return {
                     ...state,
                     expandNav: false,
                     expandCart: false,
+                    expandNotifi: false,
                     searchT: false,
                     escape: false
                 }
@@ -128,41 +142,41 @@ function Nav({ setPopupForm }) {
                             </li>
                             <li>
                                 <Link href="/dashboard">
-                                    <a onClick={navLink}>{t('Dashboard','لوحة التحكم')}</a>
+                                    <a onClick={navLink}>{t('Dashboard', 'لوحة التحكم')}</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/product">
-                                    <a onClick={navLink}>{t('Product','منتج')}</a>
+                                    <a onClick={navLink}>{t('Product', 'منتج')}</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/category">
-                                    <a onClick={navLink}>{t('Category','صنف')}</a>
+                                    <a onClick={navLink}>{t('Category', 'صنف')}</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/store">
-                                    <a onClick={navLink}>{t('Store','متجر')}</a>
+                                    <a onClick={navLink}>{t('Store', 'متجر')}</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/store/create">
-                                    <a onClick={navLink}>{t('Create Store','انشاء متجر')}</a>
+                                    <a onClick={navLink}>{t('Create Store', 'انشاء متجر')}</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/branch/create">
-                                    <a onClick={navLink}>{t('Create Branch','انشاء فرع')}</a>
+                                    <a onClick={navLink}>{t('Create Branch', 'انشاء فرع')}</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/order/user_orders">
-                                    <a onClick={navLink}>{t('My Orders','طلباتي')}</a>
+                                    <a onClick={navLink}>{t('My Orders', 'طلباتي')}</a>
                                 </Link>
                             </li>
                             <li className="select-language">
-                                <span>{t('Current language','اللغة المستخدمة')} : <span className="current-language">English</span></span>
+                                <span>{t('Current language', 'اللغة المستخدمة')} : <span className="current-language">English</span></span>
                                 <div className="switch">
                                     <span onClick={() => switchLanguge('ar')}>Arabic</span>
                                     <span onClick={() => switchLanguge('en')} className="current-language">English</span>
@@ -172,7 +186,7 @@ function Nav({ setPopupForm }) {
                         <div className="options">
                             <Authenticated>
                                 <div className="logout" onClick={logout}>
-                                    <i className="fas fa-sign-out-alt"></i><span>{t('Logout','تسجيل الخروج')}</span>
+                                    <i className="fas fa-sign-out-alt"></i><span>{t('Logout', 'تسجيل الخروج')}</span>
                                 </div>
                             </Authenticated>
                         </div>
@@ -184,7 +198,7 @@ function Nav({ setPopupForm }) {
                 </div>
                 <div className="d-flex align-items-center user-cart">
                     <form className={active(state.searchT, { defaultClass: 'search' })}>
-                        <input ref={search} id="search-input" type="text" name="search" placeholder={t('Search','بحث')} />
+                        <input ref={search} id="search-input" type="text" name="search" placeholder={t('Search', 'بحث')} />
                         <i className="fas fa-search"></i>
                     </form>
                     <div
@@ -202,16 +216,14 @@ function Nav({ setPopupForm }) {
                         <i className="fas fa-shopping-cart"></i>
                         <span className="count">3</span>
                     </div>
-                    <div className="circle user" onClick={loginPopup}>
-                        <i className="fas fa-user"></i>
-                    </div>
-                    {/* <Unauthenticated>
-                    </Unauthenticated> */}
-                    {/* <Authenticated>
-                        <div className="circle">
-                            <i className="fas fa-comments"></i>
+                    <Unauthenticated>
+                        <div className="circle user" onClick={loginPopup}>
+                            <i className="fas fa-user"></i>
                         </div>
-                    </Authenticated> */}
+                    </Unauthenticated>
+                    <Authenticated>
+                            <Notifications show={state.expandNotifi} onClick={() => dispatch({ type: ACTIONS.EXPAND_NOTIFI })}/>
+                    </Authenticated>
                 </div>
             </nav>
             <ul className="nav-categories d-none">

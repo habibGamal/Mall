@@ -5,7 +5,7 @@ import isdefined from '../../helpers/isdefined';
 import { Forms } from '../../redux/dispatcher';
 
 interface PasswordType {
-    addClass: string,
+    addClass?: string,
     id: string,
     label: string,
     name: string,
