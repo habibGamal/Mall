@@ -9,7 +9,7 @@ function CartItem({ src, name, price, shopName, quantity }) {
     return (
         <div className="cart-item">
             <div className="picture">
-                <Image src={src} layout="fill" className="img" />
+                <img src={src} className="img" />
             </div>
             <div className="details">
                 <span className="sold-by">{t('Sold by', 'صاحب المنتج')} <Link href="/store">{shopName}</Link></span>

@@ -21,7 +21,7 @@ function CartItem({ src, id, formKey, name, price, quantity, getInputValue }) {
                 <i className="fas fa-times"></i>
             </div>
             <div className="picture">
-                <Image src={src} layout="fill" className="img" />
+                <Image width={200} height={350} src={src} className="img" />
             </div>
             <div className="details">
                 <span>{name}</span>

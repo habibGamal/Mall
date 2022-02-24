@@ -607,7 +607,7 @@ nav {
 
     #nav-bar {
         left: var(--move-inactive-slide);
-
+        overflow-y: auto;
         &.active {
             left: var(--move-active-slide);
         }
