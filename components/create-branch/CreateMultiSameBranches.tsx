@@ -9,7 +9,8 @@ import Picture from "../../models/Picture";
 import BranchForm from "../general/BranchForm";
 import BranchFormRequest from "../../FormRequests/BranchFormRequest";
 import t from "../../helpers/translate";
-function CreateMultiSameBranches({ logo, getInputValue,errors }) {
+function CreateMultiSameBranches({ logo, getInputValue, errors }) {
+    
     function logoInit(e: React.ChangeEvent<HTMLInputElement>) {
         // => save just one picture
         Main.emptyPictures();
@@ -33,7 +34,7 @@ function CreateMultiSameBranches({ logo, getInputValue,errors }) {
     return (
         <>
             <Number
-                label={t('Number of branches','عدد الافرع')}
+                label={t('Number of branches', 'عدد الافرع')}
                 name="branches_number"
                 id="branches_number"
                 invalidMsg={invalid('branches_number', errors)}
@@ -50,7 +51,7 @@ function CreateMultiSameBranches({ logo, getInputValue,errors }) {
                     <div className="col-md-6">
                         <div className="row align-items-center">
                             <File
-                                label={t('Store Logo','صورة المحل او Logo')}
+                                label={t('Store Logo', 'صورة المحل او Logo')}
                                 onChange={logoInit}
                                 name="logo"
                                 multiple={false}
@@ -65,7 +66,7 @@ function CreateMultiSameBranches({ logo, getInputValue,errors }) {
                         </div>
                     </div>
                     <Text
-                    label={t('Shop Name','اسم المتجر')}
+                        label={t('Shop Name', 'اسم المتجر')}
                         name="store_name"
                         id="store_name"
                         icon={<i className="fas fa-store"></i>}

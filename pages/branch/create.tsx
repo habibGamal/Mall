@@ -88,6 +88,7 @@ function CreateBranch({ getInputValue, logo }) {
         try {
             const res = await branch.store(createRequestForm);
         } catch (err) {
+            
             if (err.response) {
                 let { data, status } = err.response;
                 if (status == 422) {

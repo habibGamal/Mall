@@ -44,7 +44,7 @@ export default class BranchFormRequest extends Form {
         const compressedPictures = await Promise.all(compressPictures(logo));
         const logos = compressedPictures.map((picture, i) => ({ file: picture, name: logo[i].id }));
         const structure = [
-            this.fromArray(logos).to(TransformTo.ArrayFromSpecialArray).getAs('logos[]'),
+            this.fromArray(logos).to(TransformTo.Files).fileHasCustomName(true).getAs('logos[]'),
             this.fromArray(logo.map(picture => picture.positionToJson())).to(TransformTo.ArrayFromSpecialArray).getAs('logos_position[]'),
             this.from('branch_name-*').to(TransformTo.Array).setlength(length).getAs('branch_names[]'),
             this.from('address-*').to(TransformTo.Array).setlength(length).getAs('addresses[]'),
