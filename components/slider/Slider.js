@@ -2,7 +2,6 @@ import React from 'react'
 import active from '../../helpers/active';
 export default function Slider() {
     const photos = [
-        'slide-3.png',
         'slide-2.png',
         'slide-1.png',
     ]
@@ -12,7 +11,6 @@ export default function Slider() {
                 <ol className="carousel-indicators">
                     <li data-target="#mainSlider" data-slide-to="0" className="active"></li>
                     <li data-target="#mainSlider" data-slide-to="1"></li>
-                    <li data-target="#mainSlider" data-slide-to="2"></li>
                 </ol>
                 <div className="carousel-inner">
                     {photos.map((photo,i) => (

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -7,11 +7,11 @@ import ProductControlPanel from '../../components/control-panel/ProductControlPa
 import p from '../../api/product';
 import NotEmpty from '../../directives/NotEmpty'
 import { $Async } from '../../redux/async_actions'
-import Picture from '../../models/Picture'
-import { Messages, Popup } from '../../redux/dispatcher'
+import { Messages } from '../../redux/dispatcher'
 import { MESSAGES } from '../../messages/messages'
 import Product from '../../models/Product'
 import BackendProduct from '../../BackendTypes/BackendProduct'
+import loader from '../../loader'
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     try {
         const res = await p.show(ctx.params.id);
@@ -75,7 +75,7 @@ export default function ShowProduct({ rawProduct }: ShowProductProps) {
             )
         });
     }, []);
-    
+
     function activeSize(index: number) {
         return active(sizeOption === index, { defaultClass: 'option' })
     }
@@ -86,7 +86,9 @@ export default function ShowProduct({ rawProduct }: ShowProductProps) {
         return active(pictureShow === index, obj)
     }
     function options(optionName: string) {
-        const [{ body }] = product.options.filter(option => option.name === optionName);
+        console.log(product.options.filter(option => option.name === optionName));
+
+        const { body } = product.options.filter(option => option.name === optionName)[0] ?? {};
         return body ?? [];
     }
     async function addToCart() {
@@ -119,7 +121,7 @@ export default function ShowProduct({ rawProduct }: ShowProductProps) {
                                 {pictures.map(({ path, position }, i) => {
                                     return (
                                         <div key={i} className={activePicture(i, { defaultClass: 'picture' })} onClick={() => setPictureShow(i)}>
-                                            <Image objectPosition={`${position.leftP}% ${position.topP}%`} layout="fill" src={path} alt="" />
+                                            <Image loader={loader} objectPosition={`${position.leftP}% ${position.topP}%`} layout="fill" src={path} alt="" />
                                         </div>
                                     )
                                 })}
@@ -135,6 +137,7 @@ export default function ShowProduct({ rawProduct }: ShowProductProps) {
                                                 }}
                                             >
                                                 <Image
+                                                    loader={loader}
                                                     src={path}
                                                     alt=""
                                                     objectPosition={`${position.leftP}% ${position.topP}%`}

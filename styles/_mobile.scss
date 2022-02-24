@@ -1,4 +1,15 @@
 // Very small
+@media screen and(max-width:375px) {
+    .single-product .product > .content .pictures {
+        width: 100%;
+        .show {
+            width: 100%;
+            > div {
+                width: 100%;
+            }
+        }
+    }
+}
 @media screen and(max-width:390px) {
     .orders-page > .orders > .order > .order-item {
         flex-direction: column;
@@ -247,6 +258,7 @@
 @media screen and (max-width: 767px) {
     // Order page
     .orders-page {
+        // $^ unwanted & repeated things
         .orders {
             .order-progress {
                 width: 300px;
@@ -342,7 +354,6 @@
                     flex-shrink: 0;
                     flex-basis: 100%;
                     margin: 0;
-
                     &.active {
                         margin: 0;
                     }
@@ -403,8 +414,11 @@
     }
 
     // Product page
-    .single-product .product > .content .pictures .show .active {
-        margin: 0 2rem;
+    .single-product .product > .content .pictures {
+        gap: 1rem;
+        .show .active {
+            margin: 0 0rem;
+        }
     }
 
     // Dashboard
@@ -431,7 +445,7 @@
     .single-product {
         .product > .content {
             grid-template-columns: auto;
-
+            justify-content: unset;
             .pictures {
                 width: 100%;
                 justify-content: center;

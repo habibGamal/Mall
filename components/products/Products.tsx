@@ -44,7 +44,6 @@ export default function Products({ title, rawProducts }: { title: string, rawPro
                         )
                     })}
                 </RowScroll>
-
             </div>
         </section>
     )

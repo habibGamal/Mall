@@ -11,7 +11,8 @@
             display: flex;
             align-items: center;
             margin-bottom: 1rem;
-
+            flex-wrap: wrap;
+            gap: 1rem;
             .store-logo {
                 display: block;
                 border-radius: 50%;
@@ -26,16 +27,13 @@
                     object-position: center center;
                 }
             }
-
-            .category-path {
-                margin-left: 1rem;
-            }
         }
 
         >.content {
             display: grid;
-            grid-template-columns: 50% 50%;
-
+            grid-template-columns: auto auto;
+            gap: 1rem;
+            justify-content: start;
             .pictures {
                 display: flex;
 

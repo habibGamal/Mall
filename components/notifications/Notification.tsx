@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
+import active from "../../helpers/active";
 import loader from "../../loader";
-import BranchNotifications from "../../models/BranchNotifications";
+import BlockNotifications from "../../models/BlockNotifications";
 import NotificationModel from "../../models/Notification";
 
-export default function Notification({ block, notification, onClick }: { block: BranchNotifications, notification: NotificationModel ,onClick:Function}) {
+export default function Notification({ block, notification, onClick }: { block: BlockNotifications, notification: NotificationModel ,onClick:Function}) {
     const router = useRouter();
     function action(){
         router.push(block.redirect);
@@ -17,7 +18,7 @@ export default function Notification({ block, notification, onClick }: { block: 
             </div>
             <div className="content">
                 <h4>{block.name}</h4>
-                <p className="info">{notification.message}</p>
+                <p className={active(!notification.seen,{activeClass:'unseen',defaultClass:'info'})}>{notification.message}</p>
             </div>
             <div className="time">
                 <span>{notification.time}</span>

@@ -146,16 +146,6 @@ function Nav({ setPopupForm }) {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/product">
-                                    <a onClick={navLink}>{t('Product', 'منتج')}</a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/category">
-                                    <a onClick={navLink}>{t('Category', 'صنف')}</a>
-                                </Link>
-                            </li>
-                            <li>
                                 <Link href="/store">
                                     <a onClick={navLink}>{t('Store', 'متجر')}</a>
                                 </Link>
@@ -212,17 +202,19 @@ function Nav({ setPopupForm }) {
                     >
                         <i className="fas fa-search"></i>
                     </div>
-                    <div className="circle cart" onClick={() => dispatch({ type: ACTIONS.EXPAND_CART })}>
-                        <i className="fas fa-shopping-cart"></i>
-                        <span className="count">3</span>
-                    </div>
+                    <Authenticated guard='user'>
+                        <div className="circle cart" onClick={() => dispatch({ type: ACTIONS.EXPAND_CART })}>
+                            <i className="fas fa-shopping-cart"></i>
+                            <span className="count">3</span>
+                        </div>
+                    </Authenticated>
                     <Unauthenticated>
                         <div className="circle user" onClick={loginPopup}>
                             <i className="fas fa-user"></i>
                         </div>
                     </Unauthenticated>
                     <Authenticated>
-                            <Notifications show={state.expandNotifi} onClick={() => dispatch({ type: ACTIONS.EXPAND_NOTIFI })}/>
+                        <Notifications show={state.expandNotifi} onClick={() => dispatch({ type: ACTIONS.EXPAND_NOTIFI })} />
                     </Authenticated>
                 </div>
             </nav>

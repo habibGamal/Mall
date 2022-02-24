@@ -22,7 +22,7 @@ export default function Product({ selectable, id, selected, name, price, offerPr
     const [menuT, setMenuT] = useState(false);
     const router = useRouter();
     useEffect(() => setSelect(selected), [selected]);
-    const img = useMemo(() => <Image loader={loader} src={src} layout="fill" objectPosition={`${position.leftP}% ${-1 * position.topP}%`} className="img" alt="T-shirt" />, []);
+    const img = useMemo(() => <Image loader={loader} src={src} width={200} height={200} objectPosition={`${position.leftP}% ${-1 * position.topP}%`} className="img" alt="T-shirt" />, []);
     function selectHandle() {
         setSelect(!select);
     }

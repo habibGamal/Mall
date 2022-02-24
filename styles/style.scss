@@ -31,18 +31,15 @@ $border: 1px solid #dee2e6 !important;
 /*
 Name : Rules
 */
-:root{
-    --dir : rtl;
+:root {
+    --dir: rtl;
 }
 html {
     scroll-behavior: smooth;
     body {
         text-align: start;
     }
-    
 }
-
-
 
 .radio-boxs {
     position: relative;
@@ -630,7 +627,8 @@ nav {
             > li {
                 list-style-type: none;
                 width: 90%;
-                &.select-language , > a {
+                &.select-language,
+                > a {
                     color: #000;
                     padding: 1rem;
                     padding-left: 2rem;
@@ -643,12 +641,12 @@ nav {
                     }
                     .switch {
                         background-color: $text-layer-4;
-                        margin-top: .5rem;
+                        margin-top: 0.5rem;
                         text-align: center;
                         display: grid;
                         grid-template-columns: auto auto;
                         > span {
-                            padding: .5rem;
+                            padding: 0.5rem;
                             cursor: pointer;
                             &.current-language {
                                 background-color: $main-color;
@@ -892,13 +890,14 @@ nav {
                     @extend .isolate-2;
                 }
                 .image {
+                    --size: 70px;
                     border-radius: 100%;
-                    width: 100px;
-                    height: 100px;
+                    width: var(--size);
+                    height: var(--size);
                     overflow: hidden;
                     margin: 0 1rem;
                 }
-                .info {
+                .info .unseen{
                     font-weight: bolder;
                 }
                 .time {
@@ -906,7 +905,7 @@ nav {
                     right: 0;
                     top: 0;
                     padding: 1rem;
-                    color: var(--primary)
+                    color: var(--primary);
                 }
             }
         }
@@ -1340,7 +1339,7 @@ nav {
     background-color: white;
 }
 .mini-loading-container {
-    margin:1rem auto;
+    margin: 1rem auto;
     display: flex;
     align-items: center;
     justify-content: center;

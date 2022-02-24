@@ -9,11 +9,12 @@ import { connect } from "react-redux";
 import BlockNotifications from "../../models/BlockNotifications";
 import UserNotifications from "../../models/UserNotifications";
 import BackendUserNotifications from "../../BackendTypes/BackendUserNotifications";
+import Empty from "../general/Empty";
 
 function Notifications({ show, onClick, authenticated }) {
     const [blockNotifications, setNotifications] = useState([] as Array<BlockNotifications>);
     const [ids, setIds] = useState([] as Array<number>);
-    const {admin,user} = authenticated;
+    const { admin, user } = authenticated;
     useEffect(() => {
         if (admin) {
             const getAdminNotifications = async () => {
@@ -49,10 +50,10 @@ function Notifications({ show, onClick, authenticated }) {
     }, [blockNotifications]);
     function seen() {
         onClick();
-        if(admin){
+        if (admin) {
             notifi.seenNotificationsForBranches({ ids });
         }
-        if(user){
+        if (user) {
             notifi.seenNotificationsForUser();
         }
         setIds([]);
@@ -60,17 +61,19 @@ function Notifications({ show, onClick, authenticated }) {
     return (
         <div className="circle" onClick={seen}>
             <i className="fas fa-comments"></i>
-            <span className="count">{ids.length}</span>
+            {ids.length == 0 ? '' : <span className="count">{ids.length}</span>}
             <div className={active(show, { defaultClass: 'notifications' })} onClick={seen}>
                 <h4 className='py-2'>{t('Notifications', 'تنبيهات')}</h4>
                 {
-                    blockNotifications.map(
-                        block => {
-                            return block.notifications.map(
-                                notification => <Notification onClick={onClick} key={notification.id} block={block} notification={notification} />
-                            )
-                        }
-                    )
+                    blockNotifications.length === 0
+                        ? <Empty msg={t('No Notifications', 'لا توجد تنبيهات')} />
+                        : blockNotifications.map(
+                            block => {
+                                return block.notifications.map(
+                                    notification => <Notification onClick={onClick} key={notification.id} block={block} notification={notification} />
+                                )
+                            }
+                        )
                 }
 
             </div>
