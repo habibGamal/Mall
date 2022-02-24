@@ -5,15 +5,14 @@ import { useRouter } from 'next/dist/client/router';
 import NavCategory from './NavCategory';
 import MiniCart from '../cart/MiniCart';
 import Authenticated from '../../directives/Authenticated';
-import auth from '../../api/auth';
+import authApi from '../../api/auth';
 import { connect } from 'react-redux';
 import { $Async } from '../../redux/async_actions';
 import { Language, Popup } from '../../redux/dispatcher';
-import t, { translate } from '../../helpers/translate';
+import t from '../../helpers/translate';
 import Unauthenticated from '../../directives/Unauthenticated';
-import Image from 'next/image';
 import Notifications from '../notifications/Notifications';
-function Nav({ setPopupForm }) {
+function Nav({ setPopupForm, auth }) {
 
     function switchLanguge(lang: string) {
         if (lang == 'en') {
@@ -90,7 +89,10 @@ function Nav({ setPopupForm }) {
     // api section
     async function logout() {
         escapeEffect();
-        await auth.logout().then(res => console.log(res));
+        if (auth.user)
+            await authApi.logout().then(res => console.log(res));
+        if (auth.admin)
+            await authApi.adminLogout().then(res => console.log(res));
         $Async.Reauth();
         router.push('/');
     }
@@ -253,5 +255,9 @@ const mapDispatchToProps = dispatch => (
         setPopupForm: (value) => Popup.setPopup('auth-form', value),
     }
 )
-export default connect(translate, mapDispatchToProps)(Nav);
-// export default connect(null, mapDispatchToProps)(Nav);
+
+const mapStateToProps = state => ({
+    auth: state.main.authenticated,
+    lang: state.translate.language
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);
