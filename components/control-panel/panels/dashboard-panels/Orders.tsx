@@ -18,21 +18,28 @@ const formKey = 'dashboard_orders'
 function Orders({ getInputValue }) {
     const router = useRouter();
     const urlBranch: string = router.query.branch as string;
-
-    const [orders, setOrders] = useState([] as Array<OrderModel>);
-    const [branches, setBranches] = useState([] as Array<{ id: number, name: string }>);
-    const [loading, setLoading] = useState(false);
+    const [{orders,branches,loading},setState] = useState({
+        orders : [] as Array<OrderModel>,
+        branches : [] as Array<{ id: number, name: string }>,
+        loading : false,
+    })
     useEffect(() => {
         const branchId = getInputValue('branch_id');
-        setLoading(false);
         const getOrders = async () => {
             const res = await orderApi.getOrdersForBranch(branchId);
             if (res.status === 200) {
-                setOrders(res.data.map((order: BackendOrder) => new OrderModel(order)));
-                setLoading(true);
+                setState(old => ({
+                    ...old,
+                    orders : res.data.map((order: BackendOrder) => new OrderModel(order)),
+                    loading : true,
+                }))
             }
         }
         if (branchId) {
+            setState(old => ({
+                ...old,
+                loading : false,
+            }))
             getOrders();
         }
     }, [getInputValue('branch_id')]);
@@ -41,9 +48,11 @@ function Orders({ getInputValue }) {
             const res = await orderApi.getOrdersForBranch(urlBranch ?? 0);
             if (res.status === 200) {
                 const getIds = await branch.getBranchesIds();
-                setOrders(res.data.map((order: BackendOrder) => new OrderModel(order)));
-                setBranches(getIds.data);
-                setLoading(true);
+                setState({
+                    orders : res.data.map((order: BackendOrder) => new OrderModel(order)),
+                    branches : getIds.data,
+                    loading : true,
+                })
             }
         }
         getOrders();
@@ -54,7 +63,7 @@ function Orders({ getInputValue }) {
             Forms.setInputValue(formKey, 'branch_id', urlBranch);
         }
     }, [branches, urlBranch]);
-
+    
     return (
         <div className="orders">
             <div className="form-group">
@@ -106,7 +115,6 @@ function Order({ order,branch_id }: { order: OrderModel,branch_id:number }) {
         // if (orderState == 'pending') {
         // }
     }
-    console.log(order);
 
     return (
         <div className="order my-4">
