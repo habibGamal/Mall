@@ -152,7 +152,13 @@ span.count {
     background-color: #f6f6f6;
     border-radius: 10px;
 }
-
+.labelled-info {
+    --state-color : var(--gray);
+    border-left: 3px solid var(--state-color);
+    width: fit-content;
+    padding: .1rem 1rem;
+    background-color: $line-color;
+}
 .z-index-1 {
     z-index: 1 !important;
 }
@@ -234,6 +240,12 @@ body {
     &:hover {
         color: #fff;
         background-color: #000;
+    }
+}
+.btn-icon {
+    width: fit-content;
+    > i {
+        margin: 0 .5rem;
     }
 }
 

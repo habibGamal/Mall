@@ -7,7 +7,7 @@ function OrderProgress({ show, keyPopup, status }) {
     const progressBar = useRef<HTMLDivElement>(null);
     function progressState() {
         switch (status) {
-            case 'accepted':
+            case 'accept':
                 return {
                     accepted: true,
                     delevering: false,

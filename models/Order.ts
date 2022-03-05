@@ -25,5 +25,9 @@ export default class Order {
     getNormalDate(date: string) {
         return date.replaceAll('-', '/').slice(0, 10);
     }
+    getItemsState(){
+        const states = this.items.map(item => item.state);
+        return states.includes('pending') ? 'pending':'accept'
+    }
 
 }

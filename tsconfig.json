@@ -17,12 +17,14 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "skipLibCheck": true,
-    "strict": false
+    "strict": false,
+    "types": ["cypress"],
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "cypress/plugins/index.ts"
   ],
   "exclude": [
     "node_modules"

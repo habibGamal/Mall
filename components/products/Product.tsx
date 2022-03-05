@@ -26,12 +26,6 @@ export default function Product({ selectable, id, selected, name, price, offerPr
     function selectHandle() {
         setSelect(!select);
     }
-    function clickHandle(e, href) {
-        e.preventDefault();
-        if (e.target.tagName === 'IMG') {
-            router.push(href);
-        }
-    }
     if (selectable) {
         // => data-selected is attribute to help in selecting the products selected
         return (
@@ -73,8 +67,8 @@ export default function Product({ selectable, id, selected, name, price, offerPr
         )
     }
     return (
-        <div className="product" onClick={(e) => clickHandle(e, `/product/${id}`)}>
-            <div className="picture">
+        <div className="product">
+            <div className="picture" onClick={()=>router.push(`/product/${id}`)}>
                 {img}
             </div>
             <div className="product-details">

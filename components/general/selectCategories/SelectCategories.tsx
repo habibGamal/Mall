@@ -27,7 +27,7 @@ function SelectCategories({ formKey, invalidMsg, getInputValue }: { formKey: str
         <>
 
             <div className={active(invMsg.length !== 0, { activeClass: 'is-invalid',defaultClass: 'show-categories'})}>
-                <Loading state={categories.length > 0}>
+                <Loading state={categories.length > 0} mini={true}>
                     {categories.map(c => <Category key={c.id} id={c.id} name={c.name} formKey={formKey} subCategories={c.sub_categories} />)}
                 </Loading>
             </div>

@@ -203,9 +203,11 @@ section.info {
                     }
                 }
                 .buttons {
-                    display: grid;
-                    grid-template-columns: auto auto;
+                    display: flex;
                     gap: 1rem;
+                    .btn {
+                        width: 100%;
+                    }
                 }
             }
         }

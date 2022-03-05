@@ -100,13 +100,13 @@ function Nav({ setPopupForm, auth }) {
         window.onscroll = () => {
             if (document.body.scrollHeight >= (window.innerHeight + 100)) {
                 if (window.scrollY > 0) {
-                    document.getElementsByTagName('nav')[0].classList.add('stick');
+                    document.getElementsByTagName('nav')[0]?.classList.add('stick');
                 } else {
-                    document.getElementsByTagName('nav')[0].classList.remove('stick');
+                    document.getElementsByTagName('nav')[0]?.classList.remove('stick');
                 }
             }
             if (window.scrollY == 0) {
-                document.getElementsByTagName('nav')[0].classList.remove('stick');
+                document.getElementsByTagName('nav')[0]?.classList.remove('stick');
             }
         }
         return () => {

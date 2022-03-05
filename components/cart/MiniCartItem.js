@@ -10,8 +10,10 @@ import loader from '../../loader';
 function CartItem({ src, id, formKey, name, price, quantity, getInputValue }) {
     useEffect(async () => {
         // => change the quantity of the item
-        // let res = await cart.increaseItemQuantity(id,{product_count:getInputValue(formKey,id),'_method':'PUT'});
-        $Async.UpdateCartItem(id, getInputValue(formKey, id) ?? null);
+        const count = getInputValue(formKey, id);
+        if (count && count != quantity) {
+            $Async.UpdateCartItem(id, count ?? null);
+        }
     }, [getInputValue(formKey, id)]);
     async function deleteItem() {
         $Async.RemoveCartItem(id);
@@ -26,9 +28,9 @@ function CartItem({ src, id, formKey, name, price, quantity, getInputValue }) {
             </div>
             <div className="details">
                 <span>{name}</span>
-                <span>{t('Price','السعر')} : <strong>{price}</strong> {t('LE','جنية')}</span>
+                <span>{t('Price', 'السعر')} : <strong>{price}</strong> {t('LE', 'جنية')}</span>
                 <Select
-                    label={t('Quantity','الكمية')}
+                    label={t('Quantity', 'الكمية')}
                     type="select"
                     name={id}
                     formKey={formKey}

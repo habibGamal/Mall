@@ -61,7 +61,7 @@ function Home() {
       <Products
         title="Women Fashion"
       />
-      {/* <button onClick={login} className="btn btn-primary">Login</button>
+      <button onClick={login} className="btn btn-primary">Login</button>
       <button onClick={logout} className="btn btn-primary">Logout</button>
       <button onClick={registerAdmin} className="btn btn-primary">Register as admin</button>
       <button onClick={adminLogin} className="btn btn-primary">Login as admin</button>
@@ -69,7 +69,7 @@ function Home() {
       <button onClick={testAuth} className="btn btn-primary">I am authenticated</button>
       <button onClick={getCookie} className="btn btn-primary">get cookie</button>
       <button onClick={clearTokens} className="btn btn-primary">clear all tokens</button>
-      <button onClick={test} className="btn btn-primary">test</button> */}
+      <button onClick={test} className="btn btn-primary">test</button>
     </>
   )
 }

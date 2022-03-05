@@ -9,20 +9,28 @@ import Empty from '../../../general/Empty';
 import t from '../../../../helpers/translate';
 import { useRouter } from 'next/router';
 import { Forms } from '../../../../redux/dispatcher';
-import active from '../../../../helpers/active';
 import OrderModel from '../../../../models/Order';
-import ProductModel from '../../../../models/Product';
 import { BackendOrder } from '../../../../BackendTypes/BackendOrder';
+import OrderedItem from '../../../../models/OrderedItem';
+import active from '../../../../helpers/active';
 
 const formKey = 'dashboard_orders'
 function Orders({ getInputValue }) {
     const router = useRouter();
     const urlBranch: string = router.query.branch as string;
-    const [{orders,branches,loading},setState] = useState({
-        orders : [] as Array<OrderModel>,
-        branches : [] as Array<{ id: number, name: string }>,
-        loading : false,
+    const [{ orders, branches, loading }, setState] = useState({
+        orders: [] as Array<OrderModel>,
+        branches: [] as Array<{ id: number, name: string }>,
+        loading: false,
     })
+    function removeOrder(id: number) {
+        setState(
+            state => {
+                const orders = state.orders.filter(order => order.id !== id);
+                return { ...state, orders };
+            }
+        )
+    }
     useEffect(() => {
         const branchId = getInputValue('branch_id');
         const getOrders = async () => {
@@ -30,32 +38,36 @@ function Orders({ getInputValue }) {
             if (res.status === 200) {
                 setState(old => ({
                     ...old,
-                    orders : res.data.map((order: BackendOrder) => new OrderModel(order)),
-                    loading : true,
+                    orders: res.data.map((order: BackendOrder) => new OrderModel(order)),
+                    loading: true,
                 }))
             }
         }
         if (branchId) {
             setState(old => ({
                 ...old,
-                loading : false,
+                loading: false,
             }))
             getOrders();
         }
     }, [getInputValue('branch_id')]);
     useEffect(() => {
+        Forms.attachForm(formKey);
         const getOrders = async () => {
             const res = await orderApi.getOrdersForBranch(urlBranch ?? 0);
             if (res.status === 200) {
                 const getIds = await branch.getBranchesIds();
                 setState({
-                    orders : res.data.map((order: BackendOrder) => new OrderModel(order)),
-                    branches : getIds.data,
-                    loading : true,
+                    orders: res.data.map((order: BackendOrder) => new OrderModel(order)),
+                    branches: getIds.data,
+                    loading: true,
                 })
             }
         }
         getOrders();
+        return () => {
+            Forms.unattachForm(formKey);
+        }
     }, []);
     // select branch by url when branches loaded
     useEffect(() => {
@@ -63,7 +75,7 @@ function Orders({ getInputValue }) {
             Forms.setInputValue(formKey, 'branch_id', urlBranch);
         }
     }, [branches, urlBranch]);
-    
+
     return (
         <div className="orders">
             <div className="form-group">
@@ -80,11 +92,10 @@ function Orders({ getInputValue }) {
             </div>
             <Loading state={loading} mini={true}>
                 {
-
                     orders.length === 0
                         ? <Empty msg="You haven't recived any orders yet" />
                         : orders.map(
-                            order => <Order key={order.id} order={order} branch_id={getInputValue('branch_id') ?? branches[0].id} />
+                            order => <Order key={order.id} removeOrder={removeOrder} order={order} branch_id={getInputValue('branch_id') ?? branches[0].id} />
                         )
                 }
             </Loading>
@@ -105,38 +116,73 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps)(Orders)
 
-function Order({ order,branch_id }: { order: OrderModel,branch_id:number }) {
-    const [orderState, setOrderState] = useState(order.status);
+function Order({ order, branch_id, removeOrder }: { order: OrderModel, branch_id: number, removeOrder: Function }) {
+    const [items, setItems] = useState(order.items);
+    const [orderState, setOrderState] = useState(order.getItemsState());
     async function acceptOrder() {
         const res = await orderApi.acceptOrder(branch_id, order.id);
         if (res.status === 200) {
-            setOrderState('accepted');
+            setOrderState(res.data); // expect to be 'accept'
+            setItems(
+                oldItems => {
+                    const newItems = oldItems.map(
+                        item => {
+                            item.state = res.data;
+                            return item;
+                        }
+                    )
+                    return newItems;
+                }
+            )
         }
-        // if (orderState == 'pending') {
-        // }
     }
-
+    async function rejectOrder() {
+        const res = await orderApi.rejectOrder(branch_id, order.id);
+        if (res.status == 200) {
+            removeOrder(order.id);
+        }
+    }
+    function removeItem(id: number) {
+        if (items.length == 1)
+            return rejectOrder();
+        setItems(
+            oldItems => oldItems.filter(item => item.id !== id)
+        )
+    }
     return (
-        <div className="order my-4">
+        <div id={`${order.id}`} className="order my-4">
             <h4>{t('Order', 'طلب')} #{order.id}</h4>
             <span>{t('Products', 'المنتجات المطلوبة')} :</span>
             <ul>
                 {
-                    order.items.map(
-                        item => <Product key={item.id} product={item.product} />
+                    items.map(
+                        item => <Item key={item.id} item={item} removeItem={removeItem} />
                     )
                 }
             </ul>
             <div className="buttons">
-                <button className="btn btn-danger">{t('Reject the order', 'رفض الطلب')}</button>
-                <button onClick={acceptOrder} className='btn btn-primary' >{t('Accept the order', 'قبول الطلب')}</button>
-                {/* <button onClick={acceptOrder} className={active(orderState == 'accepted', { defaultClass: 'btn btn-primary', falseClass: 'd-none' })}>Out for Delevary</button> */}
+                {
+                    orderState == 'pending' ?
+                        <>
+                            <button onClick={rejectOrder} className="btn btn-danger">{t('Reject the order', 'رفض الطلب')}</button>
+                            <button onClick={acceptOrder} className='btn btn-primary' >{t('Accept the order', 'قبول الطلب')}</button>
+
+                        </> :
+                        <button onClick={acceptOrder} className={active(orderState == 'accept', { defaultClass: 'btn btn-primary', activeClass:'' ,falseClass: 'd-none' })}>Out for Delevary</button>
+                }
             </div>
         </div>
     )
 }
 
-function Product({ product }: { product: ProductModel }) {
+function Item({ item, removeItem }: { item: OrderedItem, removeItem: Function }) {
+    const { product } = item;
+    async function rejectItem() {
+        const res = await orderApi.rejectProductFromOrder(item.id, item.order_id, item.branch_id);
+        if (res.status == 200) {
+            removeItem(item.id);
+        }
+    }
     return (
         <li>
             <Link href={`/product/${product.id}`}>{product.name}</Link>
@@ -151,7 +197,11 @@ function Product({ product }: { product: ProductModel }) {
                     {t('Price', 'سعر')} : <strong>{product.offer_price}</strong> {t('LE', 'جنية')}
                 </span>
             </span>
-            <button className="btn btn-outline-danger">{t('This product is not exists', 'هذا المنتج غير متوافر')}</button>
+            {
+                item.state == 'pending' ?
+                    <button onClick={rejectItem} className="btn btn-outline-danger">{t('This product is not exists', 'هذا المنتج غير متوافر')}</button>
+                    : ''
+            }
         </li>
     )
 }

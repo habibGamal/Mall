@@ -23,14 +23,18 @@ function Popup({ keyPopup, children, show }) {
             Pop.uninstallPopup(keyPopup);
         }
     }, [])
-    useEffect(()=>{
+    useEffect(() => {
         // => push a query popup if the user click on it
-        if(show(keyPopup) && router.query.popup === undefined){
-            router.push({ query: { ...router.query, popup: true } }, null,{scroll:false})
+        if (show(keyPopup) && router.query.popup === undefined) {
+            router.push({ query: { ...router.query, popup: true } }, null, { scroll: false })
         }
-    },[show(keyPopup)])
+    }, [show(keyPopup)])
     function escapeEffect() {
         Pop.setPopup(keyPopup, false);
+        router.beforePopState((state) => {
+            state.options.scroll = false;
+            return true;
+        });
         router.back();
     }
     return (

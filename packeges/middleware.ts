@@ -24,7 +24,7 @@ export default class Middleware {
     only(...args: Array<string>): boolean {
         let result: boolean = false;
         args.forEach((guard) => {
-            if (this.auth[guard]) {
+            if (this.auth?.[guard]) {
                 result = true;
             }
         })
@@ -33,7 +33,7 @@ export default class Middleware {
     allExcept(...args: Array<string>): boolean {
         let result: boolean = true;
         args.forEach((guard) => {
-            if (this.auth[guard]) {
+            if (this.auth?.[guard]) {
                 result = false;
             }
         })
