@@ -7,21 +7,21 @@ import Admin from '../../directives/Admin';
 import PicturePosition from '../../types/PicturePosition';
 import loader from '../../loader';
 interface ProductProps {
-    id: number, 
-    name: string, 
-    src: string, 
+    id: number,
+    name: string,
+    src: string,
     position: PicturePosition,
-    price: number, 
-    offerPrice: number, 
-    currency: string, 
-    selected?: boolean, 
-    selectable?: boolean, 
+    price: number,
+    offerPrice: number,
+    currency: string,
+    selected?: boolean,
+    selectable?: boolean,
 }
-export default function Product({ selectable, id, selected, name, price, offerPrice, currency, src, position }:ProductProps) {
+export default function Product({ selectable, id, selected, name, price, offerPrice, currency, src, position }: ProductProps) {
     const [select, setSelect] = useState(false);
     const [menuT, setMenuT] = useState(false);
     const router = useRouter();
-    useEffect(() => setSelect(selected), [selected]);    
+    useEffect(() => setSelect(selected), [selected]);
     const img = useMemo(() => <Image src={src} width={200} height={200} objectPosition={`${position.leftP}% ${-1 * position.topP}%`} className="img" alt="T-shirt" />, []);
     function selectHandle() {
         setSelect(!select);
@@ -68,9 +68,10 @@ export default function Product({ selectable, id, selected, name, price, offerPr
     }
     return (
         <div className="product">
-            <div className="picture" onClick={()=>router.push(`/product/${id}`)}>
-                {img}
-                {/* <img src={src} className="img" alt="T-shirt" /> */}
+            <div className="picture" onClick={() => router.push(`/product/${id}`)}>
+                {/* {img} */}
+                {                // eslint-disable-next-line @next/next/no-img-element
+                }                <img src={src} style={{ height: position.heightP + '%', objectPosition: `${position.leftP}% ${-1 * position.topP}%` }} className="img" alt="T-shirt" />
             </div>
             <div className="product-details">
                 <Admin>

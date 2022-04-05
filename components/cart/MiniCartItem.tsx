@@ -24,7 +24,8 @@ function CartItem({ item, itemCount }: { item: CartItemModel, itemCount: number 
                 <i className="fas fa-times"></i>
             </div>
             <div className="picture">
-                <Image loader={loader} src={picture.path} width={200} height={350} className="img" />
+                {/* <Image loader={loader} src={picture.path} width={200} height={350} className="img" /> */}
+                <img src={picture.path} className="img" />
             </div>
             <div className="details">
                 <span>{name}</span>

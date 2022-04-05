@@ -783,6 +783,8 @@ nav {
                     .img {
                         border-radius: 10px;
                         object-fit: cover;
+                        width:100%;
+                        height: 100%;
                     }
                 }
 
@@ -1201,6 +1203,8 @@ nav {
             height: 200px;
 
             .img {
+                width: 100%;
+                height: 100%;
                 object-fit: cover;
                 object-position: 50% 100%;
                 border-radius: var(--border-radius);
