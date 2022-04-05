@@ -54,12 +54,15 @@ function Home() {
       <Categories />
       <Products
         title="Latest"
+        rawProducts={[]}
       />
       <Products
         title="Men"
+        rawProducts={[]}
       />
       <Products
         title="Women Fashion"
+        rawProducts={[]}
       />
       {/* <button onClick={login} className="btn btn-primary">Login</button>
       <button onClick={logout} className="btn btn-primary">Logout</button>
