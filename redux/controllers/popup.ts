@@ -8,7 +8,7 @@ export class State {
     init(key: string) {
         return { ...this.state, [key]: false };
     }
-    setPopup(key: string, value: boolean, args: any) {
+    setPopup(key: string, value: boolean, args?: any) {
         return { ...this.state, [key]: value, args };
     }
     uninstallPopup(key: string) {
