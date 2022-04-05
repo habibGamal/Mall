@@ -1,8 +1,5 @@
 import Picture from "../../models/Picture";
 import ResizedPicture from "../../types/ResizedPicture";
-
-// Reducer Name
-const reducerName = 'Main';
 // state type
 type MainStateType = {
     authenticated?: boolean,
@@ -13,26 +10,16 @@ type MainStateType = {
     resizedOldPictures: Array<ResizedPicture>,
 }
 // initial state
-const initState: MainStateType = {
+export const initState: MainStateType = {
     authenticated: null,
     pictures: [],
     deletedPicturesPaths: [],
     resizedOldPictures: [],
 }
-// controller(it is control what function will be executed) => reducer
-const reducer = (state = initState, action) => {
-    const manageState = new State(state);
-    if (action.to === reducerName) {
-        if (manageState[action.type]) {
-            return manageState[action.type](...action.payload);
-        }
-    }
-    return state;
-
-}
 
 // state management
 export class State {
+    static to = 'Main';
     public state: MainStateType;
     constructor(state: MainStateType) {
         this.state = state;
@@ -107,6 +94,5 @@ export class State {
     }
 }
 
-export default reducer;
 
 

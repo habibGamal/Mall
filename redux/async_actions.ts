@@ -2,88 +2,91 @@ import auth from "../api/auth";
 import cart from "../api/cart";
 import category from "../api/category";
 import { Messages } from "./dispatcher";
+import { State as ApiDataState } from './controllers/api_data';
+import { State as CustomerEnvState } from './controllers/customer_env';
 import store from "./store";
 
 class AsyncActions {
-    static GetCategories() {
+    static instance = new AsyncActions();
+    GetCategories() {
         return async (dispatch) => {
             let res = await category.index();
             if (res.status === 200) {
                 dispatch({
-                    to: 'ApiData',
+                    to: ApiDataState.to,
                     type: 'getCategories',
                     payload: [res.data]
                 });
             }
         }
     }
-    static async InitializeCustomerEnv(dispatch) {
+    async InitializeCustomerEnv(dispatch) {
         // => get its cart
         let res = await cart.index();
         dispatch({
-            to: 'CustomerEnv',
+            to: CustomerEnvState.to,
             type: 'getCartItems',
             payload: [res.data]
         });
     }
-    static UnInitializeCustomerEnv(dispatch) {
+    UnInitializeCustomerEnv(dispatch) {
         dispatch({
-            to: 'CustomerEnv',
+            to: CustomerEnvState.to,
             type: 'uninitializing',
             payload: []
         });
     }
-    static AddCartItem(data) {
+    AddCartItem(data) {
         return async (dispatch) => {
-            try{
+            try {
                 let res = await cart.addProduct(data);
                 if (res.status === 200) {
                     dispatch({
-                        to: 'CustomerEnv',
+                        to: CustomerEnvState.to,
                         type: 'addCartItem',
                         payload: [res.data]
                     })
-                    Messages.set('success','Item is added to cart');
+                    Messages.set('success', 'Item is added to cart');
                 }
-            }catch(error){
-                let {status} = error?.response;
-                if(status === 403){
-                    Messages.set('warning','Item has already added to cart');
+            } catch (error) {
+                let { status } = error?.response;
+                if (status === 403) {
+                    Messages.set('warning', 'Item has already added to cart');
                 }
                 throw error;
             }
         }
     }
-    static UpdateCartItem(id, count) {
+    UpdateCartItem(id, count) {
 
         return async (dispatch) => {
             let res = await cart.increaseItemQuantity(id, { product_count: count, '_method': 'PUT' });
             if (res.status === 200) {
                 let res = await cart.index();
                 dispatch({
-                    to: 'CustomerEnv',
+                    to: CustomerEnvState.to,
                     type: 'getCartItems',
                     payload: [res.data]
                 });
             }
         }
     }
-    static RemoveCartItem(id) {
+    RemoveCartItem(id) {
         return async (dispatch) => {
             let res = await cart.deleteItem(id);
             if (res.status === 200) {
                 if (res.data) {
                     dispatch({
-                        to: 'CustomerEnv',
+                        to: CustomerEnvState.to,
                         type: 'removeCartItem',
                         payload: [id]
                     })
                 }
-                Messages.set('warning','Item has been removed from cart');
+                Messages.set('warning', 'Item has been removed from cart');
             }
         }
     }
-    static Reauth() {
+    Reauth() {
         return async (dispatch) => {
             let res = await auth.isAuthenticated();
             if (res.status === 200) {
@@ -93,9 +96,9 @@ class AsyncActions {
                     payload: [res.data]
                 });
                 if (res.data.user) {
-                    AsyncActions.InitializeCustomerEnv(dispatch);
+                    this.InitializeCustomerEnv(dispatch);
                 } else {
-                    AsyncActions.UnInitializeCustomerEnv(dispatch)
+                    this.UnInitializeCustomerEnv(dispatch)
                 }
             }
         }
@@ -105,10 +108,10 @@ class AsyncActions {
 
 const asyncDispatcher = {
     get: function (target, prop) {
-        return (...args) => store.dispatch(AsyncActions[prop](...args));
+        return (...args) => store.dispatch(AsyncActions.instance[prop](...args));
     }
 }
 
 
 
-export let $Async = new Proxy({}, asyncDispatcher);
+export let $Async: AsyncActions = new Proxy({}, asyncDispatcher);

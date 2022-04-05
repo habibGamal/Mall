@@ -9,8 +9,8 @@ import Picture from "../../models/Picture";
 import BranchForm from "../general/BranchForm";
 import BranchFormRequest from "../../FormRequests/BranchFormRequest";
 import t from "../../helpers/translate";
-function CreateMultiSameBranches({ logo, getInputValue, errors }) {
-    
+function CreateMultiSameBranches({ logo, getInputsValue, errors }) {
+    const { branches_number } = getInputsValue || {};
     function logoInit(e: React.ChangeEvent<HTMLInputElement>) {
         // => save just one picture
         Main.emptyPictures();
@@ -75,22 +75,15 @@ function CreateMultiSameBranches({ logo, getInputValue, errors }) {
                     />
                 </div>
             </div>
-            {renderForms(parseInt(getInputValue('branches_number') ?? 2))}
+            {renderForms(parseInt(branches_number ?? 2))}
         </>
     )
 }
 
 
 const mapStateToProps = (state) => ({
-    getInputValue: (name) => {
-        if (state.forms[BranchFormRequest.createKey]) {
-            if (state.forms[BranchFormRequest.createKey][name]) {
-                return state.forms[BranchFormRequest.createKey][name];
-            }
-        }
-        return null;
-    },
     logo: state.main.pictures,
+    getInputsValue : state.forms?.[BranchFormRequest.createKey]
 })
 
 export default connect(mapStateToProps)(CreateMultiSameBranches);

@@ -4,7 +4,8 @@ import invalid from "../../helpers/invalid";
 import BranchForm from "../general/BranchForm";
 import BranchFormRequest from "../../FormRequests/BranchFormRequest";
 import t from "../../helpers/translate";
-function CreateMultiDifferentBranches({ getInputValue, errors }) {
+function CreateMultiDifferentBranches({ getInputsValue, errors }) {
+    const { branches_number } = getInputsValue || {};
     function renderForms(length: number) {
         let buffer: Array<Object> = [];
         for (let i = 1; i <= length; i++) {
@@ -23,7 +24,7 @@ function CreateMultiDifferentBranches({ getInputValue, errors }) {
     return (
         <>
             <Number
-                label={t('Number of branches','عدد الافرع')}
+                label={t('Number of branches', 'عدد الافرع')}
                 name="branches_number"
                 id="branches_number"
                 invalidMsg={invalid('branches_number', errors)}
@@ -34,21 +35,14 @@ function CreateMultiDifferentBranches({ getInputValue, errors }) {
                 defaultValue="2"
                 formKey={BranchFormRequest.createKey}
             />
-            {renderForms(parseInt(getInputValue('branches_number') ?? 2))}
+            {renderForms(parseInt(branches_number ?? 2))}
         </>
     )
 }
 
 
 const mapStateToProps = (state) => ({
-    getInputValue: (name) => {
-        if (state.forms[BranchFormRequest.createKey]) {
-            if (state.forms[BranchFormRequest.createKey][name]) {
-                return state.forms[BranchFormRequest.createKey][name];
-            }
-        }
-        return null;
-    },
+    getInputsValue: state.forms?.[BranchFormRequest.createKey]
 })
 
 export default connect(mapStateToProps)(CreateMultiDifferentBranches);

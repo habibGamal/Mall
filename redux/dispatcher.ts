@@ -1,9 +1,12 @@
-import { State as MainState}  from "./controllers/main";
-import { State as FormsState}  from "./controllers/forms";
-import { State as LanguageState}  from "./controllers/translate";
+import { State as MainState } from "./controllers/main";
+import { State as FormsState } from "./controllers/forms";
+import { State as LanguageState } from "./controllers/translate";
+import { State as MessagesState } from "./controllers/messages";
+import { State as RouterState } from './controllers/router';
+import { State as PopupState } from './controllers/popup';
+import { State as ApiDataState } from './controllers/api_data';
+import { State as CustomerEnvState } from './controllers/customer_env';
 import store from "./store";
-
-
 const dispatcher = {
     get: function (target, prop) {
         return (...payload) => {
@@ -15,18 +18,18 @@ const dispatcher = {
         }
     }
 }
-export let Forms:FormsState = new Proxy({ to: 'Forms' }, dispatcher);
+export const Forms: FormsState = new Proxy({ to: FormsState.to }, dispatcher);
 
-export let Messages = new Proxy({ to: 'Messages' }, dispatcher);
+export const Messages: MessagesState = new Proxy({ to: MessagesState.to }, dispatcher);
 
-export let ApiData = new Proxy({ to: 'ApiData' }, dispatcher);
+export const ApiData: ApiDataState = new Proxy({ to: 'ApiData' }, dispatcher);
 
-export let Main : MainState = new Proxy({ to: 'Main' }, dispatcher);
+export const Main: MainState = new Proxy({ to: MainState.to }, dispatcher);
 
-export let Language : LanguageState = new Proxy({ to: 'translate' }, dispatcher);
+export const Language: LanguageState = new Proxy({ to: LanguageState.to }, dispatcher);
 
-export let Popup = new Proxy({ to: 'Popup' }, dispatcher);
+export const Popup: PopupState = new Proxy({ to: 'Popup' }, dispatcher);
 
-export let Router = new Proxy({ to: 'Router' }, dispatcher);
+export const Router: RouterState = new Proxy({ to: 'Router' }, dispatcher);
 
-export let customerEnv = new Proxy({ to: 'CustomerEnv' }, dispatcher);
+export const customerEnv: CustomerEnvState = new Proxy({ to: 'CustomerEnv' }, dispatcher);

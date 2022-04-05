@@ -6,17 +6,18 @@ import isThat from '../../../../../helpers/isThat';
 import Category from './Category'
 import Popup from '../../../../popup/Popup'
 import EditCategory from '../../../../popup/EditCategory'
-import listCategories from '../../../../../helpers/listCategories';
 import { ApiData, Forms, Messages } from '../../../../../redux/dispatcher';
 import { $Async } from '../../../../../redux/async_actions';
 import Text from '../../../../inputs/Text';
 import Select from '../../../../inputs/Select';
 import t from '../../../../../helpers/translate';
-
+import CategoryModel from '../../../../../models/Category'
+import BackendCategory from '../../../../../BackendTypes/BackendCategory';
 function Categories({ categories }) {
     const formKey = 'add_cat';
     const [errors, setErrors] = useState(null);
     const [buttonsT, setButtonsT] = useState('');
+
     useEffect(() => {
         $Async.GetCategories();
         Forms.attachForm(formKey);
@@ -75,10 +76,10 @@ function Categories({ categories }) {
     return (
         <div className="categories">
             <div className="add-category">
-                <h4 className="form-title">{t('Add New Category','اضافة صنف جديد')}</h4>
+                <h4 className="form-title">{t('Add New Category', 'اضافة صنف جديد')}</h4>
                 <form className="mx-1" onSubmit={addCategory}>
                     <Text
-                        label={t('Category Name','اسم الصنف')}
+                        label={t('Category Name', 'اسم الصنف')}
                         addClass=""
                         name="name"
                         id="category_name"
@@ -86,33 +87,34 @@ function Categories({ categories }) {
                         formKey={formKey}
                     />
                     <Select
-                        label={t('Parent Category','تحت الصنف')}
+                        label={t('Parent Category', 'تحت الصنف')}
                         addClass=""
-                        options={[{ value: 0, as: 'No parent' }, ...listCategories(categories)]}
+                        options={[{ value: 0, as: 'No parent' }, ...CategoryModel.mappingAllCategories(categories as Array<BackendCategory>)]}
                         name="parent_id"
                         id="category_parent"
                         formKey={formKey}
                     />
-                    <button className="btn btn-primary my-2">{t('Add Category','اضافة الصنف')}</button>
+                    <button className="btn btn-primary my-2">{t('Add Category', 'اضافة الصنف')}</button>
                 </form>
             </div>
             <Popup keyPopup="edit-category">
                 <EditCategory keyPopup="edit-category" />
             </Popup>
             <div className="categories-list">
-                {listCategories(categories, true).map(c => {
-                    return (
-                        <Category
-                            name={c.as}
-                            id={c.value}
-                            key={c.value}
-                            level={c.level}
-                            buttonsT={buttonsT}
-                            setButtonsT={setButtonsT}
-                            subCategories={c.children}
-                        />
+                {
+                    CategoryModel.mapping(categories).map(
+                        c =>
+                            <Category
+                                name={c.as}
+                                id={c.value}
+                                key={c.value}
+                                level={c.level}
+                                buttonsT={buttonsT}
+                                setButtonsT={setButtonsT}
+                                subCategories={c.children}
+                            />
                     )
-                })}
+                }
             </div>
         </div>
     )

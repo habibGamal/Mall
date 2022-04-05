@@ -3,70 +3,92 @@ $dark-color-2: #242526;
 $dark-color-3: #3a3b3c;
 $text-main: #e4e6eb;
 $text-second: #b0b3b8;
+$hover-color: #ffffff1a;
 body.dark {
     background-color: $dark-color-1;
-    color: $text-second;
-    // background color change
-    nav #nav-bar ,
-    .single-product .product > .content .details .block > .context > .option.active {
-        background-color: $dark-color-1;
-    }
-    nav ,
-    nav #nav-bar > ul > li > a.active ,
-    .isolate ,
-    .pop-up-form 
-    {
-        background-color: $dark-color-2;
-    }
-    nav .user-cart > .circle ,
-    nav .search input ,
-    .isolate-2,
-    .isolate-3,
-    .single-product .product > .content .details .block > .context > .option:not(.active),
-    .single-product .extra .comments .comment > .avatar,
-    section.single-page-form form .categories .show-categories ,
-    .form-group .form-control
-    {
+    color: $text-main;
+    --mode-light-color: #242526;
+    --mode-light-text-color: #e4e6eb;
+    .form-control {
         background-color: $dark-color-3;
+        border: unset;
     }
-    // change color
-    .single-page-form .head .title > svg {
-        color: $dark-color-3;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    label,
+    .form-control {
+        color: $text-main !important;
     }
-    nav .user-cart > .circle > .svg-inline--fa,
-    nav .search > .svg-inline--fa ,
-    nav #nav-bar > ul > li > a:not(.active) ,
-    .pop-up-form > h3,
-    .pop-up-form .login-with a ,
-    .stores .store .name > h3 ,
-    section.info .card ,
-    section.info .card > h2 ,
-    .single-page-form .head  h2 ,
-    .single-page-form .form  h3 ,
-    .single-product .product > .content .details > h3 ,
-    .single-product .product > .content .details .block > .context > .option:not(.active),
-    .single-product .extra .sub-title,
-    .single-product .extra .comments .comment > .content > h5,
-    .form-group ,
-    .form-group .form-control ,
-    .form-group .form-control svg:not(& .form-check svg),
-    .form-group svg:not(& .form-check  svg) ,
-    .categories > label,
-    .form-check ,
-    .products h2
-    {
-        color: $text-main!important;
-    }
-    nav #nav-bar > ul > li > a.active ,
-    .pop-up-form {
-        color: #fff
-    }
-    .pop-up-form {
-        box-shadow: none;
-    }
-    .form-group {
-        .form-control {
-            border:none;
+    nav #nav-bar a {
+        &:hover:not(.active) {
+            color: $text-main !important;
+        }
+        .active {
+            background-color: $hover-color !important;
         }
     }
+    nav {
+        background-color: #000;
+        --color: #fff;
+    }
+    // remove shadow
+    nav,
+    .popup {
+        box-shadow: unset;
+    }
+    // nav .user-cart > .circle ,
+    // nav .search input ,
+    // .isolate-2,
+    // .isolate-3,
+    // .single-product .product > .content .details .block > .context > .option:not(.active),
+    // .single-product .extra .comments .comment > .avatar,
+    // section.single-page-form form .categories .show-categories ,
+    // .form-group .form-control
+    // {
+    //     background-color: $dark-color-3;
+    // }
+    // // change color
+    // .single-page-form .head .title > svg {
+    //     color: $dark-color-3;
+    // }
+    // nav .user-cart > .circle > .svg-inline--fa,
+    // nav .search > .svg-inline--fa ,
+    // nav #nav-bar > ul > li > a:not(.active) ,
+    // .pop-up-form > h3,
+    // .pop-up-form .login-with a ,
+    // .stores .store .name > h3 ,
+    // section.info .card ,
+    // section.info .card > h2 ,
+    // .single-page-form .head  h2 ,
+    // .single-page-form .form  h3 ,
+    // .single-product .product > .content .details > h3 ,
+    // .single-product .product > .content .details .block > .context > .option:not(.active),
+    // .single-product .extra .sub-title,
+    // .single-product .extra .comments .comment > .content > h5,
+    // .form-group ,
+    // .form-group .form-control ,
+    // .form-group .form-control svg:not(& .form-check svg),
+    // .form-group svg:not(& .form-check  svg) ,
+    // .categories > label,
+    // .form-check ,
+    // .products h2
+    // {
+    //     color: $text-main!important;
+    // }
+    // nav #nav-bar > ul > li > a.active ,
+    // .pop-up-form {
+    //     color: #fff
+    // }
+    // .pop-up-form {
+    //     box-shadow: none;
+    // }
+    // .form-group {
+    //     .form-control {
+    //         border:none;
+    //     }
+    // }
 }

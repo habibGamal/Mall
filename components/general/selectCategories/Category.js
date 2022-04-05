@@ -6,9 +6,9 @@ import RadioBoxRow from '../../inputs/RadioBoxRow';
 import SubCategory from './SubCategory';
 // import CheckBox from '../../inputs/CheckBox';
 
-function Category({ id, name, formKey, subCategories, getInputValue }) {
+function Category({ id, name, formKey, subCategories, getInputsValue }) {
     const [selected, setSelected] = useState(false);
-    const value = getInputValue(formKey, 'category');
+    const { category: value } = getInputsValue;
     useEffect(() => {
         setSelected(value == id);
     }, [value])
@@ -28,21 +28,7 @@ function Category({ id, name, formKey, subCategories, getInputValue }) {
     )
 }
 
-const mapStateToProps = (state) => ({
-    getInputValue: (key, name, defaultValue = false) => {
-        // => key : represents form key in global store
-        // => name : represents input name
-        // => defaultValue : the value returnd if the input isn't registered yet in global state
-        // => function return current value of particular input in particular form
-        if (key && name) {
-            // => check if the key an name is definded or not
-            if (state.forms[key]) {
-                // => check if the key of the form is registered in the form state or not
-                // => return the value if it is defined or default value if it's not
-                return state.forms[key][name] === undefined ? defaultValue : state.forms[key][name];
-            }
-        }
-        return defaultValue;
-    }
+const mapStateToProps = (state, { formKey }) => ({
+    getInputsValue: state.forms?.[formKey]
 })
 export default connect(mapStateToProps)(Category)

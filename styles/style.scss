@@ -25,14 +25,14 @@ $text-layer-4: #dbdee6;
 $line-color: #e6e8e9;
 // bootstrap border
 $border: 1px solid #dee2e6 !important;
-
 // mixins
-
 /*
 Name : Rules
 */
 :root {
     --dir: rtl;
+    --mode-light-color: #fff;
+    --mode-light-text-color: #000;
 }
 html {
     scroll-behavior: smooth;
@@ -73,7 +73,7 @@ html {
                 }
                 &.active {
                     background-color: $second-color;
-                    color: #fff;
+                    color: var(--mode-light-color);
                     padding-left: 0.5rem;
                 }
             }
@@ -129,7 +129,7 @@ span.count {
     display: block;
     padding: 0 0.3rem;
     border-radius: 20px;
-    color: #fff;
+    color: var(--mode-light-color);
     background-color: #e74c3c;
 }
 
@@ -138,7 +138,7 @@ span.count {
 }
 
 .isolate {
-    background-color: #fff;
+    background-color: var(--mode-light-color);
     box-shadow: $shadow;
     border-radius: 10px;
 }
@@ -184,7 +184,7 @@ span.count {
             width: 25px;
             height: 25px;
             margin-right: 0.5rem;
-            background-color: #fff;
+            background-color: var(--mode-light-color);
             border: 1px solid #007bff;
             border-radius: 5px;
 
@@ -193,7 +193,7 @@ span.count {
                 top: 4px;
                 left: 4px;
                 z-index: 1;
-                color: #fff;
+                color: var(--mode-light-color);
             }
         }
     }
@@ -326,7 +326,7 @@ body {
         top: 50%;
         left: 50%;
         z-index: 3;
-        background-color: #fff;
+        background-color: var(--mode-light-color);
         padding: 1rem;
         transform: translate(-50%, -50%);
         overflow-y: auto;
@@ -460,7 +460,7 @@ body {
     width: 380px;
     max-width: 95%;
     max-height: 90vh;
-    background-color: #fff;
+    background-color: var(--mode-light-color);
     box-shadow: 0px 1px 3px #a2a2a2;
     border-radius: 20px;
     top: 50%;
@@ -500,8 +500,8 @@ body {
                 transition: background-color 0.2s ease-in-out;
 
                 &.active {
-                    background-color: #fff;
-                    color: #000;
+                    background-color: var(--mode-light-color);
+                    color: var(--mode-light-text-color);
                     border-radius: 10px;
                 }
             }
@@ -613,7 +613,7 @@ nav {
         width: 300px;
         height: 100vh;
         top: 0;
-        background-color: #fff;
+        background-color: var(--mode-light-color);
         transition: left 400ms ease-in-out, right 400ms ease-in-out;
     }
 
@@ -641,7 +641,7 @@ nav {
                 width: 90%;
                 &.select-language,
                 > a {
-                    color: #000;
+                    color: var(--mode-light-text-color);
                     padding: 1rem;
                     padding-left: 2rem;
                 }
@@ -662,7 +662,7 @@ nav {
                             cursor: pointer;
                             &.current-language {
                                 background-color: $main-color;
-                                color: #fff;
+                                color: var(--mode-light-color);
                             }
                         }
                     }
@@ -812,7 +812,7 @@ nav {
     .logo.nav-bar:not(body.dark nav .logo.nav-bar) {
         > a,
         > a:hover {
-            color: #000;
+            color: var(--mode-light-text-color);
         }
     }
 
@@ -852,7 +852,7 @@ nav {
 
     .user-cart {
         > .circle {
-            background-color: #fff;
+            background-color: var(--mode-light-color);
             width: 50px;
             height: 50px;
             padding: 1rem;
@@ -959,13 +959,13 @@ nav {
         transition: border-color 200ms ease-in-out;
 
         &:hover {
-            border: 1px solid #fff;
+            border: 1px solid var(--mode-light-color);
         }
 
         a {
             display: inline-block;
             padding: 0.5rem 1rem;
-            color: #fff;
+            color: var(--mode-light-color);
 
             &:hover {
                 text-decoration: none;
@@ -1056,7 +1056,7 @@ nav {
         margin: 1rem 0;
 
         > h3 {
-            color: #000;
+            color: var(--mode-light-text-color);
             font-size: 1.5rem;
         }
     }
@@ -1133,7 +1133,7 @@ nav {
                 bottom: 10px;
                 left: 10px;
                 background-color: #000;
-                color: #fff;
+                color: var(--mode-light-color);
                 padding: 0.5rem 1rem;
                 transition: bottom 400ms ease-in-out, left 400ms ease-in-out, transform 400ms ease-in-out;
 
@@ -1163,7 +1163,7 @@ nav {
         height: 300px;
         margin: 1rem;
         box-shadow: 0px 0px 5px $shodow-color;
-        color: #000;
+        color: var(--mode-light-text-color);
         border-radius: var(--border-radius);
         position: relative;
         overflow: hidden;
@@ -1177,7 +1177,7 @@ nav {
             width: 25px;
             height: 25px;
             margin: 0 0.5rem;
-            background-color: #fff;
+            background-color: var(--mode-light-color);
             border: 1px solid #007bff;
             border-radius: 5px;
 
@@ -1190,7 +1190,7 @@ nav {
                 top: 4px;
                 left: 4px;
                 z-index: 1;
-                color: #fff;
+                color: var(--mode-light-color);
             }
         }
 
@@ -1219,7 +1219,7 @@ nav {
             left: 50%;
             transform: translate(-50%);
             border-radius: var(--border-radius);
-            background-color: #fff;
+            background-color: var(--mode-light-color);
             padding: 1rem;
             text-align: center;
             cursor: auto;
@@ -1249,7 +1249,7 @@ nav {
                 top: 0;
                 right: 15px;
                 transform: translateY(-90%);
-                background-color: #fff;
+                background-color: var(--mode-light-color);
                 border-radius: 10px;
                 transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
 
@@ -1430,7 +1430,7 @@ nav {
 .row-show-container .left-arrow > i,
 .row-show-container .right-arrow > i {
     font-size: 2rem;
-    background-color: #fff;
+    background-color: var(--mode-light-color);
     border-radius: 100%;
 }
 

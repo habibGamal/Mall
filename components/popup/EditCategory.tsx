@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import category from '../../api/category';
+import BackendCategory from '../../BackendTypes/BackendCategory';
 import active from '../../helpers/active';
 import invalid from '../../helpers/invalid';
-import listCategories from '../../helpers/listCategories';
+import CategoryModel from '../../models/Category'
 import { $Async } from '../../redux/async_actions';
 import { Messages, Forms, Popup } from '../../redux/dispatcher';
 import Select from '../inputs/Select';
@@ -73,9 +74,9 @@ function EditCategory({ show, keyPopup, categories, setInputValue, args, setPopu
                 <Select
                     label="Parent Category"
                     addClass=""
-                    options={[{ value: 0, as: 'No parent' }, ...listCategories(categories)]}
+                    options={[{ value: 0, as: 'No parent' }, ...CategoryModel.mappingAllCategories(categories as Array<BackendCategory>)]}
                     name="parent_id"
-                    id="category_parent"
+                    id="category_parent_edit"
                     formKey={formKey}
                 />
                 <button className="btn btn-success my-2">Save Changes</button>

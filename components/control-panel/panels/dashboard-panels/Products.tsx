@@ -14,7 +14,8 @@ import t from '../../../../helpers/translate'
 
 const formKey = 'dashboard_products'
 
-function Products({ getInputValue }) {
+function Products({ getInputsValue }) {
+    const { branch_id } = getInputsValue || {};
     const [selectable, setSelectable] = useState(false);
     const [selectAll, setSelectAll] = useState(false);
     const [products, setProducts] = useState([] as Array<ProductModel>);
@@ -27,18 +28,17 @@ function Products({ getInputValue }) {
         };
     }, []);
     useEffect(() => {
-        const branchId = getInputValue('branch_id');
         const getProducts = async () => {
-            const res = await branch.branchProducts(branchId);
+            const res = await branch.branchProducts(branch_id);
             if (res.status === 200) {
                 const products: Array<ProductModel> = (res.data as Array<BackendProduct>).map(product => new ProductModel(product));
                 setProducts(products);
             }
         }
-        if(branchId){
+        if (branch_id) {
             getProducts();
         }
-    }, [getInputValue('branch_id')]);
+    }, [branch_id]);
     useEffect(() => {
         const getProducts = async () => {
             const res = await branch.branchProducts(0);
@@ -95,7 +95,7 @@ function Products({ getInputValue }) {
                                 <i className="fas fa-check" />
                             </span>
                             <span>
-                                {t('Select','تحديد')}
+                                {t('Select', 'تحديد')}
                             </span>
                         </label>
                     </div>
@@ -106,7 +106,7 @@ function Products({ getInputValue }) {
                                 <i className="fas fa-check" />
                             </span>
                             <span>
-                                {t('Select all','تحديد الكل')}
+                                {t('Select all', 'تحديد الكل')}
                             </span>
                         </label>
                     </div>
@@ -123,11 +123,11 @@ function Products({ getInputValue }) {
                         />
                     </div>
                     <div className={active(selectable, { defaultClass: 'buttons' })}>
-                        <button onClick={deleteProducts} className="btn btn-danger">{t('Delete','مسح')}</button>
-                        <button className="btn btn-dark">{t('Draft','تخزين')}</button>
+                        <button onClick={deleteProducts} className="btn btn-danger">{t('Delete', 'مسح')}</button>
+                        <button className="btn btn-dark">{t('Draft', 'تخزين')}</button>
                     </div>
                 </div>
-                <button className="btn btn-add"><i className="fas fa-plus-circle" /> {t('Add Product','اضافة منتج')}</button>
+                <button className="btn btn-add"><i className="fas fa-plus-circle" /> {t('Add Product', 'اضافة منتج')}</button>
             </div>
             <div className="products">
                 <div className="row">
@@ -161,14 +161,7 @@ function Products({ getInputValue }) {
 }
 
 const mapStateToProps = (state) => ({
-    getInputValue: (name: string) => {
-        if (state.forms[formKey]) {
-            if (state.forms[formKey][name]) {
-                return state.forms[formKey][name];
-            }
-        }
-        return null;
-    },
+    getInputsValue: state.forms?.[formKey],
 })
 
 export default connect(mapStateToProps)(Products)

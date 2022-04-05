@@ -15,8 +15,9 @@ import OrderedItem from '../../../../models/OrderedItem';
 import active from '../../../../helpers/active';
 
 const formKey = 'dashboard_orders'
-function Orders({ getInputValue }) {
+function Orders({ getInputsValue }) {
     const router = useRouter();
+    const {branch_id} = getInputsValue || {};
     const urlBranch: string = router.query.branch as string;
     const [{ orders, branches, loading }, setState] = useState({
         orders: [] as Array<OrderModel>,
@@ -32,9 +33,8 @@ function Orders({ getInputValue }) {
         )
     }
     useEffect(() => {
-        const branchId = getInputValue('branch_id');
         const getOrders = async () => {
-            const res = await orderApi.getOrdersForBranch(branchId);
+            const res = await orderApi.getOrdersForBranch(branch_id);
             if (res.status === 200) {
                 setState(old => ({
                     ...old,
@@ -43,14 +43,14 @@ function Orders({ getInputValue }) {
                 }))
             }
         }
-        if (branchId) {
+        if (branch_id) {
             setState(old => ({
                 ...old,
                 loading: false,
             }))
             getOrders();
         }
-    }, [getInputValue('branch_id')]);
+    }, [branch_id]);
     useEffect(() => {
         Forms.attachForm(formKey);
         const getOrders = async () => {
@@ -95,7 +95,7 @@ function Orders({ getInputValue }) {
                     orders.length === 0
                         ? <Empty msg="You haven't recived any orders yet" />
                         : orders.map(
-                            order => <Order key={order.id} removeOrder={removeOrder} order={order} branch_id={getInputValue('branch_id') ?? branches[0].id} />
+                            order => <Order key={order.id} removeOrder={removeOrder} order={order} branch_id={branch_id ?? branches[0].id} />
                         )
                 }
             </Loading>
@@ -104,14 +104,7 @@ function Orders({ getInputValue }) {
 }
 
 const mapStateToProps = (state) => ({
-    getInputValue: (name: string) => {
-        if (state.forms[formKey]) {
-            if (state.forms[formKey][name]) {
-                return state.forms[formKey][name];
-            }
-        }
-        return null;
-    },
+    getInputsValue: state.forms?.[formKey]
 })
 
 export default connect(mapStateToProps)(Orders)
@@ -166,9 +159,8 @@ function Order({ order, branch_id, removeOrder }: { order: OrderModel, branch_id
                         <>
                             <button onClick={rejectOrder} className="btn btn-danger">{t('Reject the order', 'رفض الطلب')}</button>
                             <button onClick={acceptOrder} className='btn btn-primary' >{t('Accept the order', 'قبول الطلب')}</button>
-
                         </> :
-                        <button onClick={acceptOrder} className={active(orderState == 'accept', { defaultClass: 'btn btn-primary', activeClass:'' ,falseClass: 'd-none' })}>Out for Delevary</button>
+                        <button onClick={acceptOrder} className={active(orderState == 'accept', { defaultClass: 'btn btn-primary', activeClass: '', falseClass: 'd-none' })}>Out for Delevary</button>
                 }
             </div>
         </div>

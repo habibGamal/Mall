@@ -5,14 +5,14 @@ import t from '../../helpers/translate';
 import BusinessLogin from './forms/BusinessLogin';
 import Login from './forms/Login';
 import Signup from './forms/Signup';
-function AuthForm({ show, keyPopup, defaultTap = 'login' }) {
+function AuthForm({ show, defaultTap = 'login' }) {
     const form = useRef(null);
     const [activeTap, setTap] = useState(defaultTap);
     const [businessLogin, setBusinessLogin] = useState(false);
     const taps = {
-        'login': { title: t('Login','تسجيل دخول'), content: <Login form={form} setTap={setTap} /> },
-        'signup': { title: t('Sign up','انشاء حساب'), content: <Signup form={form} setTap={setTap} /> },
-        'business_login': { title: t('Login to your store','تسجيل الدخول الى المتجر'), content: <BusinessLogin form={form} setTap={setTap} /> },
+        'login': { title: t('Login', 'تسجيل دخول'), content: <Login form={form} setTap={setTap} /> },
+        'signup': { title: t('Sign up', 'انشاء حساب'), content: <Signup form={form} setTap={setTap} /> },
+        'business_login': { title: t('Login to your store', 'تسجيل الدخول الى المتجر'), content: <BusinessLogin form={form} setTap={setTap} /> },
     }
     function customer() {
         setTap('login');
@@ -23,14 +23,14 @@ function AuthForm({ show, keyPopup, defaultTap = 'login' }) {
         setBusinessLogin(true);
     }
     return (
-        <form ref={form} className={active(show(keyPopup), { defaultClass: 'popup form' })}>
-            <h3 className="text-dark text-center">{taps[activeTap].title}</h3>
+        <form ref={form} className={active(show, { defaultClass: 'popup form' })}>
+            <h3 className="text-center">{taps[activeTap].title}</h3>
             <div className="select">
                 <div onClick={customer} className={active(!businessLogin, { defaultClass: 'option' })}>
-                    <span>{t('Customer','زبون')}</span>
+                    <span>{t('Customer', 'زبون')}</span>
                 </div>
                 <div onClick={business} className={active(businessLogin, { defaultClass: 'option' })}>
-                    <span>{t('Business','عمل')}</span>
+                    <span>{t('Business', 'عمل')}</span>
                 </div>
             </div>
             {taps[activeTap].content}
@@ -57,9 +57,11 @@ function AuthForm({ show, keyPopup, defaultTap = 'login' }) {
     )
 }
 
-const mapStateToProps = state => ({
-    show: (key) => state.popup[key],
-    lang: state.translate.language
-})
+const mapStateToProps = (state, {keyPopup}) => {
+    return {
+        show: state.popup[keyPopup],
+        lang: state.translate.language
+    }
+}
 
 export default connect(mapStateToProps)(AuthForm);

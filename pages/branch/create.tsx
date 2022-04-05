@@ -19,8 +19,8 @@ enum CreateBranchTap {
     MultiSame,
     MultiDifferent,
 }
-function CreateBranch({ getInputValue, logo }) {
-
+function CreateBranch({ getInputsValue, logo }) {
+    const { branches, same_branches, branches_number } = getInputsValue || {};
     const [errors, setErrors] = useState(null);
     const [settings, setSettings] = useState({
         multiBranchs: false,
@@ -38,29 +38,27 @@ function CreateBranch({ getInputValue, logo }) {
 
     useEffect(() => {
         // => one branch(0) or mulitble(1)
-        const value = getInputValue('branches'); // return 0 or 1
-        if (value !== null) {
+        if (branches !== null) {
             setSettings(
                 old => ({
                     ...old,
-                    multiBranchs: parseInt(value) ? true : false,
+                    multiBranchs: parseInt(branches) ? true : false,
                 })
             );
         }
-    }, [getInputValue('branches')]);
+    }, [branches]);
 
     useEffect(() => {
         // => different (0) or same(1)
-        const value = getInputValue('same_branches'); // return 0 or 1
-        if (value !== null) {
+        if (same_branches !== null) {
             setSettings(
                 old => ({
                     ...old,
-                    sameBrand: parseInt(value) ? true : false,
+                    sameBrand: parseInt(same_branches) ? true : false,
                 })
             );
         }
-    }, [getInputValue('same_branches')]);
+    }, [same_branches]);
 
     useEffect(() => {
         if (!settings.multiBranchs) {
@@ -76,7 +74,7 @@ function CreateBranch({ getInputValue, logo }) {
         e.preventDefault();
         const rawForm: FormData = new FormData(e.currentTarget);
         const branchFormRequest = new BranchFormRequest();
-        const numberOfBranches = parseInt(getInputValue('branches_number') ?? 2);
+        const numberOfBranches = parseInt(branches_number ?? 2);
         let createRequestForm: FormData;
         if (tap === CreateBranchTap.Single) {
             createRequestForm = await branchFormRequest.createSingleBranch(rawForm, logo);
@@ -88,7 +86,7 @@ function CreateBranch({ getInputValue, logo }) {
         try {
             const res = await branch.store(createRequestForm);
         } catch (err) {
-            
+
             if (err.response) {
                 let { data, status } = err.response;
                 if (status == 422) {
@@ -103,9 +101,9 @@ function CreateBranch({ getInputValue, logo }) {
             case CreateBranchTap.Single:
                 return <CreateSingleBranch errors={errors} />;
             case CreateBranchTap.MultiDifferent:
-                return <CreateMultiDifferentBranches errors={errors}  />;
+                return <CreateMultiDifferentBranches errors={errors} />;
             case CreateBranchTap.MultiSame:
-                return <CreateMultiSameBranches errors={errors}  />;
+                return <CreateMultiSameBranches errors={errors} />;
             default:
                 return <CreateSingleBranch errors={errors} />;
         }
@@ -121,17 +119,17 @@ function CreateBranch({ getInputValue, logo }) {
                 </div>
                 <form className="form" onSubmit={branchCreate}>
                     <div className="groups">
-                        <h3>{t('Shop Details','تفاصيل المتجر')}</h3>
+                        <h3>{t('Shop Details', 'تفاصيل المتجر')}</h3>
                         <Select
-                            label={t('Branches','الافرع')}
+                            label={t('Branches', 'الافرع')}
                             name="branches"
                             id="branches"
                             addClass=""
                             invalidMsg={invalid('branches', errors)}
                             formKey={BranchFormRequest.createKey}
                             options={[
-                                { value: 0, as: t('Just one branch','فرع واحد فقط') },
-                                { value: 1, as: t('Multiple branches','اكثر من فرع') },
+                                { value: 0, as: t('Just one branch', 'فرع واحد فقط') },
+                                { value: 1, as: t('Multiple branches', 'اكثر من فرع') },
                             ]}
                         />
                     </div>
@@ -146,8 +144,8 @@ function CreateBranch({ getInputValue, logo }) {
                                 invalidMsg={invalid('same_branches', errors)}
                                 formKey={BranchFormRequest.createKey}
                                 options={[
-                                    { value: 1, as: t('All branches have the same name','كل الافرع لها نفس الاسم') },
-                                    { value: 0, as: t('Each Branch has different name','كل فرع له اسم مختلف') },
+                                    { value: 1, as: t('All branches have the same name', 'كل الافرع لها نفس الاسم') },
+                                    { value: 0, as: t('Each Branch has different name', 'كل فرع له اسم مختلف') },
                                 ]}
                             />
 
@@ -165,14 +163,7 @@ function CreateBranch({ getInputValue, logo }) {
 
 
 const mapStateToProps = (state) => ({
-    getInputValue: (name) => {
-        if (state.forms[BranchFormRequest.createKey]) {
-            if (state.forms[BranchFormRequest.createKey][name]) {
-                return state.forms[BranchFormRequest.createKey][name];
-            }
-        }
-        return null;
-    },
+    getInputsValue: state.forms?.[BranchFormRequest.createKey],
     logo: state.main.pictures,
 })
 

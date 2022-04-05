@@ -21,8 +21,8 @@ export default function Product({ selectable, id, selected, name, price, offerPr
     const [select, setSelect] = useState(false);
     const [menuT, setMenuT] = useState(false);
     const router = useRouter();
-    useEffect(() => setSelect(selected), [selected]);
-    const img = useMemo(() => <Image loader={loader} src={src} width={200} height={200} objectPosition={`${position.leftP}% ${-1 * position.topP}%`} className="img" alt="T-shirt" />, []);
+    useEffect(() => setSelect(selected), [selected]);    
+    const img = useMemo(() => <Image src={src} width={200} height={200} objectPosition={`${position.leftP}% ${-1 * position.topP}%`} className="img" alt="T-shirt" />, []);
     function selectHandle() {
         setSelect(!select);
     }
@@ -70,6 +70,7 @@ export default function Product({ selectable, id, selected, name, price, offerPr
         <div className="product">
             <div className="picture" onClick={()=>router.push(`/product/${id}`)}>
                 {img}
+                {/* <img src={src} className="img" alt="T-shirt" /> */}
             </div>
             <div className="product-details">
                 <Admin>

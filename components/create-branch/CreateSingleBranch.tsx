@@ -63,14 +63,6 @@ function CreateSingleBranch({ logo, errors }) {
 
 
 const mapStateToProps = (state) => ({
-    getInputValue: (name) => {
-        if (state.forms[BranchFormRequest.createKey]) {
-            if (state.forms[BranchFormRequest.createKey][name]) {
-                return state.forms[BranchFormRequest.createKey][name];
-            }
-        }
-        return null;
-    },
     logo: state.main.pictures,
 })
 

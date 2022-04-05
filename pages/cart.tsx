@@ -4,18 +4,18 @@ import Link from 'next/link'
 import { connect } from 'react-redux';
 import handlePath from '../helpers/picturePath';
 import t from '../helpers/translate';
+import CartItemModel from '../models/CartItem';
 function Cart({ authenticated, cart }) {
-    const formKey = 'MiniCart';
     const [cartItems, setCartItems] = useState([]);
-    useEffect(async () => {
+    useEffect(() => {
         if (authenticated && cart) {
             const items = cart.map(item => {
-                const src = JSON.parse(item.pictures);
-                return <CartItem key={item.id} formKey={formKey} shopName="Brave" quantity={item.pivot.product_count} id={item.id} name={item.name} src={handlePath(src[0].path)} price={item.price} />
+                const cartItem = new CartItemModel(item);
+                return <CartItem key={item.id} item={cartItem} />
             })
             setCartItems(items);
         }
-    }, [cart]);
+    }, [cart,authenticated]);
     return (
         <section className="cart-page">
             <div className="container">

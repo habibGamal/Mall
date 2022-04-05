@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react'
 import category from '../../api/category';
-import BackendProduct from '../../BackendTypes/BackendProduct';
+import { BackendFullCategory } from '../../BackendTypes/BackendFullCategory';
 import SingleCategory from '../../components/categories/CategorySinglePage'
 import Empty from '../../components/general/Empty';
-import Products from '../../components/products/Products';
 import MiniShowStore from '../../components/stores/MiniShowStore'
 import FullCategory from '../../models/FullCategory';
 
@@ -17,34 +16,14 @@ export const getServerSideProps = async (ctx) => {
                 }
             }
         }
-    }catch(e){
+    } catch (e) {
         return {
-            notFound:{}
+            notFound: {}
         }
     }
-    
+
 }
-type BackendSinglePageCategory = {
-    created_at: string,
-    id: number,
-    level: number,
-    name: string,
-    parent_id: number,
-    products: Array<{
-        branches: Array<{
-            id: number,
-            logo: string,
-            name: string,
-        }>,
-        category_id: number,
-        id: number,
-        name: string,
-        offer_price: number,
-        pictures: string,
-        price: number
-    }>
-}
-export default function Category({ category }) {
+export default function Category({ category }: { category: BackendFullCategory }) {
     const categoryModel = useMemo(() => new FullCategory(category), [category]);
     return (
         <section className="single-category">
@@ -55,13 +34,13 @@ export default function Category({ category }) {
             <div className="container">
                 {
                     categoryModel.branches.length == 0 ?
-                    <Empty msg="This category doesn't have any products yet"/>
-                    :categoryModel.branches.map(
-                        branch => <MiniShowStore
-                            key={branch.id}
-                            branch={branch}
-                        />
-                    )
+                        <Empty msg="This category doesn't have any products yet" />
+                        : categoryModel.branches.map(
+                            branch => <MiniShowStore
+                                key={branch.id}
+                                branch={branch}
+                            />
+                        )
                 }
             </div>
         </section>

@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Image from 'next/image'
 import Select from '../inputs/Select'
-import cart from '../../api/cart';
 import { connect } from 'react-redux';
 import { $Async } from '../../redux/async_actions';
 import t from '../../helpers/translate';
 import loader from '../../loader';
+import CartItemModel from '../../models/CartItem';
 
-function CartItem({ src, id, formKey, name, price, quantity, getInputValue }) {
-    useEffect(async () => {
+function CartItem({ item, itemCount }: { item: CartItemModel, itemCount: number }) {
+    const { id, name, picture, quantity, price } = item;
+    useEffect(() => {
         // => change the quantity of the item
-        const count = getInputValue(formKey, id);
-        if (count && count != quantity) {
-            $Async.UpdateCartItem(id, count ?? null);
+        if (itemCount && itemCount != quantity) {
+                $Async.UpdateCartItem(id, itemCount ?? null) 
         }
-    }, [getInputValue(formKey, id)]);
+    }, [itemCount, quantity,id]);
     async function deleteItem() {
         $Async.RemoveCartItem(id);
     }
@@ -24,16 +24,16 @@ function CartItem({ src, id, formKey, name, price, quantity, getInputValue }) {
                 <i className="fas fa-times"></i>
             </div>
             <div className="picture">
-                <Image loader={loader} src={src} width={200} height={350} className="img" />
+                <Image loader={loader} src={picture.path} width={200} height={350} className="img" />
             </div>
             <div className="details">
                 <span>{name}</span>
                 <span>{t('Price', 'السعر')} : <strong>{price}</strong> {t('LE', 'جنية')}</span>
                 <Select
                     label={t('Quantity', 'الكمية')}
-                    type="select"
-                    name={id}
-                    formKey={formKey}
+                    name={id.toString()}
+                    id={id.toString()}
+                    formKey={CartItemModel.formKey}
                     defaultOption={quantity - 1}
                     addClass=""
                     options={[
@@ -47,9 +47,7 @@ function CartItem({ src, id, formKey, name, price, quantity, getInputValue }) {
 }
 
 
-const mapStateToProps = state => ({
-    getInputValue: (formKey, name) => {
-        return state.forms[formKey]?.[name];
-    },
+const mapStateToProps = (state, { item }: { item: CartItemModel }) => ({
+    itemCount: state.forms?.[CartItemModel.formKey]?.[item.id],
 })
 export default connect(mapStateToProps)(CartItem);

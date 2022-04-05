@@ -5,20 +5,21 @@ import { connect } from 'react-redux';
 import handlePath from '../../helpers/picturePath';
 import { useRouter } from 'next/router';
 import t from '../../helpers/translate';
-
+import BackendCartItem from '../../BackendTypes/BackendCartItem';
+import CartItemModel from '../../models/CartItem';
+import { RootState } from '../../redux/store';
 function MiniCart({ expand, close, authenticated, cart }) {
     const router = useRouter();
-    const formKey = 'MiniCart';
     const [cartItems, setCartItems] = useState([]);
-    useEffect(async () => {
+    useEffect( () => {
         if (authenticated && cart) {
-            const items = cart.map(item => {
-                const src = JSON.parse(item.pictures);
-                return <CartItem key={item.id} formKey={formKey} quantity={item.pivot.product_count} id={item.id} name={item.name} src={handlePath(src[0].path)} price={item.price} />
+            const items = cart.map((item:BackendCartItem) => {
+                const cartItem = new CartItemModel(item);
+                return <CartItem key={cartItem.id} item={cartItem} />
             })
             setCartItems(items);
         }
-    }, [cart]);
+    }, [cart,authenticated]);
     function toCart(){
         router.push('/cart');
         close();
