@@ -6,7 +6,7 @@ import ProductModel from '../../models/Product';
 import RowScroll from '../general/RowScroll'
 import Product from './Product'
 
-export default function Products({ title, rawProducts }: { title: string, rawProducts: Array<BackendProduct> }) {
+export default function Products({ title, rawProducts }: { title: string, rawProducts?: Array<BackendProduct> }) {
     const [products, setProducts] = useState([] as Array<ProductModel>);
     useEffect(() => {
         const getProducts = async () => {
